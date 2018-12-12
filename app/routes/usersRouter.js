@@ -7,8 +7,9 @@ const {
   createUser,
   deleteUserById
 } = require("../actions/users");
+const { getDeckById } = require("../actions/cards");
 
-userRouter.get("/getAllUsers", (req, res) => {
+userRouter.get("/all", (req, res) => {
   getAllUsers()
     .then(users => res.json(users))
     .catch(err => {
@@ -19,6 +20,12 @@ userRouter.get("/getAllUsers", (req, res) => {
 userRouter.delete("/:id", (req, res) => {
   deleteUserById(req.params.id)
     .then(user => res.json(user))
+    .catch(err => res.send(err));
+});
+
+cardsRoute.get("/deck/:id", async (req, res) => {
+  getDeckById(req.params.id)
+    .then(deck => res.json(deck))
     .catch(err => res.send(err));
 });
 

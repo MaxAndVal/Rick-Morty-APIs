@@ -3,7 +3,7 @@ const kaamelottRoute = express.Router();
 const axios = require("axios");
 const connection = require("../../dbConnexion");
 
-kaamelottRoute.get("/getRandomQuote", (req, res) => {
+kaamelottRoute.get("/randomQuote", (req, res) => {
   axios
     .get("https://kaamelott.chaudie.re/api/random")
     .then(response => {
