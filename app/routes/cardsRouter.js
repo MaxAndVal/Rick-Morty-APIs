@@ -17,7 +17,8 @@ cardsRoute.get("/all/:page", (req, res) => {
       res.json(response.data);
     })
     .catch(error => {
-      console.log("error:", error);
+      console.log(error);
+      res.jon(error);
     });
 });
 
@@ -42,7 +43,7 @@ cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
         res.json(newDeck);
       } catch (e) {
         console.log("e.stack: ", e);
-        res.status(500).send({ error: e });
+        res.send(e);
       }
       res.end();
     })

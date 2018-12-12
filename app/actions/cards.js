@@ -105,7 +105,7 @@ async function decreaseDeckToOpen(id) {
         );
         resolve("ok");
       } else {
-        reject("No deck to open");
+        reject({ code: 300, message: "No deck to open" });
       }
     });
   });
