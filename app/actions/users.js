@@ -1,0 +1,128 @@
+const connection = require("../../dbConnexion");
+const { omit } = require("lodash");
+
+function getAllUsers() {
+  const queryString = "SELECT user_id, user_name, user_email FROM users";
+
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, (err, rows, fields) => {
+      if (err) {
+        console.log("Failed query for users " + err);
+        reject({ status: 500, error: err });
+        return;
+      }
+      resolve(rows);
+    });
+  });
+}
+
+function createUser(user_name, user_email, user_password) {
+  return new Promise((resolve, reject) => {
+    selectUserByEmail(user_email)
+      .then(rows => {
+        if (rows.length == 0) {
+          insertNewUser(user_name, user_email, user_password)
+            .then(
+              selectUserByEmail(user_email)
+                .then(rows =>
+                  resolve({
+                    code: 200,
+                    success: "user is created",
+                    user: rows[0]
+                  }).catch(err =>
+                    reject({ code: 501, msg: "create user failed", err })
+                  )
+                )
+                .catch(err =>
+                  reject({ code: 502, msg: "create user failed", err })
+                )
+            )
+            .catch(err =>
+              reject({ code: 503, msg: "create user failed", err })
+            );
+        } else {
+          reject({ code: 204, success: "Email is already used" });
+        }
+      })
+      .catch(err => reject({ code: 501, msg: "create user failed", err }));
+  });
+}
+
+function selectUserByEmail(user_email) {
+  return new Promise((resolve, reject) => {
+    const queryString =
+      "SELECT user_id, user_name, user_email, deckToOpen FROM users WHERE user_email=?";
+    connection.query(queryString, [user_email], (err, rows, fiels) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows);
+    });
+  });
+}
+
+function insertNewUser(user_name, user_email, user_password) {
+  return new Promise((resolve, reject) => {
+    const queryString =
+      "INSERT INTO users (user_name, user_email, user_password, deckToOpen) VALUES (?,?,?,1)";
+    connection.query(
+      queryString,
+      [user_name, user_email, user_password],
+      (err, result, fields) => {
+        if (err) {
+          console.log("failed insert " + err);
+          reject({ code: 502, fail: "fail insert", error: err });
+          return;
+        } else {
+          resolve({ code: 200, success: "user is created" });
+        }
+      }
+    );
+  });
+}
+
+function getUserById(id) {
+  const queryString =
+    "SELECT user_id, user_name, user_email FROM users WHERE user_id=?";
+  return new Promise((resolve, reject) =>
+    connection.query(queryString, [id], (err, rows, fiels) => {
+      if (err) {
+        console.log("Failed  " + err);
+        reject({ code: 500, message: err });
+        return;
+      }
+      const user = rows[0];
+      console.log(user);
+      resolve(user);
+    })
+  );
+}
+
+function deleteUserById(user_id) {
+  const queryString = "DELETE FROM users WHERE user_id=?";
+  return new Promise((resolve, reject) =>
+    connection.query(queryString, [user_id], (err, rows, fields) => {
+      if (err) {
+        console.log(
+          "failed to delete user with id " + user_id + "error : " + err
+        );
+        reject({ code: 500, failed: err });
+      } else {
+        if (rows.affectedRows == 0) {
+          resolve({ code: 205, success: "user not found" });
+        } else {
+          resolve({ code: 200, success: "user is deleted" });
+        }
+      }
+    })
+  );
+}
+
+module.exports = {
+  selectUserByEmail,
+  getAllUsers,
+  getUserById,
+  insertNewUser,
+  createUser,
+  deleteUserById
+};
