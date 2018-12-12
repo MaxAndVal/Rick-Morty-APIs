@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const router = require("./app/routes");
 const bodyParser = require("body-parser");
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(morgan("short"));
 app.use(router);
 
