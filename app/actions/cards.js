@@ -1,4 +1,5 @@
 const connection = require("../../dbConnexion");
+const axios = require("axios");
 
 async function addCardToDeck(user_id, card_id) {
   return new Promise((resolve, reject) => {
@@ -107,7 +108,6 @@ async function decreaseDeckToOpen(id) {
         reject("No deck to open");
       }
     });
-    decreaseDeckToOdecreaseDeckToOpenpen;
   });
 }
 

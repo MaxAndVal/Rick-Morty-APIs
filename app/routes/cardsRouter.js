@@ -1,6 +1,13 @@
 const express = require("express");
 const cardsRoute = express.Router();
 const axios = require("axios");
+const {
+  getDeckById,
+  checkDeckToOpen,
+  randomCard,
+  decreaseDeckToOpen,
+  addCardToDeck
+} = require("../actions/cards");
 
 cardsRoute.get("/all/:page", (req, res) => {
   const page = req.params.page > 1 ? req.params.page : 1;
