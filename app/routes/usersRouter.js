@@ -23,7 +23,7 @@ userRouter.delete("/:id", (req, res) => {
     .catch(err => res.send(err));
 });
 
-cardsRoute.get("/deck/:id", async (req, res) => {
+userRouter.get("/deck/:id", async (req, res) => {
   getDeckById(req.params.id)
     .then(deck => res.json(deck))
     .catch(err => res.send(err));

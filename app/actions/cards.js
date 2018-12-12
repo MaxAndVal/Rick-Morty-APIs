@@ -42,7 +42,7 @@ async function addCardToDeck(user_id, card_id) {
   });
 }
 
-function checkDeckToOpen(id) {
+async function checkDeckToOpen(id) {
   return new Promise((resolve, reject) => {
     querySelect = "SELECT deckToOpen FROM users WHERE user_id=?";
     connection.query(querySelect, [id], (err, rows, fields) => {
