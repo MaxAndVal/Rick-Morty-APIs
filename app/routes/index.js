@@ -13,7 +13,7 @@ app.use("/users", usersRouter);
 app.use("/cards", cardsRouter);
 app.use("/kaamelott", kaamelottRouter);
 app.use("*", (req, res) => {
-  res.status(404).json({ code: 404, error: "route not found" });
+  res.json({ code: 404, error: "route not found" });
 });
 
 module.exports = app;

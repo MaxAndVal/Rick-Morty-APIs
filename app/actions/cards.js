@@ -1,10 +1,10 @@
 const connection = require("../../dbConnexion");
 const axios = require("axios");
 
-async function addCardToDeck(user_id, card_id) {
+async function addCardToDeck(user_id, card) {
   return new Promise((resolve, reject) => {
     querySelect = "SELECT amount FROM deck WHERE user_id=? AND card_id=?";
-    connection.query(querySelect, [user_id, card_id], (err, rows, fields) => {
+    connection.query(querySelect, [user_id, card.id], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
         return reject(err);
@@ -15,7 +15,7 @@ async function addCardToDeck(user_id, card_id) {
         queryString = "UPDATE deck SET amount=? WHERE user_id=? AND card_id=?";
         connection.query(
           queryString,
-          [amount, user_id, card_id],
+          [amount, user_id, card.id],
           (err, rows, fiels) => {
             if (err) {
               console.log("Failed if  " + err);
@@ -26,10 +26,10 @@ async function addCardToDeck(user_id, card_id) {
         );
       } else {
         queryString =
-          "INSERT INTO deck (user_id, card_id, amount) VALUES(?,?,1)";
+          "INSERT INTO deck (user_id, card_id, card_name,card_image, amount) VALUES(?,?,?,?,1)";
         connection.query(
           queryString,
-          [user_id, card_id],
+          [user_id, card.id, card.name, card.image],
           (err, rows, fiels) => {
             if (err) {
               console.log("Failed else " + err);
@@ -61,9 +61,9 @@ async function checkDeckToOpen(id) {
   });
 }
 
-async function randomCard(randomNumber) {
+async function getCardsById(id) {
   return axios
-    .get("https://rickandmortyapi.com/api/character/" + randomNumber)
+    .get("https://rickandmortyapi.com/api/character/" + id)
     .catch(error => {
       error;
     });
@@ -115,6 +115,6 @@ module.exports = {
   decreaseDeckToOpen,
   addCardToDeck,
   getDeckById,
-  randomCard,
+  getCardsById,
   checkDeckToOpen
 };

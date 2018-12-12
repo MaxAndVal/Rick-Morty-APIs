@@ -109,7 +109,7 @@ function deleteUserById(user_id) {
         reject({ code: 500, failed: err });
       } else {
         if (rows.affectedRows == 0) {
-          resolve({ code: 205, success: "user not found" });
+          resolve({ code: 250, success: "user not found" });
         } else {
           resolve({ code: 200, success: "user is deleted" });
         }

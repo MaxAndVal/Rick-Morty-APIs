@@ -4,10 +4,18 @@ const axios = require("axios");
 const {
   getDeckById,
   checkDeckToOpen,
-  randomCard,
+  getCardsById,
   decreaseDeckToOpen,
   addCardToDeck
 } = require("../actions/cards");
+
+cardsRoute.get("/:id", (req, res) => {
+  getCardsById(req.params.id)
+    .then(response => {
+      res.json(response.data);
+    })
+    .catch();
+});
 
 cardsRoute.get("/all/:page", (req, res) => {
   const page = req.params.page > 1 ? req.params.page : 1;
@@ -22,12 +30,6 @@ cardsRoute.get("/all/:page", (req, res) => {
     });
 });
 
-cardsRoute.get("/userDeck/:id", async (req, res) => {
-  getDeckById(req.params.id)
-    .then(deck => res.json(deck))
-    .catch(err => res.send(err));
-});
-
 cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
   const user_id = req.params.id;
   checkDeckToOpen(user_id)
@@ -35,8 +37,8 @@ cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
       try {
         var newDeck = [];
         for (i = 0; i < 10; i++) {
-          var card = await randomCard(Math.floor(Math.random() * 493));
-          await addCardToDeck(user_id, card.data.id);
+          var card = await getCardsById(Math.floor(Math.random() * 493));
+          await addCardToDeck(user_id, card.data);
           newDeck.push(card.data);
         }
         await decreaseDeckToOpen(user_id);
