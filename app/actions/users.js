@@ -1,9 +1,9 @@
 const connection = require("../../dbConnexion");
-const { omit } = require("lodash");
+const omit = require("object.omit");
+const CodeHTTP = require("../constants/CodeHTTP");
 
-function getAllUsers() {
-  const queryString = "SELECT user_id, user_name, user_email FROM users";
-
+async function getAllUsers() {
+  const queryString = "SELECT * FROM users";
   return new Promise((resolve, reject) => {
     connection.query(queryString, (err, rows, fields) => {
       if (err) {
@@ -11,7 +11,9 @@ function getAllUsers() {
         reject({ status: 500, error: err });
         return;
       }
-      resolve(rows);
+      users = rows
+      users.map(user => delete user.user_password)
+      resolve(users);
     });
   });
 }
@@ -29,17 +31,11 @@ function createUser(user_name, user_email, user_password) {
                     code: 200,
                     success: "user is created",
                     user: rows[0]
-                  }).catch(err =>
-                    reject({ code: 501, msg: "create user failed", err })
-                  )
+                  }).catch(err => reject({ code: 501, msg: "create user failed", err }))
                 )
-                .catch(err =>
-                  reject({ code: 502, msg: "create user failed", err })
-                )
+                .catch(err => reject({ code: 502, msg: "create user failed", err }))
             )
-            .catch(err =>
-              reject({ code: 503, msg: "create user failed", err })
-            );
+            .catch(err => reject({ code: 503, msg: "create user failed", err }));
         } else {
           reject({ code: 204, success: "Email is already used" });
         }
@@ -51,12 +47,13 @@ function createUser(user_name, user_email, user_password) {
 function selectUserByEmail(user_email) {
   return new Promise((resolve, reject) => {
     const queryString =
-      "SELECT user_id, user_name, user_email, deckToOpen FROM users WHERE user_email=?";
+      "SELECT * FROM users WHERE user_email=?";
     connection.query(queryString, [user_email], (err, rows, fiels) => {
       if (err) {
         reject(err);
       }
-      resolve(rows);
+      user = rows[0]
+      resolve(user);
     });
   });
 }
@@ -65,25 +62,20 @@ function insertNewUser(user_name, user_email, user_password) {
   return new Promise((resolve, reject) => {
     const queryString =
       "INSERT INTO users (user_name, user_email, user_password, deckToOpen) VALUES (?,?,?,1)";
-    connection.query(
-      queryString,
-      [user_name, user_email, user_password],
-      (err, result, fields) => {
-        if (err) {
-          console.log("failed insert " + err);
-          reject({ code: 502, fail: "fail insert", error: err });
-          return;
-        } else {
-          resolve({ code: 200, success: "user is created" });
-        }
+    connection.query(queryString, [user_name, user_email, user_password], (err, result, fields) => {
+      if (err) {
+        console.log("failed insert " + err);
+        reject({ code: 502, fail: "fail insert", error: err });
+        return;
+      } else {
+        resolve({ code: 200, success: "user is created" });
       }
-    );
+    });
   });
 }
 
 function getUserById(id) {
-  const queryString =
-    "SELECT user_id, user_name, user_email FROM users WHERE user_id=?";
+  const queryString = "SELECT * FROM users WHERE user_id=?";
   return new Promise((resolve, reject) =>
     connection.query(queryString, [id], (err, rows, fiels) => {
       if (err) {
@@ -92,8 +84,8 @@ function getUserById(id) {
         return;
       }
       const user = rows[0];
-      console.log(user);
-      resolve(user);
+      delete user.user_password;
+      resolve(user)
     })
   );
 }
@@ -103,9 +95,7 @@ function deleteUserById(user_id) {
   return new Promise((resolve, reject) =>
     connection.query(queryString, [user_id], (err, rows, fields) => {
       if (err) {
-        console.log(
-          "failed to delete user with id " + user_id + "error : " + err
-        );
+        console.log("failed to delete user with id " + user_id + "error : " + err);
         reject({ code: 500, failed: err });
       } else {
         if (rows.affectedRows == 0) {

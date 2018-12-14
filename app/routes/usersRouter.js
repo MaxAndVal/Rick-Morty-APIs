@@ -1,16 +1,11 @@
 //userRouter for users
 const express = require("express");
 const userRouter = express.Router();
-const {
-  getAllUsers,
-  getUserById,
-  createUser,
-  deleteUserById
-} = require("../actions/users");
+const { getAllUsers, getUserById, createUser, deleteUserById } = require("../actions/users");
 const { getDeckById } = require("../actions/cards");
-const CodeHTTP = require("../constants/CodeHTTP");
 
-userRouter.get("/all", (req, res) => {
+
+userRouter.get("/all", async(req, res) => {
   getAllUsers()
     .then(users => res.json(users))
     .catch(err => {

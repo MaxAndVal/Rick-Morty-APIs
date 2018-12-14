@@ -7,10 +7,14 @@ kaamelottRoute.get("/randomQuote", (req, res) => {
   axios
     .get("https://kaamelott.chaudie.re/api/random")
     .then(response => {
-      res.json(response.data.citation.citation);
+      res.send({
+        citation: response.data.citation.citation,
+        personnage: response.data.citation.infos.personnage
+      });
     })
     .catch(error => {
       console.log(error);
+      res.send(error);
     });
 });
 
