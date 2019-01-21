@@ -13,7 +13,7 @@ userRouter.get("/all", async(req, res) => {
     });
 });
 
-userRouter.delete("/:id", (req, res) => {
+userRouter.delete("/:id", async (req, res) => {
   deleteUserById(req.params.id)
     .then(user => res.json(user))
     .catch(err => res.send(err));
@@ -25,7 +25,7 @@ userRouter.get("/deck/:id", async (req, res) => {
     .catch(err => res.send(err));
 });
 
-userRouter.get("/:id", (req, res) => {
+userRouter.get("/:id", async (req, res) => {
   getUserById(req.params.id)
     .then(user => res.json(user))
     .catch(err => res.send(err));

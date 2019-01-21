@@ -11,13 +11,13 @@ const {
   getCardByName
 } = require("../actions/cards");
 
-cardsRoute.get("/search/:name", (req, res) => {
+cardsRoute.get("/search/:name", async (req, res) => {
   getCardByName(req.params.name).then(response => {
     res.json(response.data).catch(error => res.send(error));
   });
 });
 
-cardsRoute.get("/:id", (req, res) => {
+cardsRoute.get("/:id", async (req, res) => {
   getCardsById(req.params.id)
     .then(response => {
       res.json(response.data);
@@ -25,7 +25,7 @@ cardsRoute.get("/:id", (req, res) => {
     .catch(error => res.json(error));
 });
 
-cardsRoute.get("/all/:page", (req, res) => {
+cardsRoute.get("/all/:page", async (req, res) => {
   const page = req.params.page > 1 ? req.params.page : 1;
   getCardsByPages(page)
     .then(response => {
