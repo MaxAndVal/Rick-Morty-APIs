@@ -52,10 +52,10 @@ module.exports = connection;
 
 // const pool = mysql.createPool({
 //   connectionLimit: 10,
-//   host: "db4free.net",
-//   user: "maxandval",
-//   password: "R0ck&R0llBDD",
-//   database: "melkiusetzigoval"
+//   host:
+//   user:
+//   password:
+//   database:
 // });
 
 // function getConnexion() {
