@@ -1,11 +1,14 @@
 const connection = require("../../dbConnexion");
 const { omit } = require("lodash");
+const bcrypt = require('bcrypt');
+const saltRounds = 6;
+
 
 function login(user_email, user_password) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     selectUserByEmailPwd(user_email).then(rows => {
       if (rows.length > 0) {
-        if (user_password == rows[0].user_password) {
+        if (bcrypt.compareSync(user_password, rows[0].user_password)) {
           resolve({
             code: 200,
             success: "login sucessfull",
@@ -25,7 +28,7 @@ function login(user_email, user_password) {
 }
 // Same function as USERS but this one return PWD for checking
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
-function selectUserByEmailPwd(user_email) {
+async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
     const queryString =
       "SELECT user_id, user_name, user_email, user_password, deckToOpen FROM users WHERE user_email=?";
