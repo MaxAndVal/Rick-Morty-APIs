@@ -51,7 +51,7 @@ async function checkDeckToOpen(id) {
       if (deckToOpen <= 0) {
         resolve({ code: 205, message: "No deck to open" });
       } else {
-        resolve(openTheDeck(id));
+        resolve({ code: 200, message: "opening deck" });
       }
     });
   });

@@ -11,13 +11,13 @@ const {
   getCardByName
 } = require("../actions/cards");
 
-cardsRoute.get("/search/:name", async (req, res) => {
+cardsRoute.get("/search/:name", (req, res) => {
   getCardByName(req.params.name).then(response => {
     res.json(response.data).catch(error => res.send(error));
   });
 });
 
-cardsRoute.get("/:id", async (req, res) => {
+cardsRoute.get("/:id", (req, res) => {
   getCardsById(req.params.id)
     .then(response => {
       res.json(response.data);
@@ -25,20 +25,30 @@ cardsRoute.get("/:id", async (req, res) => {
     .catch(error => res.json(error));
 });
 
-cardsRoute.get("/all/:page", async (req, res) => {
+cardsRoute.get("/all/:page", (req, res) => {
   const page = req.params.page > 1 ? req.params.page : 1;
   getCardsByPages(page)
     .then(response => {
       res.json(response.data);
     })
     .catch(error => {
-      res.jon(error);
+      res.json(error);
     });
 });
 
 cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
   const user_id = req.params.id;
-  checkDeckToOpen(user_id).catch();
+  checkDeckToOpen(user_id)
+    .then(
+      openTheDeck(user_id)
+        .then(response => res.json(response.data))
+        .catch(error => {
+          res.json(error);
+        })
+    )
+    .catch(error => {
+      res.json(error);
+    });
 });
 
 module.exports = cardsRoute;
