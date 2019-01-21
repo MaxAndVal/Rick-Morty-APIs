@@ -38,9 +38,7 @@ cardsRoute.get("/all/:page", async (req, res) => {
 
 cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
   const user_id = req.params.id;
-  checkDeckToOpen(user_id)
-    .then(openTheDeck(user_id))
-    .catch();
+  checkDeckToOpen(user_id).catch();
 });
 
 module.exports = cardsRoute;
