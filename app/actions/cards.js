@@ -47,6 +47,9 @@ async function checkDeckToOpen(id) {
         console.log("Failed  " + err);
         return reject(err);
       }
+      if (rows.length < 1) {
+        return reject({ code: 400, message: "user not found" });
+      }
       var deckToOpen = rows[0].deckToOpen;
       if (deckToOpen <= 0) {
         resolve({ code: 205, message: "No deck to open" });
