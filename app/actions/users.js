@@ -21,6 +21,10 @@ async function getAllUsers() {
 }
 
 async function createUser(user_name, user_email, user_password) {
+<<<<<<< HEAD
+=======
+  console.log(user_name, user_email, user_password);
+>>>>>>> d39c118a21d9628153fbb52a17d2e683724a7c19
   return new Promise(async (resolve, reject) => {
     selectUserByEmail(user_email)
       .then(async rows => {
@@ -43,7 +47,9 @@ async function createUser(user_name, user_email, user_password) {
           reject({ code: 204, success: "Email is already used" });
         }
       })
-      .catch(err => reject({ code: 501, msg: "create user failed before insert", err }));
+      .catch(err =>
+        reject({ code: 501, msg: "create user failed before insert", err })
+      );
   });
 }
 
