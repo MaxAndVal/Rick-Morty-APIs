@@ -29,10 +29,10 @@ cardsRoute.get("/all/:page", (req, res) => {
   const page = req.params.page > 1 ? req.params.page : 1;
   getCardsByPages(page)
     .then(response => {
-      res.json([response.data]);
+      res.json(response.data);
     })
     .catch(error => {
-      res.json([error]);
+      res.json(error);
     });
 });
 
