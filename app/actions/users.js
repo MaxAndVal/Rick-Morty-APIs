@@ -1,7 +1,7 @@
 const connection = require("../../dbConnexion");
 const omit = require("object.omit");
 const CodeHTTP = require("../constants/CodeHTTP");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 6;
 
 async function getAllUsers() {
@@ -21,15 +21,15 @@ async function getAllUsers() {
 }
 
 async function createUser(user_name, user_email, user_password) {
-  console.log(user_name, user_email, user_password)
+  console.log(user_name, user_email, user_password);
   return new Promise(async (resolve, reject) => {
     selectUserByEmail(user_email)
       .then(async rows => {
         if (rows.length == 0) {
-          console.log("ici")
+          console.log("ici");
           var hash = bcrypt.hashSync(user_password, saltRounds);
-          console.log(hash)
-          console.log("check :",user_name, user_email, hash)
+          console.log(hash);
+          console.log("check :", user_name, user_email, hash);
           insertNewUser(user_name, user_email, hash)
             .then(
               selectUserByEmail(user_email)
@@ -53,7 +53,9 @@ async function createUser(user_name, user_email, user_password) {
           reject({ code: 204, success: "Email is already used" });
         }
       })
-      .catch(err => reject({ code: 501, msg: "create user failed before insert", err }));
+      .catch(err =>
+        reject({ code: 501, msg: "create user failed before insert", err })
+      );
   });
 }
 
@@ -62,14 +64,10 @@ function selectUserByEmail(user_email) {
     const queryString = "SELECT * FROM users WHERE user_email=?";
     connection.query(queryString, [user_email], (err, rows, fiels) => {
       if (err) {
-        console.log("error in selectUserByEmail :", err)
+        console.log("error in selectUserByEmail :", err);
         reject(err);
       }
-<<<<<<< HEAD
       user = rows[0];
-=======
-      const user = rows
->>>>>>> a58a0c75025b4fc989ce44f369933316bcb299db
       resolve(user);
     });
   });
