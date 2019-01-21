@@ -14,5 +14,33 @@ async function getFriendsOfUserById(id) {
     });
   });
 }
+async function addFriend(id1, id2) {
+  const queryString = "insert into friends values( ? , ?)";
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, [id1, id2], (err, rows, fields) => {
+      if (err) {
+        console.log("failed add a friend " + err);
+        reject({ status: 500, error: err });
+        return;
+      }
+      resolve({ code: 200, success: "add a friend succeded" });
+    });
+  });
+}
+async function deleteFriend(id1, id2) {
+  const queryString =
+    "DELETE FROM friends WHERE (user_id1=? AND user_id2=?) or (user_id1=? AND user_id2=?) ";
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, [id1, id2, id2, id1], (err, rows, fields) => {
+      if (err) {
+        console.log("failed to delete a friend " + err);
+        reject({ status: 500, error: err });
+        return;
+      }
+      console.log(queryString);
+      resolve({ code: 200, success: "friends is delete" });
+    });
+  });
+}
 
-module.exports = { getFriendsOfUserById };
+module.exports = { getFriendsOfUserById, addFriend, deleteFriend };
