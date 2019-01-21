@@ -4,8 +4,7 @@ const userRouter = express.Router();
 const { getAllUsers, getUserById, createUser, deleteUserById } = require("../actions/users");
 const { getDeckById } = require("../actions/cards");
 
-
-userRouter.get("/all", async(req, res) => {
+userRouter.get("/all", async (req, res) => {
   getAllUsers()
     .then(users => res.json(users))
     .catch(err => {

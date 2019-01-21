@@ -75,7 +75,7 @@ async function getDeckById(user_id) {
         console.log("Failed  " + err);
         return reject(err);
       }
-      resolve({ deck: rows });
+      resolve({ code: 200, message: "getDeck is succefull", deck: rows });
     });
   });
 }
