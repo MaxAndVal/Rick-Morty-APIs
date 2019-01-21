@@ -51,10 +51,11 @@ async function checkDeckToOpen(id) {
         return reject({ code: 400, message: "user not found" });
       }
       var deckToOpen = rows[0].deckToOpen;
+      console.log(deckToOpen);
       if (deckToOpen <= 0) {
         resolve({ code: 205, message: "No deck to open" });
       } else {
-        resolve({ code: 200, message: "opening deck" });
+        resolve(openTheDeck(id));
       }
     });
   });
@@ -138,7 +139,7 @@ async function openTheDeck(user_id) {
         newDeck.push(card.data);
       }
       await decreaseDeckToOpen(user_id);
-      resolve(newDeck);
+      resolve({ code: 200, message: "deck is opened", deck: newDeck });
     } catch (e) {
       reject(e);
     }
