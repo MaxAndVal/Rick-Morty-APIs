@@ -34,7 +34,7 @@ async function createUser(user_name, user_email, user_password) {
                 .then(rows =>
                   resolve({
                     code: 200,
-                    success: "user is created",
+                    message: "user is created",
                     user: rows[0]
                   }).catch(err => reject({ code: 501, msg: "create user failed", err }))
                 )
@@ -42,7 +42,7 @@ async function createUser(user_name, user_email, user_password) {
             )
             .catch(err => reject({ code: 503, msg: "create user failed", err }));
         } else {
-          reject({ code: 204, success: "Email is already used" });
+          reject({ code: 204, message: "Email is already used" });
         }
       })
       .catch(err => reject({ code: 501, msg: "create user failed before insert", err }));
@@ -72,10 +72,10 @@ function insertNewUser(user_name, user_email, user_password) {
     connection.query(queryString, [user_name, user_email, user_password], (err, result, fields) => {
       if (err) {
         console.log("failed insert " + err);
-        reject({ code: 502, fail: "fail insert", error: err });
+        reject({ code: 502, message: "fail insert", error: err });
         return;
       } else {
-        resolve({ code: 200, success: "user is created" });
+        resolve({ code: 200, message: "user is created" });
       }
     });
   });
@@ -106,9 +106,9 @@ function deleteUserById(user_id) {
         reject({ code: 500, failed: err });
       } else {
         if (rows.affectedRows == 0) {
-          resolve({ code: 250, success: "user not found" });
+          resolve({ code: 250, message: "user not found" });
         } else {
-          resolve({ code: 200, success: "user is deleted" });
+          resolve({ code: 200, message: "user is deleted" });
         }
       }
     })
