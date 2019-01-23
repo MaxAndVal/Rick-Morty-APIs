@@ -3,6 +3,8 @@ const express = require("express");
 const userRouter = express.Router();
 const { getAllUsers, getUserById, createUser, deleteUserById } = require("../actions/users");
 const { getDeckById } = require("../actions/cards");
+const { updateWallet } = require("../actions/wallet");
+const { getWallet } = require("../actions/wallet")
 
 userRouter.get("/all", async (req, res) => {
   getAllUsers()
@@ -35,5 +37,17 @@ userRouter.post("/", async (req, res) => {
     .then(response => res.json(response))
     .catch(err => res.send(err));
 });
+
+userRouter.put("/wallet/:id", async (req, res) => {
+  updateWallet(req.params.id, req.body.newWallet)
+  .then(response => res.json(response))
+  .catch(err => res.send(err));
+})
+
+userRouter.get("/wallet/:id", async (req, res) => {
+  getWallet(req.params.id)
+  .then(response => res.json(response))
+  .catch(err => res.send(err));
+})
 
 module.exports = userRouter;
