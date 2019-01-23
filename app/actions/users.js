@@ -21,7 +21,6 @@ async function getAllUsers() {
 }
 
 async function createUser(user_name, user_email, user_password) {
-  console.log(user_name, user_email, user_password);
   return new Promise(async (resolve, reject) => {
     selectUserByEmail(user_email)
       .then(rows => {
