@@ -1,8 +1,7 @@
 const connection = require("../../dbConnexion");
 const { omit } = require("lodash");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 6;
-
 
 function login(user_email, user_password) {
   return new Promise(async (resolve, reject) => {
@@ -11,17 +10,17 @@ function login(user_email, user_password) {
         if (bcrypt.compareSync(user_password, rows[0].user_password)) {
           resolve({
             code: 200,
-            success: "login sucessfull",
+            message: "login sucessfull",
             user: rows[0]
           });
         } else {
           reject({
             code: 204,
-            success: "Email and password does not match, try again "
+            message: "Email and password does not match, try again "
           });
         }
       } else {
-        reject({ code: 204, success: "Email does not exist" });
+        reject({ code: 204, message: "Email does not exist" });
       }
     });
   });

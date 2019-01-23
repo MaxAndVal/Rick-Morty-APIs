@@ -2,18 +2,14 @@ const express = require("express");
 const kaamelottRoute = express.Router();
 const axios = require("axios");
 const connection = require("../../dbConnexion");
+const { getRandomQuote } = require("../actions/kaamelott");
 
-kaamelottRoute.get("/randomQuote", (req, res) => {
-  axios
-    .get("https://kaamelott.chaudie.re/api/random")
+kaamelottRoute.get("/randomQuote", async (req, res) => {
+  getRandomQuote()
     .then(response => {
-      res.send({
-        citation: response.data.citation.citation,
-        personnage: response.data.citation.infos.personnage
-      });
+      res.send(response);
     })
     .catch(error => {
-      console.log(error);
       res.send(error);
     });
 });

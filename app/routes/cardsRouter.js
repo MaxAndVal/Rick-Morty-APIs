@@ -13,16 +13,16 @@ const {
 
 cardsRoute.get("/search/:name", (req, res) => {
   getCardByName(req.params.name).then(response => {
-    res.json(response.data).catch(error => res.send(error));
+    res.json([response.data]).catch(error => res.send([error]));
   });
 });
 
 cardsRoute.get("/:id", (req, res) => {
   getCardsById(req.params.id)
     .then(response => {
-      res.json(response.data);
+      res.json([response.data]);
     })
-    .catch(error => res.json(error));
+    .catch(error => res.json([error]));
 });
 
 cardsRoute.get("/all/:page", (req, res) => {
@@ -32,15 +32,17 @@ cardsRoute.get("/all/:page", (req, res) => {
       res.json(response.data);
     })
     .catch(error => {
-      res.jon(error);
+      res.json(error);
     });
 });
 
 cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
   const user_id = req.params.id;
   checkDeckToOpen(user_id)
-    .then(openTheDeck(user_id))
-    .catch();
+    .then(response => res.json([response]))
+    .catch(error => {
+      res.json([error]);
+    });
 });
 
 module.exports = cardsRoute;
