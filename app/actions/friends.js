@@ -10,7 +10,7 @@ async function getFriendsOfUserById(id) {
         reject({ status: 500, error: err });
         return;
       }
-      resolve({ code: 200, success: "get friends succeded", friends: rows });
+      resolve({ code: 200, message: "get friends succeded", friends: rows });
     });
   });
 }
@@ -23,7 +23,7 @@ async function addFriend(id1, id2) {
         reject({ status: 500, error: err });
         return;
       }
-      resolve({ code: 200, success: "add a friend succeded" });
+      resolve({ code: 200, message: "add a friend succeded" });
     });
   });
 }
@@ -38,7 +38,7 @@ async function deleteFriend(id1, id2) {
         return;
       }
       console.log(queryString);
-      resolve({ code: 200, success: "friends is delete" });
+      resolve({ code: 200, message: "friends is delete" });
     });
   });
 }
