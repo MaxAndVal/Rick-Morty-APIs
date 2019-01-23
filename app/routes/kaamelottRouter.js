@@ -8,6 +8,8 @@ kaamelottRoute.get("/randomQuote", async (req, res) => {
     .get("https://kaamelott.chaudie.re/api/random")
     .then(response => {
       res.send({
+        code: 200,
+        message: "success",
         citation: response.data.citation.citation,
         personnage: response.data.citation.infos.personnage
       });
