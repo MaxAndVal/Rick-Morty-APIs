@@ -28,7 +28,7 @@ function login(user_email, user_password, user_name, external_id) {
           } else {
             reject({
               code: 204,
-              message: "Email and password does not match, try again "
+              message: "Email and password does not match, try again, sorry"
             });
           }
         } else {
@@ -70,7 +70,8 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
 async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id=null";
+    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    console.log(queryString);
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         reject(err);
