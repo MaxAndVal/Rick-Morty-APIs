@@ -2,25 +2,66 @@ const connection = require("../../dbConnexion");
 const { omit } = require("lodash");
 const bcrypt = require("bcrypt");
 const saltRounds = 6;
+const { insertNewUser } = require("./users");
 
-function login(user_email, user_password) {
+function login(user_email, user_password, user_name, external_id) {
   return new Promise(async (resolve, reject) => {
-    selectUserByEmailPwd(user_email).then(rows => {
-      if (rows.length > 0) {
-        if (bcrypt.compareSync(user_password, rows[0].user_password)) {
+    if (external_id) {
+      selectUserByExternalId(external_id, user_name, user_email)
+        .then(rows =>
           resolve({
             code: 200,
-            message: "login sucessfull",
+            message: "login successfull external",
             user: rows[0]
-          });
+          })
+        )
+        .catch(err => reject({ code: 500, message: err }));
+    } else {
+      selectUserByEmailPwd(user_email).then(rows => {
+        if (rows.length > 0) {
+          if (bcrypt.compareSync(user_password, rows[0].user_password)) {
+            resolve({
+              code: 200,
+              message: "login sucessfull",
+              user: rows[0]
+            });
+          } else {
+            reject({
+              code: 204,
+              message: "Email and password does not match, try again "
+            });
+          }
         } else {
-          reject({
-            code: 204,
-            message: "Email and password does not match, try again "
-          });
+          reject({ code: 204, message: "Email does not exist" });
         }
+      });
+    }
+  });
+}
+async function selectUserByExternalId(external_id, user_name, user_email) {
+  return new Promise((resolve, reject) => {
+    const queryString = "SELECT * FROM users where external_id=?";
+    connection.query(queryString, [external_id], (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      if (rows.length > 0) {
+        resolve(rows);
       } else {
-        reject({ code: 204, message: "Email does not exist" });
+        var hash = bcrypt.hashSync(external_id, saltRounds);
+        insertNewUser(user_name, user_email, hash, external_id)
+          .then(() =>
+            selectUserByExternalId(external_id)
+              .then(rows =>
+                resolve({
+                  code: 200,
+                  message: "user is created",
+                  user: rows[0]
+                }).catch(err => reject({ code: 501, msg: "create user failed", err }))
+              )
+              .catch(err => reject({ code: 502, msg: "create user failed", err }))
+          )
+          .catch(err => reject({ code: 503, msg: "create user failed", err }));
       }
     });
   });
@@ -29,9 +70,8 @@ function login(user_email, user_password) {
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
 async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString =
-      "SELECT user_id, user_name, user_email, user_password, deckToOpen FROM users WHERE user_email=?";
-    connection.query(queryString, [user_email], (err, rows, fiels) => {
+    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id=null";
+    connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         reject(err);
       }
@@ -39,7 +79,6 @@ async function selectUserByEmailPwd(user_email) {
     });
   });
 }
-
 module.exports = {
   login
 };

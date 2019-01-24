@@ -37,7 +37,7 @@ async function getRandomQuote() {
         })
         .catch(error => {
           console.log(error);
-          reject.send(error);
+          reject(error);
         })
     );
   });
