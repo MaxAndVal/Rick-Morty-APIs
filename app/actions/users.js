@@ -64,19 +64,24 @@ async function selectUserByEmail(user_email) {
   });
 }
 
-function insertNewUser(user_name, user_email, user_password) {
+function insertNewUser(user_name, user_email, user_password, external_id) {
   return new Promise((resolve, reject) => {
     const queryString =
-      "INSERT INTO users (user_name, user_email, user_password, deckToOpen) VALUES (?,?,?,1)";
-    connection.query(queryString, [user_name, user_email, user_password], (err, result, fields) => {
-      if (err) {
-        console.log("failed insert " + err);
-        reject({ code: 502, message: "fail insert", error: err });
-        return;
-      } else {
-        resolve({ code: 200, message: "user is created" });
+      "INSERT INTO users (user_name, user_email, user_password, deckToOpen, external_id) VALUES (?,?,?,1,?)";
+    console.log(queryString);
+    connection.query(
+      queryString,
+      [user_name, user_email, user_password, external_id],
+      (err, result, fields) => {
+        if (err) {
+          console.log("failed insert " + err);
+          reject({ code: 502, message: "fail insert", error: err });
+          return;
+        } else {
+          resolve({ code: 200, message: "user is created" });
+        }
       }
-    });
+    );
   });
 }
 
