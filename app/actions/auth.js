@@ -45,6 +45,7 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
       if (err) {
         reject(err);
       }
+      console.log("row : ", rows.length);
       if (rows.length > 0) {
         resolve(rows);
       } else {
@@ -53,11 +54,7 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
           .then(() =>
             selectUserByExternalId(external_id)
               .then(rows =>
-                resolve({
-                  code: 200,
-                  message: "user is created",
-                  user: rows[0]
-                }).catch(err => reject({ code: 501, msg: "create user failed", err }))
+                resolve(rows).catch(err => reject({ code: 501, msg: "create user failed", err }))
               )
               .catch(err => reject({ code: 502, msg: "create user failed", err }))
           )
