@@ -43,4 +43,19 @@ async function deleteFriend(id1, id2) {
   });
 }
 
-module.exports = { getFriendsOfUserById, addFriend, deleteFriend };
+async function searchForFriends(user) {
+  const queryString =
+    "SELECT user_name, user_id FROM users WHERE user_name like (?) OR user_email=? or user_id=?";
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, [`%${user}%`, user, user], (err, rows, fields) => {
+      if (err) {
+        console.log("failed to search for friend " + err);
+        reject({ status: 500, error: err });
+        return;
+      }
+      resolve({ code: 200, message: "sucess", results: rows });
+    });
+  });
+}
+
+module.exports = { getFriendsOfUserById, addFriend, deleteFriend, searchForFriends };

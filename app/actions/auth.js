@@ -55,13 +55,9 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
           .then(() =>
             selectUserByExternalId(external_id)
               .then(rows =>
-                resolve(rows).catch(err =>
-                  reject({ code: 501, msg: "create user failed", err })
-                )
+                resolve(rows).catch(err => reject({ code: 501, msg: "create user failed", err }))
               )
-              .catch(err =>
-                reject({ code: 502, msg: "create user failed", err })
-              )
+              .catch(err => reject({ code: 502, msg: "create user failed", err }))
           )
           .catch(err => reject({ code: 503, msg: "create user failed", err }));
       }
@@ -72,8 +68,7 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
 async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString =
-      "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     console.log(queryString);
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {

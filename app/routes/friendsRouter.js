@@ -1,9 +1,22 @@
 const express = require("express");
 const friendsRouter = express.Router();
-const { getFriendsOfUserById, addFriend, deleteFriend } = require("../actions/friends");
+const {
+  getFriendsOfUserById,
+  addFriend,
+  deleteFriend,
+  searchForFriends
+} = require("../actions/friends");
 
 friendsRouter.get("/:id", async (req, res) => {
   getFriendsOfUserById(req.params.id)
+    .then(response => {
+      res.json(response);
+    })
+    .catch(error => res.send(error));
+});
+
+friendsRouter.get("/search/:new_friends", async (req, res) => {
+  searchForFriends(req.params.new_friends)
     .then(response => {
       res.json(response);
     })
