@@ -4,11 +4,20 @@ const {
   getFriendsOfUserById,
   addFriend,
   deleteFriend,
-  searchForFriends
+  searchForFriends,
+  acceptedFriendship
 } = require("../actions/friends");
 
 friendsRouter.get("/:id", async (req, res) => {
   getFriendsOfUserById(req.params.id)
+    .then(response => {
+      res.json(response);
+    })
+    .catch(error => res.send(error));
+});
+
+friendsRouter.put("/:id1&:id2", async (req, res) => {
+  acceptedFriendship(req.params.id1, req.params.id2)
     .then(response => {
       res.json(response);
     })

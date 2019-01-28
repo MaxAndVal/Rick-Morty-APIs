@@ -15,21 +15,38 @@ async function getFriendsOfUserById(id) {
   });
 }
 async function addFriend(id1, id2) {
-  const queryString = "insert into friends values( ? , ?)";
+  const queryString = "insert into friends values( ? , ?, false)";
   return new Promise((resolve, reject) => {
     connection.query(queryString, [id1, id2], (err, rows, fields) => {
       if (err) {
-        console.log("failed add a friend " + err);
+        console.log("failed to accepte a friend request" + err);
         reject({ status: 500, error: err });
         return;
+      } else {
+        resolve({ code: 200, message: "add a friend request succeded" });
       }
-      resolve({ code: 200, message: "add a friend succeded" });
     });
   });
 }
+
+async function acceptedFriendship(id1, id2) {
+  const queryString =
+    "UPDATE friends set accepted=true WHERE (user_idA=? AND user_idB=?) or (user_idA=? AND user_idB=?)";
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, [id1, id2, id2, id1], (err, rows, fields) => {
+      if (err) {
+        console.log("failed add a friend request" + err);
+        reject({ status: 500, error: err });
+        return;
+      }
+      resolve({ code: 200, message: "add a friend request succeded" });
+    });
+  });
+}
+
 async function deleteFriend(id1, id2) {
   const queryString =
-    "DELETE FROM friends WHERE (user_id1=? AND user_id2=?) or (user_id1=? AND user_id2=?) ";
+    "DELETE FROM friends WHERE (user_idA=? AND user_idB=?) or (user_idA=? AND user_idB=?) ";
   return new Promise((resolve, reject) => {
     connection.query(queryString, [id1, id2, id2, id1], (err, rows, fields) => {
       if (err) {
@@ -58,4 +75,10 @@ async function searchForFriends(user) {
   });
 }
 
-module.exports = { getFriendsOfUserById, addFriend, deleteFriend, searchForFriends };
+module.exports = {
+  acceptedFriendship,
+  getFriendsOfUserById,
+  addFriend,
+  deleteFriend,
+  searchForFriends
+};
