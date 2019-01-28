@@ -53,7 +53,7 @@ async function searchForFriends(user) {
         reject({ status: 500, error: err });
         return;
       }
-      resolve({ code: 200, message: "sucess", results: rows });
+      resolve({ code: 200, message: "sucess", friends: rows });
     });
   });
 }
