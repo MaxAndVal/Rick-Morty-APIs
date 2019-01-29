@@ -1,7 +1,7 @@
 //userRouter for users
 const express = require("express");
 const userRouter = express.Router();
-const { getAllUsers, getUserById, createUser, deleteUserById } = require("../actions/users");
+const { getAllUsers, getUserById, createUser, deleteUserById, setGameDate } = require("../actions/users");
 const { getDeckById } = require("../actions/cards");
 const { updateWallet } = require("../actions/wallet");
 const { getWallet } = require("../actions/wallet")
@@ -46,6 +46,13 @@ userRouter.put("/wallet/:id", async (req, res) => {
 
 userRouter.get("/wallet/:id", async (req, res) => {
   getWallet(req.params.id)
+  .then(response => res.json(response))
+  .catch(err => res.send(err));
+})
+
+userRouter.put("/playGame/:id", async (req, res) => {
+  console.log("date : ", req.params.newDate)
+  setGameDate(req.params.id, req.body.newDate)
   .then(response => res.json(response))
   .catch(err => res.send(err));
 })

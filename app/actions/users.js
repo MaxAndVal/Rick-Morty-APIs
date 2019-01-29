@@ -101,6 +101,24 @@ function getUserById(id) {
   );
 }
 
+function setGameDate(id, newDate) {
+  const queryString = "UPDATE users SET user_last_game = ? WHERE user_id = ?"
+    return new Promise((resolve, reject) => {
+        connection.query(queryString, [newDate, id], (err, result, fields) => {
+            if (err) {
+                console.log("error newDate", err)
+                reject( {code: 507, message: `bad request: ${err}`} )
+            }
+            console.log("fields = ", result.affectedRows)
+            if (result.affectedRows === 1) {
+                resolve( {code: 200, message: "success"} )
+            } else {
+                resolve( {code: 207, message: "user not found"} )
+            }
+        })
+    })
+}
+
 function deleteUserById(user_id) {
   const queryString = "DELETE FROM users WHERE user_id=?";
   return new Promise((resolve, reject) =>
@@ -125,5 +143,6 @@ module.exports = {
   getUserById,
   insertNewUser,
   createUser,
-  deleteUserById
+  deleteUserById, 
+  setGameDate
 };
