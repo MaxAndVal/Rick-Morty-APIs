@@ -51,6 +51,7 @@ userRouter.get("/wallet/:id", async (req, res) => {
 })
 
 userRouter.put("/playGame/:id", async (req, res) => {
+  console.log("date : ", req.params.newDate)
   setGameDate(req.params.id, req.body.newDate)
   .then(response => res.json(response))
   .catch(err => res.send(err));
