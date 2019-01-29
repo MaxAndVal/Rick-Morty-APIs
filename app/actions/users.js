@@ -143,5 +143,6 @@ module.exports = {
   getUserById,
   insertNewUser,
   createUser,
-  deleteUserById
+  deleteUserById, 
+  setGameDate
 };
