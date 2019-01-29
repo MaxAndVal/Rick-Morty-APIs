@@ -101,7 +101,7 @@ function getUserById(id) {
   );
 }
 
-function setGameDate(id) {
+function setGameDate(id, newDate) {
   const queryString = "UPDATE users SET user_last_game = ? WHERE user_id = ?"
     return new Promise((resolve, reject) => {
         connection.query(queryString, [newDate, id], (err, result, fields) => {
