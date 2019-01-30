@@ -96,7 +96,7 @@ function getUserById(id) {
       }
       const user = rows[0];
       delete user.user_password;
-      resolve(user);
+      resolve({ code: 200, message: "success", user: user});
     })
   );
 }
