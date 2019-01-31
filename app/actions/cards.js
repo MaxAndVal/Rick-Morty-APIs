@@ -70,6 +70,7 @@ console.log("id : ", id)
       .then(response => {
         console.log("response = ", response)
         const data = response[0].data
+        console.log("data = ", data)
         resolve({id: data.id,
           name: data.name,
           status: data.status,
