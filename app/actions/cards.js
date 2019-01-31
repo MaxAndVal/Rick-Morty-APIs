@@ -62,7 +62,7 @@ async function checkDeckToOpen(id) {
 }
 
 async function getCardsById(id) {
-
+console.log("id : ", id)
   return new Promise((resolve, reject) => {
     console.log("response = ", response)
     axios
