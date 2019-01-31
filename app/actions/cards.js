@@ -83,8 +83,11 @@ console.log("id : ", id)
         });
       })
       .catch(error => {
-        console.log("erreur", error);
-        reject(error);
+        console.log("erreur", error);        
+        reject({
+          code: 502,
+          message : error.response.data.error
+        });
       });
   });
 }
