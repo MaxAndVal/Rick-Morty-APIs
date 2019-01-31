@@ -64,6 +64,7 @@ async function checkDeckToOpen(id) {
 async function getCardsById(id) {
 
   return new Promise((resolve, reject) => {
+    console.log("response = ", response)
     axios
       .get("https://rickandmortyapi.com/api/character/" + id)
       .then(response => {
