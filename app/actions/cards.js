@@ -62,9 +62,29 @@ async function checkDeckToOpen(id) {
 }
 
 async function getCardsById(id) {
-  return axios.get("https://rickandmortyapi.com/api/character/" + id).catch(error => {
-    error;
+
+  return new Promise((resolve, reject) => {
+    axios
+      .get("https://rickandmortyapi.com/api/character/" + id)
+      .then(response => {
+        resolve({id: response.id,
+          name: response.name,
+          status: response.status,
+          species: response.species,
+          gender: response.gender,
+          origin: response.origin.name,
+          location: response.location,
+          image: response.image });
+      })
+      .catch(error => {
+        console.log("erreur", error);
+        reject(error);
+      });
   });
+
+  /* return axios.get("https://rickandmortyapi.com/api/character/" + id).catch(error => {
+    error;
+  }); */
 }
 
 async function getDeckById(user_id) {
