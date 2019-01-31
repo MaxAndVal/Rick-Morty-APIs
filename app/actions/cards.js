@@ -70,6 +70,8 @@ console.log("id : ", id)
       .then(response => {
         const result = response.data
         resolve({
+          code: 200,
+          message: "success",
           id: result.id,
           name: result.name,
           status: result.status,
