@@ -69,14 +69,15 @@ console.log("id : ", id)
       .get("https://rickandmortyapi.com/api/character/" + id)
       .then(response => {
         console.log("response = ", response)
-        resolve({id: response.id,
-          name: response.name,
-          status: response.status,
-          species: response.species,
-          gender: response.gender,
-          origin: response.origin.name,
-          location: response.location,
-          image: response.image });
+        const data = response.data
+        resolve({id: data.id,
+          name: data.name,
+          status: data.status,
+          species: data.species,
+          gender: data.gender,
+          origin: data.origin.name,
+          location: data.location,
+          image: data.image });
       })
       .catch(error => {
         console.log("erreur", error);
