@@ -68,27 +68,23 @@ console.log("id : ", id)
     axios
       .get("https://rickandmortyapi.com/api/character/" + id)
       .then(response => {
-        console.log("response = ", response)
-        const data = response.data
-        console.log("data = ", data)
-        resolve({id: data.id,
-          name: data.name,
-          status: data.status,
-          species: data.species,
-          gender: data.gender,
-          origin: data.origin.name,
-          location: data.location,
-          image: data.image });
+        const result = response.data
+        resolve({
+          id: result.id,
+          name: result.name,
+          status: result.status,
+          species: result.species,
+          gender: result.gender,
+          origin: result.origin.name,
+          location: result.location.name,
+          image: result.image
+        });
       })
       .catch(error => {
         console.log("erreur", error);
         reject(error);
       });
   });
-
-  /* return axios.get("https://rickandmortyapi.com/api/character/" + id).catch(error => {
-    error;
-  }); */
 }
 
 async function getDeckById(user_id) {
