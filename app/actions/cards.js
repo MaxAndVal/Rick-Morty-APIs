@@ -70,6 +70,8 @@ console.log("id : ", id)
       .then(response => {
         const result = response.data
         resolve({
+          code: 200,
+          message: "success",
           id: result.id,
           name: result.name,
           status: result.status,
@@ -81,8 +83,11 @@ console.log("id : ", id)
         });
       })
       .catch(error => {
-        console.log("erreur", error);
-        reject(error);
+        console.log("erreur", error);        
+        reject({
+          code: 502,
+          message : error.response.data.error
+        });
       });
   });
 }

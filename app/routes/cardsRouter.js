@@ -23,7 +23,7 @@ cardsRoute.get("/:id", (req, res) => {
       const result = response.data;
       res.json(response);
     })
-    .catch(error => res.json([error]));
+    .catch(error => res.json(error));
 });
 
 cardsRoute.get("/all/:page", (req, res) => {
