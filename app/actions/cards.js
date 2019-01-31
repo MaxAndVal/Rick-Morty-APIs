@@ -69,7 +69,7 @@ console.log("id : ", id)
       .get("https://rickandmortyapi.com/api/character/" + id)
       .then(response => {
         console.log("response = ", response)
-        const data = response.data
+        const data = response[0].data
         resolve({id: data.id,
           name: data.name,
           status: data.status,
