@@ -1,10 +1,17 @@
 //userRouter for users
 const express = require("express");
 const userRouter = express.Router();
-const { getAllUsers, getUserById, createUser, deleteUserById, setGameDate } = require("../actions/users");
+const {
+  getAllUsers,
+  getUserById,
+  createUser,
+  deleteUserById,
+  setGameDate
+} = require("../actions/users");
 const { getDeckById } = require("../actions/cards");
 const { updateWallet } = require("../actions/wallet");
-const { getWallet } = require("../actions/wallet")
+const { getWallet } = require("../actions/wallet");
+const friendsRouter = require("./friendsRouter.js");
 
 userRouter.get("/all", async (req, res) => {
   getAllUsers()
@@ -40,21 +47,31 @@ userRouter.post("/", async (req, res) => {
 
 userRouter.put("/wallet/:id", async (req, res) => {
   updateWallet(req.params.id, req.body.newWallet)
-  .then(response => res.json(response))
-  .catch(err => res.send(err));
-})
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
 
 userRouter.get("/wallet/:id", async (req, res) => {
   getWallet(req.params.id)
-  .then(response => res.json(response))
-  .catch(err => res.send(err));
-})
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
 
 userRouter.put("/playGame/:id", async (req, res) => {
-  console.log("date : ", req.params.newDate)
+  console.log("date : ", req.params.newDate);
   setGameDate(req.params.id, req.body.newDate)
-  .then(response => res.json(response))
-  .catch(err => res.send(err));
-})
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
+
+//userRouter.use("/:user/friends", friendsRouter);
+userRouter.use(
+  "/:user/friends",
+  function(req, res, next) {
+    req.user = req.params.user;
+    next();
+  },
+  friendsRouter
+);
 
 module.exports = userRouter;

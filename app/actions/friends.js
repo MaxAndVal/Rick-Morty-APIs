@@ -14,10 +14,10 @@ async function getFriendsOfUserById(id) {
     });
   });
 }
-async function addFriend(id1, id2) {
+async function addFriend(user, id2) {
   const queryString = "insert into friends values( ? , ?, false)";
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [id1, id2], (err, rows, fields) => {
+    connection.query(queryString, [user, id2], (err, rows, fields) => {
       if (err) {
         console.log("failed to accepte a friend request" + err);
         reject({ status: 500, error: err });
@@ -29,11 +29,11 @@ async function addFriend(id1, id2) {
   });
 }
 
-async function acceptedFriendship(id1, id2) {
+async function acceptedFriendship(user, id2) {
   const queryString =
     "UPDATE friends set accepted=true WHERE (user_idA=? AND user_idB=?) or (user_idA=? AND user_idB=?)";
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [id1, id2, id2, id1], (err, rows, fields) => {
+    connection.query(queryString, [user, id2, id2, user], (err, rows, fields) => {
       if (err) {
         console.log("failed add a friend request" + err);
         reject({ status: 500, error: err });
@@ -60,17 +60,17 @@ async function deleteFriend(id1, id2) {
   });
 }
 
-async function searchForFriends(user) {
+async function searchForFriends(user, request) {
   const queryString =
-    "SELECT user_name, user_id FROM users WHERE user_name like (?) OR user_email=? or user_id=?";
+    "SELECT user_name, user_id FROM users WHERE (user_name like (?) OR (user_email=? OR user_id=?)) AND user_id != ?";
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [`%${user}%`, user, user], (err, rows, fields) => {
+    connection.query(queryString, [`%${request}%`, request, request, user], (err, rows, fields) => {
       if (err) {
         console.log("failed to search for friend " + err);
         reject({ status: 500, error: err });
         return;
       }
-      resolve({ code: 200, message: "sucess", friends: rows });
+      resolve({ code: 200, message: "success", friends: rows });
     });
   });
 }

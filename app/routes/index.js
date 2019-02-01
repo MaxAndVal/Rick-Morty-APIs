@@ -13,7 +13,7 @@ app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/cards", cardsRouter);
 app.use("/kaamelott", kaamelottRouter);
-app.use("/friends", friendsRouter);
+//app.use("/user/:id/friends", friendsRouter);
 app.use("*", (req, res) => {
   res.json({ code: 404, error: "route not found" });
 });
