@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 6;
 const { insertNewUser } = require("./users");
 
-function login(user_email, user_password, user_name, external_id) {
+async function login(user_email, user_password, user_name, external_id) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
       selectUserByExternalId(external_id, user_name, user_email)
