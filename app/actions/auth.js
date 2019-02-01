@@ -7,7 +7,7 @@ const { insertNewUser } = require("./users");
 async function login(user_email, user_password, user_name, external_id) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
-      selectUserByExternalId(external_id, user_name, user_email)
+      await selectUserByExternalId(external_id, user_name, user_email)
         .then(rows =>
           resolve({
             code: 200,
@@ -17,7 +17,7 @@ async function login(user_email, user_password, user_name, external_id) {
         )
         .catch(err => reject({ code: 500, message: err }));
     } else {
-      selectUserByEmailPwd(user_email).then(rows => {
+      await selectUserByEmailPwd(user_email).then(rows => {
         console.log("rows :", rows);
         if (rows.length > 0) {
           if (bcrypt.compareSync(user_password, rows[0].user_password)) {
