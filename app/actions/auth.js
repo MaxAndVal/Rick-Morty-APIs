@@ -35,7 +35,8 @@ async function login(user_email, user_password, user_name, external_id) {
         } else {
           reject({ code: 204, message: "Email does not exist" });
         }
-      });
+      })
+      .catch(err => reject({ code: 508, message: "User doesn't exist", err }))
     }
   });
 }
