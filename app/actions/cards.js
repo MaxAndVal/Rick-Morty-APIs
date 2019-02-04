@@ -1,5 +1,6 @@
 const connection = require("../../dbConnexion");
 const axios = require("axios");
+const { getUserById } = require("../actions/users");
 
 async function addCardToDeck(user_id, card) {
   return new Promise((resolve, reject) => {
@@ -171,7 +172,7 @@ async function openTheDeck(user_id) {
   });
 }
 
-async function addDeckToOpen(user_id, deckNumber) {
+async function addDeckToOpen(user_id, deckNumber) { //TODO : add user in return value
   return new Promise(async (resolve, reject) => {
     let queryIncrease = "UPDATE users SET deckToOpen = ? WHERE user_id = ?"
     connection.query(queryIncrease, [deckNumber, user_id], (err, result, fields) => {
@@ -181,7 +182,7 @@ async function addDeckToOpen(user_id, deckNumber) {
     } 
     console.log("fields = ", result.affectedRows)
             if (result.affectedRows === 1) {
-                resolve( {code: 200, message: "success"} )
+                resolve( getUserById(user_id) )
             } else {
                 resolve( {code: 207, message: "user not found"} )
             }
