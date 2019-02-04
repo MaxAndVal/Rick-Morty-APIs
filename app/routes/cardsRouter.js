@@ -8,7 +8,8 @@ const {
   openTheDeck,
   decreaseDeckToOpen,
   addCardToDeck,
-  getCardByName
+  getCardByName,
+  addDeckToOpen
 } = require("../actions/cards");
 
 cardsRoute.get("/search/:name", (req, res) => {
@@ -44,6 +45,12 @@ cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
     .catch(error => {
       res.json([error]);
     });
+});
+
+cardsRoute.post("/addDecks", async (req, res) => {
+  addDeckToOpen(req.body.user_id, req.body.deckNumber)
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
 });
 
 module.exports = cardsRoute;

@@ -171,6 +171,25 @@ async function openTheDeck(user_id) {
   });
 }
 
+async function addDeckToOpen(user_id, deckNumber) {
+  return new Promise(async (resolve, reject) => {
+    let queryIncrease = "UPDATE users SET deckToOpen = ? WHERE user_id = ?"
+    connection.query(queryIncrease, [deckNumber, user_id], (err, result, fields) => {
+      if (err) {
+        console.log("error insert newDeck", err)
+        reject( {code: 510, message: `bad request: ${err}`} )
+    } 
+    console.log("fields = ", result.affectedRows)
+            if (result.affectedRows === 1) {
+                resolve( {code: 200, message: "success"} )
+            } else {
+                resolve( {code: 207, message: "user not found"} )
+            }
+    })
+  })
+}
+
+
 module.exports = {
   decreaseDeckToOpen,
   getCardByName,
@@ -179,5 +198,6 @@ module.exports = {
   getDeckById,
   getCardsById,
   checkDeckToOpen,
-  getCardsByPages
+  getCardsByPages,
+  addDeckToOpen
 };
