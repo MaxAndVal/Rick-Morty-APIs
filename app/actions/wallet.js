@@ -1,5 +1,7 @@
 const connection = require("../../dbConnexion");
 const axios = require("axios");
+const { getUserById } = require("../actions/users");
+  
 
 async function updateWallet(id, newWallet) {
     const queryString = "UPDATE users SET user_wallet = ? WHERE user_id = ?"
@@ -11,7 +13,7 @@ async function updateWallet(id, newWallet) {
             }
             console.log("fields = ", result.affectedRows)
             if (result.affectedRows === 1) {
-                resolve( {code: 200, message: "success"} )
+                resolve( getUserById(id)) 
             } else {
                 resolve( {code: 207, message: "user not found"} )
             }
