@@ -36,7 +36,7 @@ async function login(user_email, user_password, user_name, external_id) {
           reject({ code: 204, message: "Email does not exist" });
         }
       })
-      .catch(err => reject({ code: 508, message: "User doesn't exist", err }))
+      //.catch(err => reject({ code: 508, message: "User doesn't exist", err }))
     }
   });
 }
@@ -67,7 +67,7 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
 }
 // Same function as USERS but this one return PWD for checking
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
-async function selectUserByEmailPwd(user_email) {
+function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     console.log(queryString);
