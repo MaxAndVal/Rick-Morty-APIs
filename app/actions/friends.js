@@ -10,6 +10,10 @@ async function getFriendsOfUserById(id) {
         reject({ status: 500, error: err });
         return;
       }
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].accepted = !!rows[i].accepted
+      }
+      console.log("row value : ", rows[0])
       resolve({ code: 200, message: "get friends succeded", friends: rows });
     });
   });
@@ -31,7 +35,7 @@ async function addFriend(user, id2) {
 
 async function acceptedFriendship(user, id2) {
   const queryString =
-    "UPDATE friends set accepted=true WHERE (user_idA=? AND user_idB=?) or (user_idA=? AND user_idB=?)";
+    "UPDATE friends set accepted = true WHERE (user_idA=? AND user_idB=?) or (user_idA=? AND user_idB=?)";
   return new Promise((resolve, reject) => {
     connection.query(queryString, [user, id2, id2, user], (err, rows, fields) => {
       if (err) {
