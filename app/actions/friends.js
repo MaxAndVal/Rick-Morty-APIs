@@ -2,9 +2,9 @@ const connection = require("../../dbConnexion");
 
 async function getFriendsOfUserById(id) {
   const queryString =
-    "SELECT distinct * FROM friends FR, users US WHERE (FR.user_idA=? OR FR.user_idB=?) AND (US.user_id=FR.user_idA OR US.user_id=FR.user_idB) AND not US.user_id=?";
+    "SELECT distinct * FROM friends FR inner JOIN users US on FR.user_idA=US.user_id or FR.user_idB = US.user_id WHERE ((FR.user_idA=? OR FR.user_idB=?) AND FR.accepted=true) OR ((FR.user_idB=?) AND FR.accepted=false) AND not US.user_id=?";
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [id, id, id], (err, rows, fields) => {
+    connection.query(queryString, [id, id, id, id], (err, rows, fields) => {
       if (err) {
         console.log("Failed query for friends " + err);
         reject({ status: 500, error: err });
