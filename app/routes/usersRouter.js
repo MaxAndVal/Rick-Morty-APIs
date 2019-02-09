@@ -6,12 +6,14 @@ const {
   getUserById,
   createUser,
   deleteUserById,
-  setGameDate
+  setGameDate,
+  getDeckToOpen
 } = require("../actions/users");
 const { getDeckById } = require("../actions/cards");
 const { updateWallet } = require("../actions/wallet");
 const { getWallet } = require("../actions/wallet");
 const friendsRouter = require("./friendsRouter.js");
+const cardsRouter = require("./cardsRouter");
 
 userRouter.get("/all", async (req, res) => {
   getAllUsers()
@@ -64,6 +66,12 @@ userRouter.put("/playGame/:id", async (req, res) => {
     .catch(err => res.send(err));
 });
 
+userRouter.get("/:id/decktoopen", async (req, res) => {
+  getDeckToOpen(req.params.id)
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
+
 //userRouter.use("/:user/friends", friendsRouter);
 userRouter.use(
   "/:user/friends",
@@ -72,6 +80,14 @@ userRouter.use(
     next();
   },
   friendsRouter
+);
+userRouter.use(
+  "/:user/cards",
+  function(req, res, next) {
+    req.user = req.params.user;
+    next();
+  },
+  cardsRouter
 );
 
 module.exports = userRouter;

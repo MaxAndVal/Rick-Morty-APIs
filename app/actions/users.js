@@ -63,6 +63,19 @@ async function selectUserByEmail(user_email) {
     });
   });
 }
+async function getDeckToOpen(user_id) {
+  return new Promise((resolve, reject) => {
+    const queryString = "SELECT deckToOpen FROM users where user_id=?";
+    connection.query(queryString, [user_id], (err, rows, fields) => {
+      if (err) {
+        console.log("failed insert " + err);
+        reject({ code: 502, message: "fail get dect to open", error: err });
+      } else {
+        resolve({ code: 200, message: "user is created", deckToOpen: rows[0].deckToOpen });
+      }
+    });
+  });
+}
 
 function insertNewUser(user_name, user_email, user_password, external_id) {
   return new Promise((resolve, reject) => {
@@ -96,27 +109,27 @@ function getUserById(id) {
       }
       const user = rows[0];
       delete user.user_password;
-      resolve({ code: 200, message: "success", user: user});
+      resolve({ code: 200, message: "success", user: user });
     })
   );
 }
 
 function setGameDate(id, newDate) {
-  const queryString = "UPDATE users SET user_last_game = ? WHERE user_id = ?"
-    return new Promise((resolve, reject) => {
-        connection.query(queryString, [newDate, id], (err, result, fields) => {
-            if (err) {
-                console.log("error newDate", err)
-                reject( {code: 507, message: `bad request: ${err}`} )
-            }
-            console.log("fields = ", result.affectedRows)
-            if (result.affectedRows === 1) {
-                resolve( {code: 200, message: "success"} )
-            } else {
-                resolve( {code: 207, message: "user not found"} )
-            }
-        })
-    })
+  const queryString = "UPDATE users SET user_last_game = ? WHERE user_id = ?";
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, [newDate, id], (err, result, fields) => {
+      if (err) {
+        console.log("error newDate", err);
+        reject({ code: 507, message: `bad request: ${err}` });
+      }
+      console.log("fields = ", result.affectedRows);
+      if (result.affectedRows === 1) {
+        resolve({ code: 200, message: "success" });
+      } else {
+        resolve({ code: 207, message: "user not found" });
+      }
+    });
+  });
 }
 
 function deleteUserById(user_id) {
@@ -139,10 +152,11 @@ function deleteUserById(user_id) {
 
 module.exports = {
   selectUserByEmail,
+  getDeckToOpen,
   getAllUsers,
   getUserById,
   insertNewUser,
   createUser,
-  deleteUserById, 
+  deleteUserById,
   setGameDate
 };
