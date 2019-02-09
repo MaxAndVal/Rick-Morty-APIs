@@ -11,7 +11,6 @@ async function addCardToDeck(user_id, card) {
         return reject(err);
       }
       if (rows.length > 0) {
-        addCardToDeck;
         const amount = rows[0].amount + 1;
         queryString = "UPDATE deck SET amount=? WHERE user_id=? AND card_id=?";
         connection.query(queryString, [amount, user_id, card.id], (err, rows, fiels) => {
@@ -61,11 +60,39 @@ async function checkDeckToOpen(id) {
   });
 }
 
-async function getCardsById(id) {
+async function cardsById(id) {
   return new Promise((resolve, reject) => {
     axios
       .get("https://rickandmortyapi.com/api/character/" + id)
       .then(response => resolve(response))
+      .catch(error => {
+        console.log("erreur", error);
+        reject({
+          code: 502,
+          message: error.response.data.error
+        });
+      });
+  });
+}
+async function getCardsById(id) {
+  return new Promise((resolve, reject) => {
+    axios
+      .get("https://rickandmortyapi.com/api/character/" + id)
+      .then(response => {
+        const result = response.data;
+        resolve({
+          code: 200,
+          message: "success",
+          id: result.id,
+          name: result.name,
+          status: result.status,
+          species: result.species,
+          gender: result.gender,
+          origin: result.origin.name,
+          location: result.location.name,
+          image: result.image
+        });
+      })
       .catch(error => {
         console.log("erreur", error);
         reject({
@@ -143,7 +170,7 @@ async function openTheDeck(user_id) {
     try {
       var newDeck = [];
       for (i = 0; i < 10; i++) {
-        var card = await getCardsById(Math.floor(Math.random() * 493));
+        var card = await cardsById(Math.floor(Math.random() * 493));
         await addCardToDeck(user_id, card.data);
         newDeck.push(card.data);
       }
