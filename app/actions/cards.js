@@ -52,7 +52,6 @@ async function checkDeckToOpen(id) {
         return reject({ code: 400, message: "user not found" });
       }
       var deckToOpen = rows[0].deckToOpen;
-      console.log(deckToOpen);
       if (deckToOpen <= 0) {
         resolve({ code: 205, message: "No deck to open" });
       } else {
@@ -63,31 +62,15 @@ async function checkDeckToOpen(id) {
 }
 
 async function getCardsById(id) {
-console.log("id : ", id)
   return new Promise((resolve, reject) => {
-    
     axios
       .get("https://rickandmortyapi.com/api/character/" + id)
-      .then(response => {
-        const result = response.data
-        resolve({
-          code: 200,
-          message: "success",
-          id: result.id,
-          name: result.name,
-          status: result.status,
-          species: result.species,
-          gender: result.gender,
-          origin: result.origin.name,
-          location: result.location.name,
-          image: result.image
-        });
-      })
+      .then(response => resolve(response))
       .catch(error => {
-        console.log("erreur", error);        
+        console.log("erreur", error);
         reject({
           code: 502,
-          message : error.response.data.error
+          message: error.response.data.error
         });
       });
   });
@@ -172,24 +155,23 @@ async function openTheDeck(user_id) {
   });
 }
 
-async function addDeckToOpen(user_id, deckNumber) { //TODO : add user in return value
+async function addDeckToOpen(user_id, deckNumber) {
+  //TODO : add user in return value
   return new Promise(async (resolve, reject) => {
-    let queryIncrease = "UPDATE users SET deckToOpen = ? WHERE user_id = ?"
+    let queryIncrease = "UPDATE users SET deckToOpen = ? WHERE user_id = ?";
     connection.query(queryIncrease, [deckNumber, user_id], (err, result, fields) => {
       if (err) {
-        console.log("error insert newDeck", err)
-        reject( {code: 510, message: `bad request: ${err}`} )
-    } 
-    console.log("fields = ", result.affectedRows)
-            if (result.affectedRows === 1) {
-                resolve( getUserById(user_id) )
-            } else {
-                resolve( {code: 207, message: "user not found"} )
-            }
-    })
-  })
+        console.log("error insert newDeck", err);
+        reject({ code: 510, message: `bad request: ${err}` });
+      }
+      if (result.affectedRows === 1) {
+        resolve(getUserById(user_id));
+      } else {
+        resolve({ code: 207, message: "user not found" });
+      }
+    });
+  });
 }
-
 
 module.exports = {
   decreaseDeckToOpen,
