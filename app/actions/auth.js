@@ -46,7 +46,7 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
     connection.query(queryString, [external_id], (err, rows, fields) => {
-      if (err) {
+      if (err || !rows) {
         reject(err);
       }
       if (rows.length > 0) {
