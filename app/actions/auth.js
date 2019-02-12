@@ -17,27 +17,28 @@ async function login(user_email, user_password, user_name, external_id) {
         )
         .catch(err => reject({ code: 500, message: err }));
     } else {
-      console.log("MAIL : ", user_email)
-      selectUserByEmailPwd(user_email).then(rows => {
-        console.log("rows :", rows);
-        if (rows.length > 0) {
-          if (bcrypt.compareSync(user_password, rows[0].user_password)) {
-            resolve({
-              code: 200,
-              message: "login sucessfull",
-              user: rows[0]
-            });
+      console.log("MAIL : ", user_email);
+      selectUserByEmailPwd(user_email)
+        .then(rows => {
+          console.log("rows :", rows);
+          if (rows.length > 0) {
+            if (bcrypt.compareSync(user_password, rows[0].user_password)) {
+              resolve({
+                code: 200,
+                message: "login sucessfull",
+                user: rows[0]
+              });
+            } else {
+              reject({
+                code: 204,
+                message: "Email and password does not match, try again, sorry"
+              });
+            }
           } else {
-            reject({
-              code: 204,
-              message: "Email and password does not match, try again, sorry"
-            });
+            reject({ code: 204, message: "Email does not exist" });
           }
-        } else {
-          reject({ code: 204, message: "Email does not exist" });
-        }
-      })
-      .catch(err => reject({ code: 508, message: "User doesn't exist", err }))
+        })
+        .catch(err => reject({ code: 508, message: "User doesn't exist", err }));
     }
   });
 }
@@ -48,7 +49,6 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
       if (err) {
         reject(err);
       }
-      console.log("row : ", rows.length);
       if (rows.length > 0) {
         resolve(rows);
       } else {

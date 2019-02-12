@@ -172,7 +172,7 @@ async function openTheDeck(user_id) {
       for (i = 0; i < 10; i++) {
         var card = await cardsById(Math.floor(Math.random() * 493));
         await addCardToDeck(user_id, card.data);
-        newDeck.push({ card_id: card.data.id });
+        newDeck.push({ card_id: card.data.id, });
       }
       await decreaseDeckToOpen(user_id);
       resolve({ code: 200, message: "deck is opened", deck: newDeck });
