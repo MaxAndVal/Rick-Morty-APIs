@@ -44,7 +44,8 @@ if (process.env.NODE_ENV === "developmentIUT") {
     host: "db4free.net",
     user: "maxandval",
     password: "R0ck&R0llBDD",
-    database: "melkiusetzigoval"
+    database: "melkiusetzigoval",
+    port: 3307
   });
 }
 
