@@ -14,6 +14,7 @@ const { updateWallet } = require("../actions/wallet");
 const { getWallet } = require("../actions/wallet");
 const friendsRouter = require("./friendsRouter.js");
 const cardsRouter = require("./cardsRouter");
+const marketRouter = require("./marketRouter");
 
 userRouter.get("/all", async (req, res) => {
   getAllUsers()
@@ -88,6 +89,15 @@ userRouter.use(
     next();
   },
   cardsRouter
+);
+
+userRouter.use(
+  "/:user/market",
+  function(req, res, next) {
+    req.user = req.params.user;
+    next();
+  },
+  marketRouter
 );
 
 module.exports = userRouter;
