@@ -4,10 +4,10 @@ const bcrypt = require("bcrypt");
 const saltRounds = 6;
 const { insertNewUser } = require("./users");
 
-async function login(user_email, user_password, user_name, external_id) {
+async function login(user_email, user_password, user_name, external_id, user_image) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
-      selectUserByExternalId(external_id, user_name, user_email)
+      selectUserByExternalId(external_id, user_name, user_email, user_image)
         .then(rows =>
           resolve({
             code: 200,
@@ -42,7 +42,7 @@ async function login(user_email, user_password, user_name, external_id) {
     }
   });
 }
-async function selectUserByExternalId(external_id, user_name, user_email) {
+async function selectUserByExternalId(external_id, user_name, user_email, user_image) {
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
     connection.query(queryString, [external_id], (err, rows, fields) => {
@@ -53,7 +53,7 @@ async function selectUserByExternalId(external_id, user_name, user_email) {
         resolve(rows);
       } else {
         var hash = bcrypt.hashSync(external_id, saltRounds);
-        insertNewUser(user_name, user_email, hash, external_id)
+        insertNewUser(user_name, user_email, hash, external_id, user_image)
           .then(() =>
             selectUserByExternalId(external_id)
               .then(rows =>
