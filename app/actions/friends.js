@@ -10,6 +10,7 @@ async function getFriendsOfUserById(id) {
         reject({ status: 500, error: err });
         return;
       }
+      // parsing int into bool
       for (var i = 0; i < rows.length; i++) {
         rows[i].accepted = !!rows[i].accepted;
       }

@@ -41,10 +41,10 @@ if (process.env.NODE_ENV === "developmentIUT") {
 } else {
   connection = mysql.createConnection({
     connectionLimit: 10,
-    host: "db4free.net",
-    user: "maxandval",
-    password: "R0ck&R0llBDD",
-    database: "melkiusetzigoval",
+    host: prodHost,
+    user: prodUser,
+    password: prodPassword,
+    database: prodDatabase,
     port: 3307
   });
 }
