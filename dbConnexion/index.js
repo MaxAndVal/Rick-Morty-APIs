@@ -44,8 +44,7 @@ if (process.env.NODE_ENV === "developmentIUT") {
     host: prodHost,
     user: prodUser,
     password: prodPassword,
-    database: prodDatabase,
-    port: 3307
+    database: prodDatabase
   });
 }
 
