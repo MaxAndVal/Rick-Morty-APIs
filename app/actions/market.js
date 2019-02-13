@@ -9,7 +9,7 @@ async function getMarketOfUser(user_id) {
         console.log("Failed  " + err);
         return reject(err);
       }
-      resolve({ code: 200, message: "getMarketById is succefull", market: rows });
+      resolve({ code: 200, message: "getMarketById is succefull", deck: rows });
     });
   });
 }
