@@ -77,14 +77,14 @@ async function getDeckToOpen(user_id) {
   });
 }
 
-function insertNewUser(user_name, user_email, user_password, external_id) {
+function insertNewUser(user_name, user_email, user_password, external_id, user_image) {
   return new Promise((resolve, reject) => {
     const queryString =
-      "INSERT INTO users (user_name, user_email, user_password, deckToOpen, external_id) VALUES (?,?,?,1,?)";
+      "INSERT INTO users (user_name, user_email, user_password, deckToOpen, external_id, user_image) VALUES (?,?,?,1,?,?)";
     console.log(queryString);
     connection.query(
       queryString,
-      [user_name, user_email, user_password, external_id],
+      [user_name, user_email, user_password, external_id, user_image],
       (err, result, fields) => {
         if (err) {
           console.log("failed insert " + err);

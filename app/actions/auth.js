@@ -43,6 +43,7 @@ async function login(user_email, user_password, user_name, external_id, user_ima
   });
 }
 async function selectUserByExternalId(external_id, user_name, user_email, user_image) {
+  console.log("userImage in SelectByExt : ", user_image)
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
     connection.query(queryString, [external_id], (err, rows, fields) => {
