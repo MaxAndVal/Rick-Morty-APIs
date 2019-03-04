@@ -48,15 +48,14 @@ cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
     });
 });
 
-cardsRoute.get("/randomSelectionFor/:amount"),
-  async (req, res) => {
-    const amount = req.params.amount;
-    selectCardsForDeck(amonut)
-      .then(response => res.json(response))
-      .catch(error => {
-        res.json(error);
-      });
-  };
+cardsRoute.get("/randomSelectionFor/:amount", async (req, res) => {
+  const amount = req.params.amount;
+  selectCardsForDeck(amount)
+    .then(response => res.json(response))
+    .catch(error => {
+      res.json(error);
+    });
+});
 
 cardsRoute.post("/addDecks", async (req, res) => {
   addDeckToOpen(req.body.user_id, req.body.deckNumber)

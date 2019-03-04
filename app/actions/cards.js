@@ -216,6 +216,7 @@ async function selectCardsForDeck(amount) {
   return new Promise(async (resolve, reject) => {
     try {
       var newDeck = [];
+      console.log("là");
       for (i = 0; i < amount; i++) {
         var card = await cardsById(Math.floor(Math.random() * 493));
         newDeck.push({ card_id: card.data.id });
