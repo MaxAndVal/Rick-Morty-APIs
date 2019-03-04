@@ -13,13 +13,17 @@ async function addCardToDeck(user_id, card) {
       if (rows.length > 0) {
         const amount = rows[0].amount + 1;
         queryString = "UPDATE deck SET amount=? WHERE user_id=? AND card_id=?";
-        connection.query(queryString, [amount, user_id, card.id], (err, rows, fiels) => {
-          if (err) {
-            console.log("Failed if  " + err);
-            reject(err);
+        connection.query(
+          queryString,
+          [amount, user_id, card.id],
+          (err, rows, fiels) => {
+            if (err) {
+              console.log("Failed if  " + err);
+              reject(err);
+            }
+            resolve("ok");
           }
-          resolve("ok");
-        });
+        );
       } else {
         queryString =
           "INSERT INTO deck (user_id, card_id, card_name,card_image, amount) VALUES(?,?,?,?,1)";
@@ -127,12 +131,16 @@ async function decreaseDeckToOpen(id) {
       if (deckToOpen > 0) {
         deckToOpen = deckToOpen - 1;
         queryDecrease = "UPDATE users SET deckToOpen=? WHERE user_id=?";
-        connection.query(queryDecrease, [deckToOpen, id], (err, rows, fields) => {
-          if (err) {
-            console.log("Failed  " + err);
-            return reject(err);
+        connection.query(
+          queryDecrease,
+          [deckToOpen, id],
+          (err, rows, fields) => {
+            if (err) {
+              console.log("Failed  " + err);
+              return reject(err);
+            }
           }
-        });
+        );
         resolve("ok");
       } else {
         reject({ code: 300, message: "No deck to open" });
@@ -172,7 +180,7 @@ async function openTheDeck(user_id) {
       for (i = 0; i < 10; i++) {
         var card = await cardsById(Math.floor(Math.random() * 493));
         await addCardToDeck(user_id, card.data);
-        newDeck.push({ card_id: card.data.id, });
+        newDeck.push({ card_id: card.data.id });
       }
       await decreaseDeckToOpen(user_id);
       resolve({ code: 200, message: "deck is opened", deck: newDeck });
@@ -186,17 +194,36 @@ async function addDeckToOpen(user_id, deckNumber) {
   //TODO : add user in return value
   return new Promise(async (resolve, reject) => {
     let queryIncrease = "UPDATE users SET deckToOpen = ? WHERE user_id = ?";
-    connection.query(queryIncrease, [deckNumber, user_id], (err, result, fields) => {
-      if (err) {
-        console.log("error insert newDeck", err);
-        reject({ code: 510, message: `bad request: ${err}` });
+    connection.query(
+      queryIncrease,
+      [deckNumber, user_id],
+      (err, result, fields) => {
+        if (err) {
+          console.log("error insert newDeck", err);
+          reject({ code: 510, message: `bad request: ${err}` });
+        }
+        if (result.affectedRows === 1) {
+          resolve(getUserById(user_id));
+        } else {
+          resolve({ code: 207, message: "user not found" });
+        }
       }
-      if (result.affectedRows === 1) {
-        resolve(getUserById(user_id));
-      } else {
-        resolve({ code: 207, message: "user not found" });
+    );
+  });
+}
+
+async function selectCardsForDeck(amount) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      var newDeck = [];
+      for (i = 0; i < amount; i++) {
+        var card = await cardsById(Math.floor(Math.random() * 493));
+        newDeck.push({ card_id: card.data.id });
       }
-    });
+      resolve({ code: 200, message: "selection is ok", deck: newDeck });
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 
@@ -209,5 +236,6 @@ module.exports = {
   getCardsById,
   checkDeckToOpen,
   getCardsByPages,
-  addDeckToOpen
+  addDeckToOpen,
+  selectCardsForDeck
 };
