@@ -219,7 +219,11 @@ async function selectCardsForDeck(amount) {
       console.log("là");
       for (i = 0; i < amount; i++) {
         var card = await cardsById(Math.floor(Math.random() * 493));
-        newDeck.push({ card_id: card.data.id });
+        newDeck.push({
+          card_id: card.data.id,
+          card_name: card.data.name,
+          card_image: card.data.image
+        });
       }
       resolve({ code: 200, message: "selection is ok", deck: newDeck });
     } catch (e) {
