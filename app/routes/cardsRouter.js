@@ -9,7 +9,8 @@ const {
   decreaseDeckToOpen,
   addCardToDeck,
   getCardByName,
-  addDeckToOpen
+  addDeckToOpen,
+  selectCardsForDeck
 } = require("../actions/cards");
 
 cardsRoute.get("/search/:name", (req, res) => {
@@ -44,6 +45,15 @@ cardsRoute.get("/randomDeckGenerator/:id", async (req, res) => {
     .then(response => res.json(response))
     .catch(error => {
       res.json([error]);
+    });
+});
+
+cardsRoute.get("/randomSelectionFor/:amount", async (req, res) => {
+  const amount = req.params.amount;
+  selectCardsForDeck(amount)
+    .then(response => res.json(response))
+    .catch(error => {
+      res.json(error);
     });
 });
 
