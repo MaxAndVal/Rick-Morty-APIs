@@ -5,15 +5,18 @@ const { getUserById } = require("../actions/users");
 async function addCardToDeck(user_id, card) {
   return new Promise((resolve, reject) => {
     querySelect = "SELECT amount FROM deck WHERE user_id=? AND card_id=?";
-    connection.query(querySelect, [user_id, card.id], (err, rows, fields) => {
+    connection.query(querySelect, [user_id, card], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
         return reject(err);
       }
+      console.log("rows[0].amount",rows[0].amount)
       if (rows.length > 0) {
         const amount = rows[0].amount + 1;
+        console.log("amount: ", amount)
+        console.log(user_id, card)
         queryString = "UPDATE deck SET amount=? WHERE user_id=? AND card_id=?";
-        connection.query(queryString, [amount, user_id, card.id], (err, rows, fiels) => {
+        connection.query(queryString, [amount, user_id, card], (err, rows, fiels) => {
           if (err) {
             console.log("Failed if  " + err);
             reject(err);
@@ -105,7 +108,7 @@ async function getCardsById(id) {
 
 async function getDeckById(user_id) {
   return new Promise((resolve, reject) => {
-    query = "SELECT * FROM deck WHERE user_id=?";
+    query = "SELECT * FROM deck WHERE user_id=? AND amount>0";
     connection.query(query, [user_id], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
