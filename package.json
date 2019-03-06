@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "0.18.0",
-    "bcrypt": "^3.0.3",
+    "bcrypt": "^3.0.4",
     "body-parser": "1.18.3",
     "express": "4.16.4",
     "lodash": "^4.17.11",
