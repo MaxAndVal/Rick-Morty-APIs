@@ -5,16 +5,14 @@ const { getUserById } = require("../actions/users");
 async function addCardToDeck(user_id, card) {
   return new Promise((resolve, reject) => {
     querySelect = "SELECT amount FROM deck WHERE user_id=? AND card_id=?";
+    console.log("user_id, card", user_id, card);
     connection.query(querySelect, [user_id, card], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
         return reject(err);
       }
-      console.log("rows[0].amount", rows[0].amount);
       if (rows.length > 0) {
         const amount = rows[0].amount + 1;
-        console.log("amount: ", amount);
-        console.log(user_id, card);
         queryString = "UPDATE deck SET amount=? WHERE user_id=? AND card_id=?";
         connection.query(
           queryString,
@@ -182,6 +180,7 @@ async function openTheDeck(user_id) {
       var newDeck = [];
       for (i = 0; i < 10; i++) {
         var card = await cardsById(Math.floor(Math.random() * 493));
+        console.log("card id ", card.data);
         await addCardToDeck(user_id, card.data.id);
         newDeck.push({ card_id: card.data.id });
       }
