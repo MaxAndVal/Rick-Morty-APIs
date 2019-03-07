@@ -18,7 +18,7 @@ async function addCardToDeck(user_id, card) {
         queryString = "UPDATE deck SET amount=? WHERE user_id=? AND card_id=?";
         connection.query(
           queryString,
-          [amount, user_id, card.id],
+          [amount, user_id, card],
           (err, rows, fiels) => {
             if (err) {
               console.log("Failed if  " + err);
