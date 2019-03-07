@@ -32,7 +32,7 @@ async function addCardToDeck(user_id, card) {
           "INSERT INTO deck (user_id, card_id, card_name,card_image, amount) VALUES(?,?,?,?,1)";
         connection.query(
           queryString,
-          [user_id, card.id, card.name, card.image],
+          [user_id, card, card.name, card.image],
           (err, rows, fiels) => {
             if (err) {
               console.log("Failed else " + err);
