@@ -40,7 +40,7 @@ const buyCard = async (user_id, friend_id, card_id, price) => {
         reject(err);
       }
       let queryAmountU2 =
-        "SELECT amount FROM deck WHERE card_id=? AND user_id=?";
+        "SELECT amount, card_name FROM deck WHERE card_id=? AND user_id=?";
       connection.query(
         queryAmountU2,
         [card_id, friend_id],
@@ -71,7 +71,8 @@ const buyCard = async (user_id, friend_id, card_id, price) => {
                   });
                   reject(err);
                 }
-                addCardToDeck(user_id, card_id).then(res => {
+                const card_name = rows[0].card_name;
+                addCardToDeck(user_id, card_id, card_name).then(res => {
                   const result = res;
                   if (result != "ok") {
                     connection.rollback(function() {

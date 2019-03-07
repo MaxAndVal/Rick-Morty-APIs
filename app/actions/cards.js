@@ -2,11 +2,11 @@ const connection = require("../../dbConnexion");
 const axios = require("axios");
 const { getUserById } = require("../actions/users");
 
-async function addCardToDeck(user_id, card) {
+async function addCardToDeck(user_id, card_id, card_name) {
   return new Promise((resolve, reject) => {
     querySelect = "SELECT amount FROM deck WHERE user_id=? AND card_id=?";
-    console.log("user_id, card", user_id, card);
-    connection.query(querySelect, [user_id, card], (err, rows, fields) => {
+    console.log("user_id, card", user_id, card_id);
+    connection.query(querySelect, [user_id, card_id], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
         return reject(err);
@@ -16,7 +16,7 @@ async function addCardToDeck(user_id, card) {
         queryString = "UPDATE deck SET amount=? WHERE user_id=? AND card_id=?";
         connection.query(
           queryString,
-          [amount, user_id, card],
+          [amount, user_id, card_id],
           (err, rows, fiels) => {
             if (err) {
               console.log("Failed if  " + err);
@@ -26,11 +26,12 @@ async function addCardToDeck(user_id, card) {
           }
         );
       } else {
+        const card_image = `https://rickandmortyapi.com/api/character/avatar/${card_id}.jpeg`;
         queryString =
           "INSERT INTO deck (user_id, card_id, card_name,card_image, amount) VALUES(?,?,?,?,1)";
         connection.query(
           queryString,
-          [user_id, card, card.name, card.image],
+          [user_id, card_id, card_name, card_image],
           (err, rows, fiels) => {
             if (err) {
               console.log("Failed else " + err);
@@ -181,7 +182,7 @@ async function openTheDeck(user_id) {
       for (i = 0; i < 10; i++) {
         var card = await cardsById(Math.floor(Math.random() * 493));
         console.log("card id ", card.data);
-        await addCardToDeck(user_id, card.data.id);
+        await addCardToDeck(user_id, card.data.id, card.data.name);
         newDeck.push({ card_id: card.data.id });
       }
       await decreaseDeckToOpen(user_id);
