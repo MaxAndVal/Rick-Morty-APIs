@@ -35,16 +35,24 @@ async function createUser(user_name, user_email, user_password) {
                     code: 200,
                     message: "user is created",
                     user: rows[0]
-                  }).catch(err => reject({ code: 501, msg: "create user failed", err }))
+                  }).catch(err =>
+                    reject({ code: 501, msg: "create user failed", err })
+                  )
                 )
-                .catch(err => reject({ code: 502, msg: "create user failed", err }))
+                .catch(err =>
+                  reject({ code: 502, msg: "create user failed", err })
+                )
             )
-            .catch(err => reject({ code: 503, msg: "create user failed", err }));
+            .catch(err =>
+              reject({ code: 503, msg: "create user failed", err })
+            );
         } else {
           reject({ code: 204, message: "Email is already used" });
         }
       })
-      .catch(err => reject({ code: 501, msg: "create user failed before insert", err }));
+      .catch(err =>
+        reject({ code: 501, msg: "create user failed before insert", err })
+      );
   });
 }
 
@@ -71,13 +79,23 @@ async function getDeckToOpen(user_id) {
         console.log("failed insert " + err);
         reject({ code: 502, message: "fail get dect to open", error: err });
       } else {
-        resolve({ code: 200, message: "user is created", deckToOpen: rows[0].deckToOpen });
+        resolve({
+          code: 200,
+          message: "user is created",
+          deckToOpen: rows[0].deckToOpen
+        });
       }
     });
   });
 }
 
-function insertNewUser(user_name, user_email, user_password, external_id, user_image) {
+function insertNewUser(
+  user_name,
+  user_email,
+  user_password,
+  external_id,
+  user_image
+) {
   return new Promise((resolve, reject) => {
     const queryString =
       "INSERT INTO users (user_name, user_email, user_password, deckToOpen, external_id, user_image) VALUES (?,?,?,1,?,?)";
@@ -132,12 +150,32 @@ function setGameDate(id, newDate) {
   });
 }
 
+function setMemoryDate(id, newDate) {
+  const queryString = "UPDATE users SET user_last_memory = ? WHERE user_id = ?";
+  return new Promise((resolve, reject) => {
+    connection.query(queryString, [newDate, id], (err, result, fields) => {
+      if (err) {
+        console.log("error newDate", err);
+        reject({ code: 507, message: `bad request: ${err}` });
+      }
+      console.log("fields = ", result.affectedRows);
+      if (result.affectedRows === 1) {
+        resolve({ code: 200, message: "success" });
+      } else {
+        resolve({ code: 207, message: "user not found" });
+      }
+    });
+  });
+}
+
 function deleteUserById(user_id) {
   const queryString = "DELETE FROM users WHERE user_id=?";
   return new Promise((resolve, reject) =>
     connection.query(queryString, [user_id], (err, rows, fields) => {
       if (err) {
-        console.log("failed to delete user with id " + user_id + "error : " + err);
+        console.log(
+          "failed to delete user with id " + user_id + "error : " + err
+        );
         reject({ code: 500, failed: err });
       } else {
         if (rows.affectedRows == 0) {
@@ -158,5 +196,6 @@ module.exports = {
   insertNewUser,
   createUser,
   deleteUserById,
-  setGameDate
+  setGameDate,
+  setMemoryDate
 };
