@@ -7,7 +7,8 @@ const {
   createUser,
   deleteUserById,
   setGameDate,
-  getDeckToOpen
+  getDeckToOpen,
+  setMemoryDate
 } = require("../actions/users");
 const { getDeckById } = require("../actions/cards");
 const { updateWallet } = require("../actions/wallet");
@@ -63,6 +64,13 @@ userRouter.get("/wallet/:id", async (req, res) => {
 userRouter.put("/playGame/:id", async (req, res) => {
   console.log("date : ", req.params.newDate);
   setGameDate(req.params.id, req.body.newDate)
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
+
+userRouter.put("/playMemory/:id", async (req, res) => {
+  console.log("memory date : ", req.params.newDate);
+  setMemoryDate(req.params.id, req.body.newDate)
     .then(response => res.json(response))
     .catch(err => res.send(err));
 });
