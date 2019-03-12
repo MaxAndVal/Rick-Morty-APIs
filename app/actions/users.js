@@ -3,6 +3,7 @@ const omit = require("object.omit");
 const CodeHTTP = require("../constants/CodeHTTP");
 const bcrypt = require("bcrypt");
 const saltRounds = 6;
+const { welcomeMail } = require("../utils/mailUtils.js");
 
 async function getAllUsers() {
   const queryString = "SELECT * FROM users";
@@ -95,6 +96,7 @@ function insertNewUser(user_name, user_email, user_password, external_id, user_i
           reject({ code: 502, message: "fail insert", error: err });
           return;
         } else {
+          welcomeMail(user_email, user_name);
           resolve({ code: 200, message: "user is created" });
         }
       }

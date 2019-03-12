@@ -1,10 +1,8 @@
 const connection = require("../../dbConnexion");
-const { omit } = require("lodash");
 const bcrypt = require("bcrypt");
 const saltRounds = 6;
 const { insertNewUser } = require("./users");
-
-var nodemailer = require("nodemailer");
+const { lostPasswordMail } = require("../utils/mailUtils");
 
 async function login(user_email, user_password, user_name, external_id, user_image) {
   return new Promise(async (resolve, reject) => {
@@ -83,14 +81,6 @@ async function selectUserByEmailPwd(user_email) {
   });
 }
 
-var transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "rickandmorty.tcg@gmail.com",
-    pass: "maxandval"
-  }
-});
-
 async function lostPassword(user_email) {
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
@@ -98,28 +88,14 @@ async function lostPassword(user_email) {
       if (err) {
         reject(err);
       }
-      console.log(rows);
-      if (rows.length > 0) {
-        console.log("in if ", user_email);
-        var mailOptions = {
-          from: "rickandmorty.tcg@gmail.com",
-          to: user_email,
-          subject: "Sending Email using Node.js",
-          text: "Yes ! it's from node.js"
-        };
-
-        transporter.sendMail(mailOptions, function(error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("Email sent: " + info.response);
-          }
-        });
+      if (rows && rows.length > 0) {
+        lostPasswordMail(user_email);
       }
       resolve({ code: 200, message: "email sent" });
     });
   });
 }
+
 module.exports = {
   login,
   lostPassword
