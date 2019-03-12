@@ -44,7 +44,7 @@ const welcomeMail = (user_email, user_name) => {
     from: "rickandmorty.tcg@gmail.com",
     to: user_email,
     subject: "l'Equipe de Rick And Morty vous souhaite la bienvenue !",
-    html: setWelcomeEmail(user_email)
+    html: setWelcomeEmail(user_name)
   };
   transporter.sendMail(mailOptions, function(error, info) {
     if (error) {
