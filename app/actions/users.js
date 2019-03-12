@@ -35,31 +35,23 @@ async function createUser(user_name, user_email, user_password) {
                     code: 200,
                     message: "user is created",
                     user: rows[0]
-                  }).catch(err =>
-                    reject({ code: 501, msg: "create user failed", err })
-                  )
+                  }).catch(err => reject({ code: 501, msg: "create user failed", err }))
                 )
-                .catch(err =>
-                  reject({ code: 502, msg: "create user failed", err })
-                )
+                .catch(err => reject({ code: 502, msg: "create user failed", err }))
             )
-            .catch(err =>
-              reject({ code: 503, msg: "create user failed", err })
-            );
+            .catch(err => reject({ code: 503, msg: "create user failed", err }));
         } else {
           reject({ code: 204, message: "Email is already used" });
         }
       })
-      .catch(err =>
-        reject({ code: 501, msg: "create user failed before insert", err })
-      );
+      .catch(err => reject({ code: 501, msg: "create user failed before insert", err }));
   });
 }
 
 async function selectUserByEmail(user_email) {
   return new Promise((resolve, reject) => {
     console.log("user email : ", user_email);
-    const queryString = "SELECT * FROM users WHERE user_email=?";
+    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     connection.query(queryString, [user_email], (err, rows, fiels) => {
       if (err) {
         console.log("error in selectUserByEmail :", err);
@@ -89,13 +81,7 @@ async function getDeckToOpen(user_id) {
   });
 }
 
-function insertNewUser(
-  user_name,
-  user_email,
-  user_password,
-  external_id,
-  user_image
-) {
+function insertNewUser(user_name, user_email, user_password, external_id, user_image) {
   return new Promise((resolve, reject) => {
     const queryString =
       "INSERT INTO users (user_name, user_email, user_password, deckToOpen, external_id, user_image) VALUES (?,?,?,1,?,?)";
@@ -173,9 +159,7 @@ function deleteUserById(user_id) {
   return new Promise((resolve, reject) =>
     connection.query(queryString, [user_id], (err, rows, fields) => {
       if (err) {
-        console.log(
-          "failed to delete user with id " + user_id + "error : " + err
-        );
+        console.log("failed to delete user with id " + user_id + "error : " + err);
         reject({ code: 500, failed: err });
       } else {
         if (rows.affectedRows == 0) {

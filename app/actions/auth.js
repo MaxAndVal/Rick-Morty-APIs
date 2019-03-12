@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const saltRounds = 6;
 const { insertNewUser } = require("./users");
 
+var nodemailer = require("nodemailer");
+
 async function login(user_email, user_password, user_name, external_id, user_image) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
@@ -43,7 +45,7 @@ async function login(user_email, user_password, user_name, external_id, user_ima
   });
 }
 async function selectUserByExternalId(external_id, user_name, user_email, user_image) {
-  console.log("userImage in SelectByExt : ", user_image)
+  console.log("userImage in SelectByExt : ", user_image);
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
     connection.query(queryString, [external_id], (err, rows, fields) => {
@@ -72,7 +74,6 @@ async function selectUserByExternalId(external_id, user_name, user_email, user_i
 async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
-    console.log(queryString);
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -81,6 +82,45 @@ async function selectUserByEmailPwd(user_email) {
     });
   });
 }
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "rickandmorty.tcg@gmail.com",
+    pass: "maxandval"
+  }
+});
+
+async function lostPassword(user_email) {
+  return new Promise((resolve, reject) => {
+    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    connection.query(queryString, [user_email], (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      console.log(rows);
+      if (rows.length > 0) {
+        console.log("in if ", user_email);
+        var mailOptions = {
+          from: "rickandmorty.tcg@gmail.com",
+          to: user_email,
+          subject: "Sending Email using Node.js",
+          text: "Yes ! it's from node.js"
+        };
+
+        transporter.sendMail(mailOptions, function(error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+        });
+      }
+      resolve({ code: 200, message: "email sent" });
+    });
+  });
+}
 module.exports = {
-  login
+  login,
+  lostPassword
 };
