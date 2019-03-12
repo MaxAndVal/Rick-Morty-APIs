@@ -193,6 +193,20 @@ async function openTheDeck(user_id) {
   });
 }
 
+async function addRewardsToUser(listOfCards, user_id) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      for (i = 0; i < listOfCards.length; i++) {
+        const card = listOfCards[i];
+        await addCardToDeck(user_id, card.card_id, card.card_name);
+      }
+      resolve({ code: 200, message: "rewards added !" });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 async function addDeckToOpen(user_id, deckNumber) {
   //TODO : add user in return value
   return new Promise(async (resolve, reject) => {
@@ -245,5 +259,6 @@ module.exports = {
   checkDeckToOpen,
   getCardsByPages,
   addDeckToOpen,
-  selectCardsForDeck
+  selectCardsForDeck,
+  addRewardsToUser
 };

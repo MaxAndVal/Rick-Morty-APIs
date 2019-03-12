@@ -10,7 +10,8 @@ const {
   addCardToDeck,
   getCardByName,
   addDeckToOpen,
-  selectCardsForDeck
+  selectCardsForDeck,
+  addRewardsToUser
 } = require("../actions/cards");
 
 cardsRoute.get("/search/:name", (req, res) => {
@@ -59,6 +60,12 @@ cardsRoute.get("/randomSelectionFor/:amount", async (req, res) => {
 
 cardsRoute.post("/addDecks", async (req, res) => {
   addDeckToOpen(req.body.user_id, req.body.deckNumber)
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
+
+cardsRoute.post("/addRewards", async (req, res) => {
+  addRewardsToUser(req.body.listOfCards, req.body.user_id)
     .then(response => res.json(response))
     .catch(err => res.send(err));
 });
