@@ -2,19 +2,23 @@ const nodemailer = require("nodemailer");
 const { randomCode } = require("./codeUtil");
 const setEmailPassword = require("../../mailing/setEmailPassword");
 const setWelcomeEmail = require("../../mailing/setEmailWelcome");
-const { EMAIL_CONFIG } = require("../../dbConnexion/config");
 const isHeroku = process.env.NODE_ENV === "production";
-
+var eUser = "";
+var ePass = "";
 if (isHeroku) {
-  prodEmailUser = process.env.prodEmailUser;
-  prodEmailPass = process.env.prodEmailPass;
+  eUser = process.env.prodEmailUser;
+  ePass = process.env.prodEmailPass;
+} else {
+  const { EMAIL_CONFIG } = require("../../dbConnexion/config");
+  eUser = EMAIL_CONFIG.user;
+  ePass = EMAIL_CONFIG.pass;
 }
 
 var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: isHeroku ? prodEmailUser : EMAIL_CONFIG.user,
-    pass: isHeroku ? prodEmailPass : EMAIL_CONFIG.pass
+    user: eUser,
+    pass: ePass
   }
 });
 
