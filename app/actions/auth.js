@@ -138,11 +138,16 @@ async function changePassword(user_id, user_email, user_old_password, user_new_p
               user: rows[0]
             });
           });
+        } else {
+          reject({
+            code: 204,
+            message: "Password is incorrect, try again, sorry"
+          });
         }
       } else {
         reject({
           code: 204,
-          message: "Password is incorrect, try again, sorry"
+          message: ", try again, sorry"
         });
       }
     });
