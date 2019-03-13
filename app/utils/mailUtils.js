@@ -1,5 +1,4 @@
 const nodemailer = require("nodemailer");
-const { randomCode } = require("./codeUtil");
 const setEmailPassword = require("../../mailing/setEmailPassword");
 const setWelcomeEmail = require("../../mailing/setEmailWelcome");
 const isHeroku = process.env.NODE_ENV === "production";
@@ -22,8 +21,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 
-const lostPasswordMail = user_email => {
-  const code = randomCode();
+const lostPasswordMail = (user_email, code) => {
   var mailOptions = {
     from: "rickandmorty.tcg@gmail.com",
     to: user_email,
