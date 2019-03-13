@@ -10,6 +10,8 @@ const {
   getDeckToOpen,
   setMemoryDate
 } = require("../actions/users");
+const { changePassword } = require("../actions/auth");
+
 const { getDeckById } = require("../actions/cards");
 const { updateWallet } = require("../actions/wallet");
 const { getWallet } = require("../actions/wallet");
@@ -107,5 +109,15 @@ userRouter.use(
   },
   marketRouter
 );
+userRouter.put("/:id/password", async (req, res) => {
+  changePassword(
+    req.params.id,
+    req.body.user_email,
+    req.body.user_old_password,
+    req.body.user_new_password
+  )
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
 
 module.exports = userRouter;
