@@ -72,23 +72,19 @@ async function selectUserByExternalId(external_id, user_name, user_email, user_i
 // Same function as USERS but this one return PWD for checking
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
 async function selectUserByEmailPwd(user_email) {
-  console.log("user_mail ", user_email);
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         reject(err);
       }
-      console.log("rows : ", rows);
       resolve(rows);
     });
   });
 }
 async function addCodeInDB(user_id, code) {
   return new Promise((resolve, reject) => {
-    console.log("addCodeInDB");
     const date = moment().format("YYYY-MM-DD");
-    console.log("date :", date);
     const queryString = `INSERT INTO lost_password (user_id, code_password, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE code_password = ?, date = ?`;
     connection.query(queryString, [user_id, code, date, code, date], (err, rows, fields) => {
       if (err) {
@@ -154,12 +150,35 @@ async function changePassword(user_id, user_email, user_old_password, user_new_p
   });
 }
 
-async function resetPassword(user_email, user_ord_password, user_new_password) {
-  return new Promise((resolve, reject) => {});
-}
+const loginWithCode = async user_code => {
+  const query = `select * from users INNER JOIN lost_password ON users.user_id = lost_password.user_id where code_password=?`;
+  return new Promise((resolve, reject) => {
+    connection.query(query, [user_code], (err, rows, field) => {
+      if (err) {
+        console.log(err);
+        reject({ code: 500, message: err.errorno });
+      }
+      if (rows && rows[0]) {
+        user = rows[0];
+        delete user.user_password;
+        delete user.code_password;
+        const actualDate = moment().format("YYYY-MM-DD");
+        if (moment(actualDate).diff(user.date, "days") === 0) {
+          delete user.date;
+          resolve({ code: 200, message: "Success", user: user });
+        } else {
+          resolve({ code: 205, message: "Code is expired" });
+        }
+      } else {
+        resolve({ code: 204, message: "Code incorrect" });
+      }
+    });
+  });
+};
 
 module.exports = {
   login,
   changePassword,
-  lostPassword
+  lostPassword,
+  loginWithCode
 };

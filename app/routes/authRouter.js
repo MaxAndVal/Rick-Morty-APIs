@@ -1,7 +1,7 @@
 //userRouter for users
 const express = require("express");
 const authRouter = express.Router();
-const { login, lostPassword } = require("../actions/auth");
+const { login, lostPassword, loginWithCode } = require("../actions/auth");
 
 authRouter.post("/login", async (req, res) => {
   login(
@@ -17,6 +17,12 @@ authRouter.post("/login", async (req, res) => {
 
 authRouter.post("/lostpassword", async (req, res) => {
   lostPassword(req.body.user_email)
+    .then(response => res.json(response))
+    .catch(err => res.send(err));
+});
+
+authRouter.post("/loginwithcode", async (req, res) => {
+  loginWithCode(req.body.user_code)
     .then(response => res.json(response))
     .catch(err => res.send(err));
 });
