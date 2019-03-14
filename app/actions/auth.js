@@ -169,6 +169,12 @@ const loginWithCode = async user_code => {
         } else {
           resolve({ code: 205, message: "Code is expired" });
         }
+        const queryDel = "DELETE from lost_password where code=?";
+        connection.query(queryDel, [user_code], (err, rows, field) => {
+          if (err) {
+            console.log(err);
+          }
+        });
       } else {
         resolve({ code: 204, message: "Code incorrect" });
       }
