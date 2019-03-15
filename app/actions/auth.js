@@ -116,6 +116,7 @@ async function selectUserByExternalId(
           }
         );
         user = rows[0];
+        console.log("User = " + user);
         user["session_token"] = token;
         resolve(user);
       } else {
