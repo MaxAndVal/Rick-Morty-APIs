@@ -14,6 +14,7 @@ async function login(
   user_image,
   token
 ) {
+  console.log("login : token = " + token);
   return new Promise(async (resolve, reject) => {
     if (external_id) {
       selectUserByExternalId(external_id, user_name, user_email, user_image)
@@ -26,6 +27,7 @@ async function login(
         )
         .catch(err => reject({ code: 500, message: err }));
     } else if (token) {
+      console.log("login2 : token = " + token);
       selectUserBySessionToken(token)
         .then(rows => {
           if (rows.length > 0) {
@@ -76,6 +78,7 @@ async function login(
 }
 
 async function selectUserBySessionToken(token) {
+  console.log("selectUserBySessionToken : token = " + token);
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users WHERE session_token=?";
     connection.query(queryString, [token], (err, rows, fields) => {
@@ -101,6 +104,7 @@ async function selectUserByExternalId(
       }
       if (rows.length > 0) {
         const token = randomCode(30);
+        console.log("random : token = " + token);
         const queryToken = "UPDATE users set session_token = ? WHERE user_id=?";
         connection.query(
           queryToken,
