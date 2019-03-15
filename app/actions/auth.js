@@ -100,7 +100,7 @@ async function selectUserByExternalId(
         reject(err || "unknown error");
       }
       if (rows.length > 0) {
-        const token = randonCode(30);
+        const token = randomCode(30);
         const queryToken = "UPDATE users set session_token = ? WHERE user_id=?";
         connection.query(
           queryToken,
