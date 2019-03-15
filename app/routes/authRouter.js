@@ -9,7 +9,8 @@ authRouter.post("/login", async (req, res) => {
     req.body.user_password,
     req.body.user_name,
     req.body.external_id,
-    req.body.user_image
+    req.body.user_image,
+    token
   )
     .then(response => res.json(response))
     .catch(err => res.send(err));

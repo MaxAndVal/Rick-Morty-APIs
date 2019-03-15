@@ -11,7 +11,8 @@ async function login(
   user_password,
   user_name,
   external_id,
-  user_image
+  user_image,
+  token
 ) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
@@ -20,15 +21,36 @@ async function login(
           resolve({
             code: 200,
             message: "login successfull external",
-            user: rows[0]
+            user: rows
           })
         )
         .catch(err => reject({ code: 500, message: err }));
+    } else if (token) {
+      selectUserBySessionToken(token)
+        .then(rows => {
+          if (rows.length > 0) {
+            resolve({
+              code: 200,
+              message: "login by token successfull",
+              user: rows[0]
+            });
+          } else {
+            reject({
+              code: 204,
+              message: "Token expired"
+            });
+          }
+        })
+        .catch(err =>
+          reject({
+            code: 500,
+            message: err
+          })
+        );
     } else {
       console.log("MAIL : ", user_email);
       selectUserByEmailPwd(user_email)
         .then(rows => {
-          console.log("rows :", rows);
           if (rows.length > 0) {
             if (bcrypt.compareSync(user_password, rows[0].user_password)) {
               resolve({
@@ -52,13 +74,25 @@ async function login(
     }
   });
 }
+
+async function selectUserBySessionToken(token) {
+  return new Promise((resolve, reject) => {
+    const queryString = "SELECT * FROM users WHERE session_token=?";
+    connection.query(queryString, [token], (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(rows);
+    });
+  });
+}
+
 async function selectUserByExternalId(
   external_id,
   user_name,
   user_email,
   user_image
 ) {
-  console.log("userImage in SelectByExt : ", user_image);
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
     connection.query(queryString, [external_id], (err, rows, fields) => {
@@ -66,6 +100,19 @@ async function selectUserByExternalId(
         reject(err || "unknown error");
       }
       if (rows.length > 0) {
+        const token = randonCode(30);
+        const queryToken = "UPDATE users set session_token = ? WHERE user_id=?";
+        connection.query(
+          queryToken,
+          [token, rows[0].user_id],
+          (err, rows, fields) => {
+            if (err) {
+              console.log("err ", err);
+            }
+          }
+        );
+        users = rows[0];
+        users["session_token"] = token;
         resolve(rows);
       } else {
         var hash = bcrypt.hashSync(external_id, saltRounds);
