@@ -115,9 +115,9 @@ async function selectUserByExternalId(
             }
           }
         );
-        users = rows[0];
-        users["session_token"] = token;
-        resolve(rows);
+        user = rows[0];
+        user["session_token"] = token;
+        resolve(user);
       } else {
         var hash = bcrypt.hashSync(external_id, saltRounds);
         insertNewUser(user_name, user_email, hash, external_id, user_image)
