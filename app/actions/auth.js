@@ -12,7 +12,7 @@ async function login(
   user_name,
   external_id,
   user_image,
-  token
+  session_token
 ) {
   console.log("login : token = " + token);
   return new Promise(async (resolve, reject) => {
@@ -26,9 +26,9 @@ async function login(
           })
         )
         .catch(err => reject({ code: 500, message: err }));
-    } else if (token) {
-      console.log("login2 : token = " + token);
-      selectUserBySessionToken(token)
+    } else if (session_token) {
+      console.log("login2 : token = " + session_token);
+      selectUserBySessionToken(session_token)
         .then(rows => {
           if (rows.length > 0) {
             resolve({
