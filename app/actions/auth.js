@@ -14,7 +14,6 @@ async function login(
   user_image,
   session_token
 ) {
-  console.log("login : token = " + token);
   return new Promise(async (resolve, reject) => {
     if (external_id) {
       selectUserByExternalId(external_id, user_name, user_email, user_image)
@@ -115,7 +114,7 @@ async function selectUserByExternalId(
             }
           }
         );
-        user = rows[0];
+        const user = rows[0];
         console.log("User = " + user);
         user["session_token"] = token;
         resolve(user);
