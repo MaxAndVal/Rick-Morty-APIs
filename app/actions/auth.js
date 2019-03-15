@@ -6,7 +6,13 @@ const { lostPasswordMail } = require("../utils/mailUtils");
 const { randomCode } = require("../utils/codeUtil");
 const moment = require("moment");
 
-async function login(user_email, user_password, user_name, external_id, user_image) {
+async function login(
+  user_email,
+  user_password,
+  user_name,
+  external_id,
+  user_image
+) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
       selectUserByExternalId(external_id, user_name, user_email, user_image)
@@ -40,11 +46,18 @@ async function login(user_email, user_password, user_name, external_id, user_ima
             reject({ code: 204, message: "Email does not exist" });
           }
         })
-        .catch(err => reject({ code: 508, message: "User doesn't exist", err }));
+        .catch(err =>
+          reject({ code: 508, message: "User doesn't exist", err })
+        );
     }
   });
 }
-async function selectUserByExternalId(external_id, user_name, user_email, user_image) {
+async function selectUserByExternalId(
+  external_id,
+  user_name,
+  user_email,
+  user_image
+) {
   console.log("userImage in SelectByExt : ", user_image);
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
@@ -60,9 +73,13 @@ async function selectUserByExternalId(external_id, user_name, user_email, user_i
           .then(() =>
             selectUserByExternalId(external_id)
               .then(rows =>
-                resolve(rows).catch(err => reject({ code: 501, msg: "create user failed", err }))
+                resolve(rows).catch(err =>
+                  reject({ code: 501, msg: "create user failed", err })
+                )
               )
-              .catch(err => reject({ code: 502, msg: "create user failed", err }))
+              .catch(err =>
+                reject({ code: 502, msg: "create user failed", err })
+              )
           )
           .catch(err => reject({ code: 503, msg: "create user failed", err }));
       }
@@ -73,7 +90,8 @@ async function selectUserByExternalId(external_id, user_name, user_email, user_i
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
 async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    const queryString =
+      "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -86,20 +104,25 @@ async function addCodeInDB(user_id, code) {
   return new Promise((resolve, reject) => {
     const date = moment().format("YYYY-MM-DD");
     const queryString = `INSERT INTO lost_password (user_id, code_password, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE code_password = ?, date = ?`;
-    connection.query(queryString, [user_id, code, date, code, date], (err, rows, fields) => {
-      if (err) {
-        console.log("error : ", err);
-        reject(err);
+    connection.query(
+      queryString,
+      [user_id, code, date, code, date],
+      (err, rows, fields) => {
+        if (err) {
+          console.log("error : ", err);
+          reject(err);
+        }
+        resolve("Ok");
       }
-      resolve("Ok");
-    });
+    );
   });
 }
 
 async function lostPassword(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
-    const code = randomCode();
+    const queryString =
+      "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    const code = randomCode(5);
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         console.log("err ", err);
@@ -115,7 +138,12 @@ async function lostPassword(user_email) {
   });
 }
 
-async function changePassword(user_id, user_email, user_old_password, user_new_password) {
+async function changePassword(
+  user_id,
+  user_email,
+  user_old_password,
+  user_new_password
+) {
   return new Promise((resolve, reject) => {
     selectUserByEmailPwd(user_email).then(rows => {
       if (rows.length > 0) {
