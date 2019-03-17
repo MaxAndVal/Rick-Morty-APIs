@@ -259,11 +259,11 @@ async function selectUserBySessionToken(token) {
         if (moment(actualDate).diff(user.date, "days") <= 15) {
           console.log("if");
           delete user.date;
-          resolve(user);
+          resolve([user]);
         } else {
           console.log("else");
           user.session_token = "expired";
-          resolve(user);
+          resolve([user]);
           const queryStringDelete =
             "DELETE from session_tokens where user_id=?";
           connection.query(
