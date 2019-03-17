@@ -54,10 +54,27 @@ async function login(
         .then(rows => {
           if (rows.length > 0) {
             if (bcrypt.compareSync(user_password, rows[0].user_password)) {
+              const token = randomCode(30);
+              const date = moment().format("YYYY-MM-DD");
+              console.log("random : token = " + token);
+              const queryToken =
+                "INSERT INTO session_tokens (user_id, session_token, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE session_token = ?, date = ?";
+              connection.query(
+                queryToken,
+                [rows[0].user_id, token, date],
+                (err, rows, fields) => {
+                  if (err) {
+                    console.log("err ", err);
+                  }
+                }
+              );
+              const user = rows[0];
+              console.log("User = " + user);
+              user["session_token"] = token;
               resolve({
                 code: 200,
                 message: "login sucessfull",
-                user: rows[0]
+                user: user
               });
             } else {
               reject({
@@ -76,19 +93,6 @@ async function login(
   });
 }
 
-async function selectUserBySessionToken(token) {
-  console.log("selectUserBySessionToken : token = " + token);
-  return new Promise((resolve, reject) => {
-    const queryString = "SELECT * FROM users WHERE session_token=?";
-    connection.query(queryString, [token], (err, rows, fields) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(rows);
-    });
-  });
-}
-
 async function selectUserByExternalId(
   external_id,
   user_name,
@@ -103,11 +107,13 @@ async function selectUserByExternalId(
       }
       if (rows.length > 0) {
         const token = randomCode(30);
+        const date = moment().format("YYYY-MM-DD");
         console.log("random : token = " + token);
-        const queryToken = "UPDATE users set session_token = ? WHERE user_id=?";
+        const queryToken =
+          "INSERT INTO session_tokens (user_id, session_token, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE session_token = ?, date = ?";
         connection.query(
           queryToken,
-          [token, rows[0].user_id],
+          [rows[0].user_id, token, date],
           (err, rows, fields) => {
             if (err) {
               console.log("err ", err);
@@ -151,6 +157,7 @@ async function selectUserByEmailPwd(user_email) {
     });
   });
 }
+
 async function addCodeInDB(user_id, code) {
   return new Promise((resolve, reject) => {
     const date = moment().format("YYYY-MM-DD");
@@ -224,6 +231,41 @@ async function changePassword(
           code: 204,
           message: ", try again, sorry"
         });
+      }
+    });
+  });
+}
+
+async function selectUserBySessionToken(token) {
+  console.log("selectUserBySessionToken : token = " + token);
+  return new Promise((resolve, reject) => {
+    const queryString =
+      "SELECT * FROM users INNER JOIN session_tokens ON session_token=?";
+    connection.query(queryString, [token], (err, rows, fields) => {
+      if (err) {
+        reject(err);
+      }
+      if (rows && rows[0]) {
+        user = rows[0];
+        delete user.user_password;
+        const actualDate = moment().format("YYY_MM_DD");
+        if (moment(actualDate).diff(user.date, "days") <= 15) {
+          delete user.date;
+          resolve({
+            code: 200,
+            message: "Token connection Success",
+            user: user
+          });
+        } else {
+          user.session_token = "expired";
+          resolve({ code: 204, message: "Token expired", user: user });
+          queryString = "DELETE from session_tokens where user_id=?";
+          connection.query(queryString, [user.user_id], (err, rows, fields) => {
+            if (err) {
+              console.log("token not deleted : " + err);
+            }
+          });
+        }
       }
     });
   });
