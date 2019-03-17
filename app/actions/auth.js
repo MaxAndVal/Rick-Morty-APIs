@@ -246,7 +246,7 @@ async function selectUserBySessionToken(token) {
         reject(err);
       }
       if (rows && rows[0]) {
-        console.log("user => " + rows[0]);
+        console.log("user => " + rows[0].user_name);
         user = rows[0];
         delete user.user_password;
         const actualDate = moment().format("YYYY-MM-DD");
