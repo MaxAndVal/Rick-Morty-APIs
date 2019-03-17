@@ -247,14 +247,15 @@ async function selectUserBySessionToken(token) {
       }
       if (rows && rows[0]) {
         console.log("user => " + rows[0].user_id);
-        console.log("user => " + rows[0].user_name);
-        console.log("user => " + rows[0].user_email);
-        console.log("user => " + rows[0]);
+        console.log("name => " + rows[0].user_name);
+        console.log("email => " + rows[0].user_email);
+        console.log("token => " + rows[0].session_token);
         user = rows[0];
         delete user.user_password;
         const actualDate = moment().format("YYYY-MM-DD");
         console.log("Actual date => " + actualDate);
-        if (moment(actualDate).diff(user.date, "days") <= 15) {
+        if (moment(actualDate).diff(user.date, "days") === 0) {
+          console.log("if");
           delete user.date;
           resolve({
             code: 200,
@@ -262,6 +263,7 @@ async function selectUserBySessionToken(token) {
             user: user
           });
         } else {
+          console.log("else");
           user.session_token = "expired";
           resolve({ code: 204, message: "Token expired", user: user });
           const queryStringDelete =
