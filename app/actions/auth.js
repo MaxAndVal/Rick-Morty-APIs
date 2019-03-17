@@ -240,13 +240,16 @@ async function selectUserBySessionToken(token) {
   console.log("selectUserBySessionToken : token = " + token);
   return new Promise((resolve, reject) => {
     const queryString =
-      "SELECT * FROM users INNER JOIN session_tokens ON session_token=?";
+      "SELECT * FROM users INNER JOIN session_tokens ON session_tokens.user_id = users.user_id WHERE session_token=?";
     connection.query(queryString, [token], (err, rows, fields) => {
       if (err) {
         reject(err);
       }
       if (rows && rows[0]) {
+        console.log("user => " + rows[0].user_id);
         console.log("user => " + rows[0].user_name);
+        console.log("user => " + rows[0].user_email);
+        console.log("user => " + rows[0]);
         user = rows[0];
         delete user.user_password;
         const actualDate = moment().format("YYYY-MM-DD");
