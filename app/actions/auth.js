@@ -29,6 +29,8 @@ async function login(
       console.log("login2 : token = " + session_token);
       selectUserBySessionToken(session_token)
         .then(rows => {
+          console.log("row => " + rows);
+          console.log("row[0] => " + rows[0]);
           if (rows.length > 0) {
             resolve({
               code: 200,
@@ -261,7 +263,7 @@ async function selectUserBySessionToken(token) {
         } else {
           console.log("else");
           user.session_token = "expired";
-          resolve({ code: 204, message: "Token expired", user: user });
+          resolve(user);
           const queryStringDelete =
             "DELETE from session_tokens where user_id=?";
           connection.query(
