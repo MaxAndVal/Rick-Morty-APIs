@@ -63,7 +63,7 @@ async function login(
                 "INSERT INTO session_tokens (user_id, session_token, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE session_token = ?, date = ?";
               connection.query(
                 queryToken,
-                [rows[0].user_id, token, date],
+                [rows[0].user_id, token, date, token, date],
                 (err, rows, fields) => {
                   if (err) {
                     console.log("err ", err);
