@@ -270,6 +270,11 @@ async function selectUserBySessionToken(token) {
             }
           });
         }
+      } else {
+        reject({
+          code: 204,
+          message: "user not found"
+        });
       }
     });
   });
