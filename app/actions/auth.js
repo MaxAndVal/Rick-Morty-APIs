@@ -254,14 +254,10 @@ async function selectUserBySessionToken(token) {
         delete user.user_password;
         const actualDate = moment().format("YYYY-MM-DD");
         console.log("Actual date => " + actualDate);
-        if (moment(actualDate).diff(user.date, "days") === 0) {
+        if (moment(actualDate).diff(user.date, "days") <= 15) {
           console.log("if");
           delete user.date;
-          resolve({
-            code: 200,
-            message: "Token connection Success",
-            user: user
-          });
+          resolve(user);
         } else {
           console.log("else");
           user.session_token = "expired";
