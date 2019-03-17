@@ -253,6 +253,7 @@ async function selectUserBySessionToken(token) {
         user = rows[0];
         delete user.user_password;
         const actualDate = moment().format("YYYY-MM-DD");
+        console.log("Actual date => " + actualDate);
         if (moment(actualDate).diff(user.date, "days") <= 15) {
           delete user.date;
           resolve({
