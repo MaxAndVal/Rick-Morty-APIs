@@ -7,7 +7,7 @@ homeRouter.get("/", (req, res) => {
 });
 
 const awakeDB = () => {
-  const query = "SELECT user_name FROM USERS where user_id=-1";
+  const query = "SELECT user_name FROM users WHERE user_id=-1";
   connection.query(query, (err, rows, fields) => {
     if (err) {
       console.log(err);
