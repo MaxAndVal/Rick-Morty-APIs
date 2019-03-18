@@ -14,7 +14,6 @@ async function getFriendsOfUserById(id) {
       for (var i = 0; i < rows.length; i++) {
         rows[i].accepted = !!rows[i].accepted;
       }
-      console.log("row value : ", rows[0]);
       users = rows;
       users.map(user => delete user.user_password);
       resolve({ code: 200, message: "get friends succeded", friends: users });
