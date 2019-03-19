@@ -110,7 +110,7 @@ function getUserById(id) {
     connection.query(queryString, [id], (err, rows, fiels) => {
       if (err) {
         console.log("Failed  " + err);
-        reject({ code: 500, message: err });
+        reject({ code: 500, message: err.errorno });
         return;
       }
       const user = rows[0];
@@ -162,7 +162,7 @@ function deleteUserById(user_id) {
     connection.query(queryString, [user_id], (err, rows, fields) => {
       if (err) {
         console.log("failed to delete user with id " + user_id + "error : " + err);
-        reject({ code: 500, failed: err });
+        reject({ code: 500, message: err.errorno });
       } else {
         if (rows.affectedRows == 0) {
           resolve({ code: 250, message: "user not found" });

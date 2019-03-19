@@ -10,7 +10,7 @@ getAllFaq = async () => {
     connection.query(queryString, (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
-        return reject({ code: 500, message: err });
+        return reject({ code: 500, message: err.errorno });
       }
       resolve({ code: 200, message: "success faq", faq: rows });
     });

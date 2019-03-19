@@ -37,7 +37,7 @@ async function login(user_email, user_password, user_name, external_id, user_ima
         .catch(err =>
           reject({
             code: 500,
-            message: err
+            message: err.errorno
           })
         );
     } else {
@@ -140,7 +140,7 @@ async function addCodeInDB(user_id, code) {
     connection.query(queryString, [user_id, code, date, code, date], (err, rows, fields) => {
       if (err) {
         console.log("error : ", err);
-        reject(err);
+        reject(err.errorno);
       }
       resolve("Ok");
     });
@@ -154,7 +154,7 @@ async function lostPassword(user_email) {
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         console.log("err ", err);
-        reject({ code: 500, message: err });
+        reject({ code: 500, message: err.errorno });
       }
       if (rows && rows.length > 0) {
         addCodeInDB(rows[0].user_id, code)
@@ -177,7 +177,7 @@ async function changePassword(user_id, user_email, user_old_password, user_new_p
           connection.query(query, [hash, user_email], (err, rows, fields) => {
             if (err) {
               console.log("err ", err);
-              reject(err);
+              reject({ code: 500, message: err.errorno });
             }
             resolve({
               code: 200,

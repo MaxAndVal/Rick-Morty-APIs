@@ -8,7 +8,7 @@ async function getMarketOfUser(user_id) {
     connection.query(query, [user_id], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
-        return reject(err);
+        return reject({ code: 500, message: err.errorno });
       }
       resolve({ code: 200, message: "getMarketById is succefull", deck: rows });
     });
@@ -26,7 +26,7 @@ const addCardtoMarket = async (user_id, card_id, card_name, price) => {
       (err, rows, fiels) => {
         if (err) {
           console.log("Failed else " + err);
-          reject(err);
+          reject({ code: 500, message: err.errorno });
         }
         resolve({ code: 200, message: "add card succeded" });
       }
@@ -37,19 +37,19 @@ const buyCard = async (user_id, friend_id, card_id, price) => {
   return new Promise(async (resolve, reject) => {
     connection.beginTransaction(function(err) {
       if (err) {
-        reject(err);
+        reject({ code: 500, message: err.errorno });
       }
       let queryAmountU2 = "SELECT amount, card_name FROM deck WHERE card_id=? AND user_id=?";
       connection.query(queryAmountU2, [card_id, friend_id], (err, rows, fields) => {
         if (err) {
           connection.rollback(function() {
-            reject(err);
+            reject({ code: 500, message: err.errorno });
           });
-          reject(err);
+          reject({ code: 500, message: err.errorno });
         }
         if (rows === undefined) {
           connection.rollback(function() {
-            reject(err);
+            reject({ code: 500, message: err.errorno });
           });
           return reject("undifined");
         }
@@ -64,17 +64,17 @@ const buyCard = async (user_id, friend_id, card_id, price) => {
             (err, rows, fields) => {
               if (err) {
                 connection.rollback(function() {
-                  reject(err);
+                  reject({ code: 500, message: err.errorno });
                 });
-                reject(err);
+                reject({ code: 500, message: err.errorno });
               }
               addCardToDeck(user_id, card_id, card_name).then(res => {
                 const result = res;
                 if (result != "ok") {
                   connection.rollback(function() {
-                    reject(err);
+                    reject({ code: 500, message: err.errorno });
                   });
-                  reject(err);
+                  reject({ code: 500, message: err.errorno });
                 }
               });
               connection.query(
@@ -83,9 +83,9 @@ const buyCard = async (user_id, friend_id, card_id, price) => {
                 (err, rows, fields) => {
                   if (err) {
                     connection.rollback(function() {
-                      reject(err);
+                      reject({ code: 500, message: err.errorno });
                     });
-                    reject(err);
+                    reject({ code: 500, message: err.errorno });
                   }
                 }
               );
@@ -95,9 +95,9 @@ const buyCard = async (user_id, friend_id, card_id, price) => {
                 (err, rows, fields) => {
                   if (err) {
                     connection.rollback(function() {
-                      reject(err);
+                      reject({ code: 500, message: err.errorno });
                     });
-                    reject(err);
+                    reject({ code: 500, message: err.errorno });
                   }
                 }
               );
@@ -107,9 +107,9 @@ const buyCard = async (user_id, friend_id, card_id, price) => {
                 (err, rows, fields) => {
                   if (err) {
                     connection.rollback(function() {
-                      reject(err);
+                      reject({ code: 500, message: err.errorno });
                     });
-                    reject(err);
+                    reject({ code: 500, message: err.errorno });
                   }
                 }
               );

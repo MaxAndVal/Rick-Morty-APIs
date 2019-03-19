@@ -16,7 +16,7 @@ async function addCardToDeck(user_id, card_id, card_name) {
         connection.query(queryString, [amount, user_id, card_id], (err, rows, fiels) => {
           if (err) {
             console.log("Failed if  " + err);
-            reject(err);
+            reject(err.errorno);
           }
           resolve("ok");
         });
@@ -46,7 +46,7 @@ async function checkDeckToOpen(id) {
     connection.query(querySelect, [id], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
-        return reject(err);
+        return reject({ code: 500, message: err.errorno });
       }
       if (rows.length < 1) {
         return reject({ code: 400, message: "user not found" });
@@ -110,7 +110,7 @@ async function getDeckById(user_id) {
     connection.query(query, [user_id], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
-        return reject(err);
+        return reject({ code: 500, message: err.errorno });
       }
       resolve({ code: 200, message: "getDeck is succefull", deck: rows });
     });
@@ -122,7 +122,7 @@ async function decreaseDeckToOpen(id) {
     connection.query(querySelect, [id], (err, rows, fields) => {
       if (err) {
         console.log("Failed  " + err);
-        return reject(err);
+        return reject({ code: 500, message: err.errorno });
       }
       var deckToOpen = rows[0].deckToOpen;
       if (deckToOpen > 0) {
@@ -131,7 +131,7 @@ async function decreaseDeckToOpen(id) {
         connection.query(queryDecrease, [deckToOpen, id], (err, rows, fields) => {
           if (err) {
             console.log("Failed  " + err);
-            return reject(err);
+            return reject({ code: 500, message: err.errorno });
           }
         });
         resolve("ok");
