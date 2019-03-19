@@ -6,14 +6,7 @@ const { lostPasswordMail } = require("../utils/mailUtils");
 const { randomCode } = require("../utils/codeUtil");
 const moment = require("moment");
 
-async function login(
-  user_email,
-  user_password,
-  user_name,
-  external_id,
-  user_image,
-  session_token
-) {
+async function login(user_email, user_password, user_name, external_id, user_image, session_token) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
       selectUserByExternalId(external_id, user_name, user_email, user_image)
@@ -26,11 +19,8 @@ async function login(
         )
         .catch(err => reject({ code: 500, message: err }));
     } else if (session_token) {
-      console.log("login2 : token = " + session_token);
       selectUserBySessionToken(session_token)
         .then(rows => {
-          console.log("row => " + rows);
-          console.log("row[0] => " + rows[0]);
           if (rows.length > 0) {
             resolve({
               code: 200,
@@ -51,14 +41,12 @@ async function login(
           })
         );
     } else {
-      console.log("MAIL : ", user_email);
       selectUserByEmailPwd(user_email)
         .then(rows => {
           if (rows.length > 0) {
             if (bcrypt.compareSync(user_password, rows[0].user_password)) {
               const token = randomCode(30);
               const date = moment().format("YYYY-MM-DD");
-              console.log("random : token = " + token);
               const queryToken =
                 "INSERT INTO session_tokens (user_id, session_token, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE session_token = ?, date = ?";
               connection.query(
@@ -71,7 +59,6 @@ async function login(
                 }
               );
               const user = rows[0];
-              console.log("User = " + user);
               user["session_token"] = token;
               resolve({
                 code: 200,
@@ -88,19 +75,12 @@ async function login(
             reject({ code: 204, message: "Email does not exist" });
           }
         })
-        .catch(err =>
-          reject({ code: 508, message: "User doesn't exist", err })
-        );
+        .catch(err => reject({ code: 508, message: "User doesn't exist", err }));
     }
   });
 }
 
-async function selectUserByExternalId(
-  external_id,
-  user_name,
-  user_email,
-  user_image
-) {
+async function selectUserByExternalId(external_id, user_name, user_email, user_image) {
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
     connection.query(queryString, [external_id], (err, rows, fields) => {
@@ -110,7 +90,6 @@ async function selectUserByExternalId(
       if (rows.length > 0) {
         const token = randomCode(30);
         const date = moment().format("YYYY-MM-DD");
-        console.log("random : token = " + token);
         const queryToken =
           "INSERT INTO session_tokens (user_id, session_token, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE session_token = ?, date = ?";
         connection.query(
@@ -123,7 +102,6 @@ async function selectUserByExternalId(
           }
         );
         const user = rows[0];
-        console.log("User = " + user);
         user["session_token"] = token;
         resolve(user);
       } else {
@@ -132,13 +110,9 @@ async function selectUserByExternalId(
           .then(() =>
             selectUserByExternalId(external_id)
               .then(rows =>
-                resolve(rows).catch(err =>
-                  reject({ code: 501, msg: "create user failed", err })
-                )
+                resolve(rows).catch(err => reject({ code: 501, msg: "create user failed", err }))
               )
-              .catch(err =>
-                reject({ code: 502, msg: "create user failed", err })
-              )
+              .catch(err => reject({ code: 502, msg: "create user failed", err }))
           )
           .catch(err => reject({ code: 503, msg: "create user failed", err }));
       }
@@ -149,8 +123,7 @@ async function selectUserByExternalId(
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
 async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString =
-      "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -164,29 +137,24 @@ async function addCodeInDB(user_id, code) {
   return new Promise((resolve, reject) => {
     const date = moment().format("YYYY-MM-DD");
     const queryString = `INSERT INTO lost_password (user_id, code_password, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE code_password = ?, date = ?`;
-    connection.query(
-      queryString,
-      [user_id, code, date, code, date],
-      (err, rows, fields) => {
-        if (err) {
-          console.log("error : ", err);
-          reject(err);
-        }
-        resolve("Ok");
+    connection.query(queryString, [user_id, code, date, code, date], (err, rows, fields) => {
+      if (err) {
+        console.log("error : ", err);
+        reject(err);
       }
-    );
+      resolve("Ok");
+    });
   });
 }
 
 async function lostPassword(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString =
-      "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     const code = randomCode(5);
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         console.log("err ", err);
-        reject(err);
+        reject({ code: 500, message: err });
       }
       if (rows && rows.length > 0) {
         addCodeInDB(rows[0].user_id, code)
@@ -198,12 +166,7 @@ async function lostPassword(user_email) {
   });
 }
 
-async function changePassword(
-  user_id,
-  user_email,
-  user_old_password,
-  user_new_password
-) {
+async function changePassword(user_id, user_email, user_old_password, user_new_password) {
   return new Promise((resolve, reject) => {
     selectUserByEmailPwd(user_email).then(rows => {
       if (rows.length > 0) {
@@ -239,7 +202,6 @@ async function changePassword(
 }
 
 async function selectUserBySessionToken(token) {
-  console.log("selectUserBySessionToken : token = " + token);
   return new Promise((resolve, reject) => {
     const queryString =
       "SELECT * FROM users INNER JOIN session_tokens ON session_tokens.user_id = users.user_id WHERE session_token=?";
@@ -248,33 +210,21 @@ async function selectUserBySessionToken(token) {
         reject(err);
       }
       if (rows && rows[0]) {
-        console.log("user => " + rows[0].user_id);
-        console.log("name => " + rows[0].user_name);
-        console.log("email => " + rows[0].user_email);
-        console.log("token => " + rows[0].session_token);
         user = rows[0];
         delete user.user_password;
         const actualDate = moment().format("YYYY-MM-DD");
-        console.log("Actual date => " + actualDate);
         if (moment(actualDate).diff(user.date, "days") <= 15) {
-          console.log("if");
           delete user.date;
           resolve([user]);
         } else {
-          console.log("else");
           user.session_token = "expired";
           resolve([user]);
-          const queryStringDelete =
-            "DELETE from session_tokens where user_id=?";
-          connection.query(
-            queryStringDelete,
-            [user.user_id],
-            (err, rows, fields) => {
-              if (err) {
-                console.log("token not deleted : " + err);
-              }
+          const queryStringDelete = "DELETE from session_tokens where user_id=?";
+          connection.query(queryStringDelete, [user.user_id], (err, rows, fields) => {
+            if (err) {
+              console.log("token not deleted : " + err);
             }
-          );
+          });
         }
       } else {
         reject("user not found");

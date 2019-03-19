@@ -60,7 +60,6 @@ async function deleteFriend(id1, id2) {
         reject({ status: 500, error: err });
         return;
       }
-      console.log(queryString);
       resolve({ code: 200, message: "friends is delete" });
     });
   });

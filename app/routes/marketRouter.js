@@ -1,6 +1,6 @@
 const express = require("express");
 const marketRouter = express.Router();
-const { getMarketOfUser, addCardtoMarket, changePrice,buyCard } = require("../actions/market");
+const { getMarketOfUser, addCardtoMarket, changePrice, buyCard } = require("../actions/market");
 
 marketRouter.get("/", async (req, res) => {
   getMarketOfUser(req.user)
@@ -27,7 +27,6 @@ marketRouter.get("/:friend", async (req, res) => {
 });
 
 marketRouter.post("/:friend/buycard/:card_id", async (req, res) => {
-  console.log("prix route : ", req.body.price)
   buyCard(req.user, req.params.friend, req.params.card_id, req.body.price)
     .then(response => {
       res.json(response);
