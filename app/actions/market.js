@@ -28,7 +28,7 @@ const addCardtoMarket = async (user_id, card_id, card_name, price) => {
           console.log("Failed else " + err);
           reject({ code: 500, message: err.errorno });
         }
-        const updateDeck = "UPDATE deck SET amout=amount-1 WHERE user_id=? AND card_id=?";
+        const updateDeck = "UPDATE deck SET amount=amount-1 WHERE user_id=? AND card_id=?";
         connection.query(updateDeck, [user_id, card_id], (err, fields, row) => {
           if (err) {
             console.log(err);
