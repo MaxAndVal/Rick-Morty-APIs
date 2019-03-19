@@ -41,7 +41,7 @@ const addCardtoMarket = async (user_id, card_id, card_name, price) => {
     );
   });
 };
-const buyCard = async (user_id, friend_id, card_id, price) => {
+const buyCard = async (user_id, friend_id, card_id, card_name, price) => {
   return new Promise(async (resolve, reject) => {
     connection.beginTransaction(function(err) {
       if (err) {

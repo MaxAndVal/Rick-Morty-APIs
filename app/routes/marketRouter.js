@@ -27,7 +27,7 @@ marketRouter.get("/:friend", async (req, res) => {
 });
 
 marketRouter.post("/:friend/buycard/:card_id", async (req, res) => {
-  buyCard(req.user, req.params.friend, req.params.card_id, req.body.price)
+  buyCard(req.user, req.params.friend, req.params.card_id, req.body.card_name, req.body.price)
     .then(response => {
       res.json(response);
     })
