@@ -35,20 +35,7 @@ const addCardtoMarket = async (user_id, card_id, card_name, price) => {
           } else {
             console.log("decrease card");
           }
-          const card_image = `https://rickandmortyapi.com/api/character/avatar/${card_id}.jpeg`;
-          queryString =
-            "INSERT INTO deck (user_id, card_id, card_name,card_image, amount) VALUES(?,?,?,?,1)";
-          connection.query(
-            queryString,
-            [user_id, card_id, card_name, card_image],
-            (err, rows, fiels) => {
-              if (err) {
-                console.log("Failed else " + err);
-                reject({ code: 500, message: err.errorno });
-              }
-              getDeckById(user_id).then(res => resolve(res));
-            }
-          );
+          getDeckById(user_id).then(res => resolve(res));
         });
       }
     );
