@@ -223,7 +223,7 @@ async function selectUserBySessionToken(token) {
       "SELECT * FROM users INNER JOIN session_tokens ON session_tokens.user_id = users.user_id WHERE session_token=?";
     connection.query(queryString, [token], (err, rows, fields) => {
       if (err) {
-        reject(err);
+        reject({ code: 500, message: err.errorno });
       }
       if (rows && rows[0]) {
         user = rows[0];
@@ -234,14 +234,14 @@ async function selectUserBySessionToken(token) {
           resolve({
             code: 200,
             message: "login by token successfull",
-            user: [user]
+            user: user
           });
         } else {
           user.session_token = "expired";
           resolve({
             code: 208,
             message: "Token expired",
-            user: [user]
+            user: user
           });
           const queryStringDelete =
             "DELETE from session_tokens where user_id=?";
