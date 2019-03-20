@@ -21,9 +21,12 @@ async function getFriendsOfUserById(id) {
   });
 }
 async function addFriend(user, id2) {
-  const queryString = "insert into friends values( ? , ?, false)";
+  const queryString =
+    "insert into friends values( ? , ?, false) ON DUPLICATE KEY UPDATE accepted=true";
+  const min = user < id2 ? user : id2;
+  const max = user > id2 ? user : id2;
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [user, id2], (err, rows, fields) => {
+    connection.query(queryString, [min, max], (err, rows, fields) => {
       if (err) {
         console.log("failed to accepte a friend request" + err);
         reject({ status: 500, error: err });
