@@ -23,7 +23,6 @@ cardsRoute.get("/search/:name", (req, res) => {
 cardsRoute.get("/:id", (req, res) => {
   getCardsById(req.params.id)
     .then(response => {
-      const result = response.data;
       res.json(response);
     })
     .catch(error => res.json(error));

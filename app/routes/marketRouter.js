@@ -13,8 +13,7 @@ marketRouter.get("/", async (req, res) => {
 marketRouter.post("/:card_id", async (req, res) => {
   addCardtoMarket(req.user, req.params.card_id, req.body.card_name, req.body.price)
     .then(response => {
-      (console.log(response),
-      res.json(response));
+      res.json(response);
     })
     .catch(error => res.send(error));
 });
