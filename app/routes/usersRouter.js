@@ -33,7 +33,7 @@ userRouter.delete("/:id", async (req, res) => {
     .catch(err => res.send(err));
 });
 
-userRouter.get("/deck/:id", async (req, res) => {
+userRouter.get("/:id/deck", async (req, res) => {
   getDeckById(req.params.id)
     .then(deck => res.json(deck))
     .catch(err => res.send(err));
@@ -51,25 +51,25 @@ userRouter.post("/", async (req, res) => {
     .catch(err => res.send(err));
 });
 
-userRouter.put("/wallet/:id", async (req, res) => {
+userRouter.put("/:id/wallet", async (req, res) => {
   updateWallet(req.params.id, req.body.newWallet)
     .then(response => res.json(response))
     .catch(err => res.send(err));
 });
 
-userRouter.get("/wallet/:id", async (req, res) => {
+userRouter.get("/:id/wallet", async (req, res) => {
   getWallet(req.params.id)
     .then(response => res.json(response))
     .catch(err => res.send(err));
 });
 
-userRouter.put("/playGame/:id", async (req, res) => {
+userRouter.put("/:id/playGame", async (req, res) => {
   setGameDate(req.params.id, req.body.newDate)
     .then(response => res.json(response))
     .catch(err => res.send(err));
 });
 
-userRouter.put("/playMemory/:id", async (req, res) => {
+userRouter.put("/:id/playMemory", async (req, res) => {
   setMemoryDate(req.params.id, req.body.newDate)
     .then(response => res.json(response))
     .catch(err => res.send(err));
