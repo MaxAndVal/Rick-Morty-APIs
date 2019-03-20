@@ -32,7 +32,7 @@ async function addCardToDeck(user_id, card_id, card_name) {
               console.log("Failed else " + err);
               reject({ code: 500, message: err.errorno });
             }
-            getDeckById(user_id);
+            getDeckById(user_id).then(res => resolve(res))
           }
         );
       }
