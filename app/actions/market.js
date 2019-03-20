@@ -1,6 +1,6 @@
 const connection = require("../../dbConnexion");
 const axios = require("axios");
-const { addCardToDeck, getCardsById } = require("./cards");
+const { addCardToDeck, getDeckById } = require("./cards");
 
 async function getMarketOfUser(user_id) {
   return new Promise((resolve, reject) => {
