@@ -20,14 +20,6 @@ cardsRoute.get("/search/:name", (req, res) => {
   });
 });
 
-cardsRoute.get("/:id", (req, res) => {
-  getCardsById(req.params.id)
-    .then(response => {
-      res.json(response);
-    })
-    .catch(error => res.json(error));
-});
-
 cardsRoute.get("/all/:page", (req, res) => {
   const page = req.params.page > 1 ? req.params.page : 1;
   getCardsByPages(page)
@@ -39,14 +31,21 @@ cardsRoute.get("/all/:page", (req, res) => {
     });
 });
 
-cardsRoute.get("/randomDeckGenerator/", async (req, res) => {
+cardsRoute.get("/randomDeckGenerator", async (req, res) => {
   const user_id = req.user;
-  console.log(user_id);
   checkDeckToOpen(user_id)
     .then(response => res.json(response))
     .catch(error => {
       res.json([error]);
     });
+});
+
+cardsRoute.get("/:id", (req, res) => {
+  getCardsById(req.params.id)
+    .then(response => {
+      res.json(response);
+    })
+    .catch(error => res.json(error));
 });
 
 cardsRoute.get("/randomSelectionFor/:amount", async (req, res) => {
