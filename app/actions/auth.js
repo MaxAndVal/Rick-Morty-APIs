@@ -6,7 +6,14 @@ const { lostPasswordMail } = require("../utils/mailUtils");
 const { randomCode } = require("../utils/codeUtil");
 const moment = require("moment");
 
-async function login(user_email, user_password, user_name, external_id, user_image, session_token) {
+async function login(
+  user_email,
+  user_password,
+  user_name,
+  external_id,
+  user_image,
+  session_token
+) {
   return new Promise(async (resolve, reject) => {
     if (external_id) {
       selectUserByExternalId(external_id, user_name, user_email, user_image)
@@ -20,20 +27,7 @@ async function login(user_email, user_password, user_name, external_id, user_ima
         .catch(err => reject({ code: 500, message: err }));
     } else if (session_token) {
       selectUserBySessionToken(session_token)
-        .then(rows => {
-          if (rows.length > 0) {
-            resolve({
-              code: 200,
-              message: "login by token successfull",
-              user: rows[0]
-            });
-          } else {
-            reject({
-              code: 204,
-              message: "Token expired"
-            });
-          }
-        })
+        .then(rows => resolve(rows))
         .catch(err =>
           reject({
             code: 500,
@@ -75,12 +69,19 @@ async function login(user_email, user_password, user_name, external_id, user_ima
             reject({ code: 204, message: "Email does not exist" });
           }
         })
-        .catch(err => reject({ code: 508, message: "User doesn't exist", err }));
+        .catch(err =>
+          reject({ code: 508, message: "User doesn't exist", err })
+        );
     }
   });
 }
 
-async function selectUserByExternalId(external_id, user_name, user_email, user_image) {
+async function selectUserByExternalId(
+  external_id,
+  user_name,
+  user_email,
+  user_image
+) {
   return new Promise((resolve, reject) => {
     const queryString = "SELECT * FROM users where external_id=?";
     connection.query(queryString, [external_id], (err, rows, fields) => {
@@ -110,9 +111,13 @@ async function selectUserByExternalId(external_id, user_name, user_email, user_i
           .then(() =>
             selectUserByExternalId(external_id)
               .then(rows =>
-                resolve(rows).catch(err => reject({ code: 501, msg: "create user failed", err }))
+                resolve(rows).catch(err =>
+                  reject({ code: 501, msg: "create user failed", err })
+                )
               )
-              .catch(err => reject({ code: 502, msg: "create user failed", err }))
+              .catch(err =>
+                reject({ code: 502, msg: "create user failed", err })
+              )
           )
           .catch(err => reject({ code: 503, msg: "create user failed", err }));
       }
@@ -123,7 +128,8 @@ async function selectUserByExternalId(external_id, user_name, user_email, user_i
 // Avoiding to use 'omit' each time we are using the other function selectUserByEmail
 async function selectUserByEmailPwd(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    const queryString =
+      "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
         reject(err);
@@ -137,19 +143,24 @@ async function addCodeInDB(user_id, code) {
   return new Promise((resolve, reject) => {
     const date = moment().format("YYYY-MM-DD");
     const queryString = `INSERT INTO lost_password (user_id, code_password, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE code_password = ?, date = ?`;
-    connection.query(queryString, [user_id, code, date, code, date], (err, rows, fields) => {
-      if (err) {
-        console.log("error : ", err);
-        reject(err.errorno);
+    connection.query(
+      queryString,
+      [user_id, code, date, code, date],
+      (err, rows, fields) => {
+        if (err) {
+          console.log("error : ", err);
+          reject(err.errorno);
+        }
+        resolve("Ok");
       }
-      resolve("Ok");
-    });
+    );
   });
 }
 
 async function lostPassword(user_email) {
   return new Promise((resolve, reject) => {
-    const queryString = "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
+    const queryString =
+      "SELECT * FROM users WHERE user_email=? AND external_id IS NULL";
     const code = randomCode(5);
     connection.query(queryString, [user_email], (err, rows, fields) => {
       if (err) {
@@ -166,7 +177,12 @@ async function lostPassword(user_email) {
   });
 }
 
-async function changePassword(user_id, user_email, user_old_password, user_new_password) {
+async function changePassword(
+  user_id,
+  user_email,
+  user_old_password,
+  user_new_password
+) {
   return new Promise((resolve, reject) => {
     selectUserByEmailPwd(user_email).then(rows => {
       if (rows.length > 0) {
@@ -207,7 +223,7 @@ async function selectUserBySessionToken(token) {
       "SELECT * FROM users INNER JOIN session_tokens ON session_tokens.user_id = users.user_id WHERE session_token=?";
     connection.query(queryString, [token], (err, rows, fields) => {
       if (err) {
-        reject(err);
+        reject({ code: 500, message: err.errorno });
       }
       if (rows && rows[0]) {
         user = rows[0];
@@ -215,19 +231,35 @@ async function selectUserBySessionToken(token) {
         const actualDate = moment().format("YYYY-MM-DD");
         if (moment(actualDate).diff(user.date, "days") <= 15) {
           delete user.date;
-          resolve({ code: 200, message: "connexion with token ok", user: user });
+          resolve({
+            code: 200,
+            message: "login by token successfull",
+            user: user
+          });
         } else {
           user.session_token = "expired";
-          resolve(user);
-          const queryStringDelete = "DELETE from session_tokens where user_id=?";
-          connection.query(queryStringDelete, [user.user_id], (err, rows, fields) => {
-            if (err) {
-              console.log("token not deleted : " + err);
-            }
+          resolve({
+            code: 208,
+            message: "Token expired",
+            user: user
           });
+          const queryStringDelete =
+            "DELETE from session_tokens where user_id=?";
+          connection.query(
+            queryStringDelete,
+            [user.user_id],
+            (err, rows, fields) => {
+              if (err) {
+                console.log("token not deleted : " + err);
+              }
+            }
+          );
         }
       } else {
-        reject("user not found");
+        resolve({
+          code: 204,
+          message: "user not found"
+        });
       }
     });
   });
@@ -260,7 +292,11 @@ const loginWithCode = async user_code => {
         } else {
           resolve({ code: 205, message: "Code is expired" });
         }
+<<<<<<< HEAD
         // const queryDel = "DELETE from lost_password where code=?";
+=======
+        // const queryDel = "DELETE from lost_password where code_password=?";
+>>>>>>> 78238f2bec6617037705cbef8185ed660c1ddeb6
         // connection.query(queryDel, [user_code], (err, rows, field) => {
         //   if (err) {
         //     console.log(err);
