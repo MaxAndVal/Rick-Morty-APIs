@@ -22,11 +22,11 @@ async function getFriendsOfUserById(id) {
 }
 async function addFriend(user, id2) {
   const queryString =
-    "insert into friends values( ? , ?, false) ON DUPLICATE KEY UPDATE accepted=true";
+    "insert into friends values( ? , ?, false, ?) ON DUPLICATE KEY UPDATE accepted=true";
   const min = user < id2 ? user : id2;
   const max = user > id2 ? user : id2;
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [min, max], (err, rows, fields) => {
+    connection.query(queryString, [min, max, user], (err, rows, fields) => {
       if (err) {
         console.log("failed to accepte a friend request" + err);
         reject({ status: 500, error: err });
@@ -39,10 +39,12 @@ async function addFriend(user, id2) {
 }
 
 async function acceptedFriendship(user, id2) {
+  const min = user < id2 ? user : id2;
+  const max = user > id2 ? user : id2;
   const queryString =
-    "UPDATE friends set accepted = true WHERE (user_idA=? AND user_idB=?) or (user_idA=? AND user_idB=?)";
+    "UPDATE friends set accepted = true WHERE user_idA=? AND user_idB=? AND sender!=?";
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [user, id2, id2, user], (err, rows, fields) => {
+    connection.query(queryString, [min, max, user], (err, rows, fields) => {
       if (err) {
         console.log("failed add a friend request" + err);
         reject({ status: 500, error: err });

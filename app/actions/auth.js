@@ -215,10 +215,10 @@ async function selectUserBySessionToken(token) {
         const actualDate = moment().format("YYYY-MM-DD");
         if (moment(actualDate).diff(user.date, "days") <= 15) {
           delete user.date;
-          resolve([user]);
+          resolve({ code: 200, message: "connexion with token ok", user: user });
         } else {
           user.session_token = "expired";
-          resolve([user]);
+          resolve(user);
           const queryStringDelete = "DELETE from session_tokens where user_id=?";
           connection.query(queryStringDelete, [user.user_id], (err, rows, fields) => {
             if (err) {
@@ -242,25 +242,49 @@ const loginWithCode = async user_code => {
         reject({ code: 500, message: err.errorno });
       }
       if (rows && rows[0]) {
-        user = rows[0];
+        const user = rows[0];
         delete user.user_password;
         delete user.code_password;
         const actualDate = moment().format("YYYY-MM-DD");
         if (moment(actualDate).diff(user.date, "days") === 0) {
           delete user.date;
-          resolve({ code: 200, message: "Success", user: user });
+          updateToken(user.user_id)
+            .then(res => {
+              selectUserBySessionToken(res)
+                .then(res => {
+                  resolve(res);
+                })
+                .catch(err => reject(err));
+            })
+            .catch(err => reject(err));
         } else {
           resolve({ code: 205, message: "Code is expired" });
         }
-        const queryDel = "DELETE from lost_password where code=?";
-        connection.query(queryDel, [user_code], (err, rows, field) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+        // const queryDel = "DELETE from lost_password where code=?";
+        // connection.query(queryDel, [user_code], (err, rows, field) => {
+        //   if (err) {
+        //     console.log(err);
+        //   }
+        // });
       } else {
         resolve({ code: 204, message: "Code incorrect" });
       }
+    });
+  });
+};
+
+const updateToken = async user_id => {
+  return new Promise((resolve, reject) => {
+    const token = randomCode(30);
+    const date = moment().format("YYYY-MM-DD");
+    const queryToken =
+      "INSERT INTO session_tokens (user_id, session_token, date) VALUES (?,?,?) ON DUPLICATE KEY UPDATE session_token = ?, date = ?";
+    connection.query(queryToken, [user_id, token, date, token, date], (err, rows, fields) => {
+      if (err) {
+        console.log("err ", err);
+        reject(err);
+      }
+      resolve(token);
     });
   });
 };
