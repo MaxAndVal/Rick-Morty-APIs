@@ -2,27 +2,30 @@ const connection = require("../../dbConnexion");
 
 async function getFriendsOfUserById(id) {
   const queryString =
-    "SELECT distinct * FROM friends FR inner JOIN users US on FR.user_idA=US.user_id or FR.user_idB = US.user_id WHERE (FR.user_idA=? OR FR.user_idB=?) AND not US.user_id=?";
+    "SELECT distinct * FROM friends FR inner JOIN users US on FR.user_idA=US.user_id or FR.user_idB = US.user_id WHERE ((FR.user_idA=? OR FR.user_idB=?) AND accepted=true) OR ((FR.user_idA=? OR FR.user_idB=?) AND accepted=false AND sender!=?) AND not US.user_id=?";
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [id, id, id, id], (err, rows, fields) => {
-      if (err) {
-        console.log("Failed query for friends " + err);
-        reject({ status: 500, error: err });
-        return;
+    connection.query(
+      queryString,
+      [id, id, id, id, id, id],
+      (err, rows, fields) => {
+        if (err) {
+          console.log("Failed query for friends " + err);
+          reject({ status: 500, error: err });
+          return;
+        }
+        // parsing int into bool
+        for (var i = 0; i < rows.length; i++) {
+          rows[i].accepted = !!rows[i].accepted;
+        }
+        users = rows;
+        users.map(user => delete user.user_password);
+        resolve({ code: 200, message: "get friends succeded", friends: users });
       }
-      // parsing int into bool
-      for (var i = 0; i < rows.length; i++) {
-        rows[i].accepted = !!rows[i].accepted;
-      }
-      users = rows;
-      users.map(user => delete user.user_password);
-      resolve({ code: 200, message: "get friends succeded", friends: users });
-    });
+    );
   });
 }
 async function addFriend(user, id2) {
-  const queryString =
-    "insert into friends values( ? , ?, false, ?) ON DUPLICATE KEY UPDATE accepted=true";
+  const queryString = "insert into friends values( ? , ?, false, ?)";
   const min = user < id2 ? user : id2;
   const max = user > id2 ? user : id2;
   return new Promise((resolve, reject) => {
@@ -74,14 +77,18 @@ async function searchForFriends(user, request) {
   const queryString =
     "SELECT user_name, user_id FROM users WHERE (user_name like (?) OR (user_email=? OR user_id=?)) AND user_id != ?";
   return new Promise((resolve, reject) => {
-    connection.query(queryString, [`%${request}%`, request, request, user], (err, rows, fields) => {
-      if (err) {
-        console.log("failed to search for friend " + err);
-        reject({ status: 500, error: err });
-        return;
+    connection.query(
+      queryString,
+      [`%${request}%`, request, request, user],
+      (err, rows, fields) => {
+        if (err) {
+          console.log("failed to search for friend " + err);
+          reject({ status: 500, error: err });
+          return;
+        }
+        resolve({ code: 200, message: "success", friends: rows });
       }
-      resolve({ code: 200, message: "success", friends: rows });
-    });
+    );
   });
 }
 
