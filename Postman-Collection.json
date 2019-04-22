@@ -1,0 +1,3324 @@
+{
+	"info": {
+		"_postman_id": "43515d40-9469-4b28-bb66-b4264aa00986",
+		"name": "WebServiceHeroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/auth",
+			"item": [
+				{
+					"name": "/lostpassword",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_email\": \"test@test.fr\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/lostpassword",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"lostpassword"
+							]
+						},
+						"description": "Permettant d'envoyer un email avec un code générer aléatoirement."
+					},
+					"response": [
+						{
+							"name": "/lostpassword",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"user_email\": \"test@test.fr\"}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/lostpassword",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"lostpassword"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "35"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"23-oODjRqDCor4pQ129bApdAvjftm4\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:42:50 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"email sent\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/loginwithcode",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_code\":\"TEST\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/loginwithcode",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"loginwithcode"
+							]
+						},
+						"description": "Permettant de se connecter via le code reçu par mail lors de la perte du mot de passe."
+					},
+					"response": [
+						{
+							"name": "/loginwithcode",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"user_code\":\"BTZrZ\"}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/loginwithcode",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"loginwithcode"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"28-29J5IiNN72gI32ZVwNJrpaHHSbw\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:47:15 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 205,\n    \"message\": \"Code is expired\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_email\": \"rick@test.fr\",\"user_password\":\"grossetruite\", \"user_name\":\"kapoué\", \"external_id\":\"dfxxpoué\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/login",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Connexion classique à l'application."
+					},
+					"response": [
+						{
+							"name": "/login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"user_email\":\"test@test.fr\",\n    \"user_password\": \"$2b$06$EZGQCe6frn42AMDQ9a/z9OtBVj/YSoCDgiGZ5iVZtNkHRtpBd7Ada\",\n    \"user_name\": \"test user\",\n    \"external_id\":null,\n    \"user_image\":null,\n    \"session_token\":\"7Dc14OkKYwv2mUsWk8rY8sOGWpFnHZ\"}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/login",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "304"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"130-p/e2LLfOj7XUbWSgRLeyCSn5Qyw\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:52:37 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"login by token successfull\",\n    \"user\": {\n        \"user_id\": 154,\n        \"user_name\": \"test user\",\n        \"user_email\": \"test@test.fr\",\n        \"deckToOpen\": 1,\n        \"user_wallet\": 50,\n        \"external_id\": null,\n        \"user_last_game\": \"00000000\",\n        \"user_last_memory\": \"0000000000\",\n        \"user_image\": null,\n        \"session_token\": \"7Dc14OkKYwv2mUsWk8rY8sOGWpFnHZ\"\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "Requêtes concernant la connexion et l'inscription.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0c4cfa8c-5d55-417a-8b89-805f7b4131b9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8730eeb2-c2ad-498d-b86c-c312ff24283f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/users",
+			"item": [
+				{
+					"name": "/:userID/wallet",
+					"item": [
+						{
+							"name": "/",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/wallet",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"wallet"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "133",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet de récupérer le montant du porte-monnaie de l'utilisateur."
+							},
+							"response": [
+								{
+									"name": "/",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/wallet",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":id",
+												"wallet"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "133"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "44"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"2c-H5eqALypRQixPf1xRRMVjiH1aLY\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 04:54:37 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"wallet\": 50\n}"
+								}
+							]
+						},
+						{
+							"name": "/",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/wallet",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"wallet"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "133",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet de modifier le montant du porte-monnaie de l'utilisateur."
+							},
+							"response": [
+								{
+									"name": "/",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"id\": 154, \"newWallet\":200}"
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/wallet",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":id",
+												"wallet"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "154"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "237"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"ed-jg6ktPB+WOUeJJlKp8XVECjwPKs\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 04:59:15 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"user\": {\n        \"user_id\": 154,\n        \"user_name\": \"test user\",\n        \"user_email\": \"test@test.fr\",\n        \"deckToOpen\": 1,\n        \"user_wallet\": 200,\n        \"external_id\": null,\n        \"user_last_game\": \"00000000\",\n        \"user_last_memory\": \"0000000000\",\n        \"user_image\": null\n    }\n}"
+								}
+							]
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/:userID/cards",
+					"item": [
+						{
+							"name": "/randomDeckGenerator",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/cards/randomDeckGenerator",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"cards",
+										"randomDeckGenerator"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "50",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Retourne 10 cartes aléatoires et différentes à l'utilisateur et les ajoute à son deck, s'il dispose de decks à ouvrir."
+							},
+							"response": [
+								{
+									"name": "/randomDeckGenerator",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/cards/randomDeckGenerator",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":id",
+												"cards",
+												"randomDeckGenerator"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "154"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "205"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"cd-JUqedAJo8AqL/5Zti8Jt9nEqsCc\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 05:05:06 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"deck is opened\",\n    \"deck\": [\n        {\n            \"card_id\": 121\n        },\n        {\n            \"card_id\": 418\n        },\n        {\n            \"card_id\": 77\n        },\n        {\n            \"card_id\": 219\n        },\n        {\n            \"card_id\": 468\n        },\n        {\n            \"card_id\": 58\n        },\n        {\n            \"card_id\": 244\n        },\n        {\n            \"card_id\": 96\n        },\n        {\n            \"card_id\": 223\n        },\n        {\n            \"card_id\": 429\n        }\n    ]\n}"
+								},
+								{
+									"name": "/randomDeckGenerator",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/cards/randomDeckGenerator",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":id",
+												"cards",
+												"randomDeckGenerator"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "154"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "207"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"cf-66A4mk6dpVNUlE9yY8N6dcaUpMA\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 05:10:04 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"deck is opened\",\n    \"deck\": [\n        {\n            \"card_id\": 276\n        },\n        {\n            \"card_id\": 214\n        },\n        {\n            \"card_id\": 155\n        },\n        {\n            \"card_id\": 235\n        },\n        {\n            \"card_id\": 167\n        },\n        {\n            \"card_id\": 150\n        },\n        {\n            \"card_id\": 379\n        },\n        {\n            \"card_id\": 11\n        },\n        {\n            \"card_id\": 402\n        },\n        {\n            \"card_id\": 252\n        }\n    ]\n}"
+								}
+							]
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/userID/friends",
+					"item": [
+						{
+							"name": "/",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/friends",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"friends"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "50",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet d'obtenir la liste de ses amis."
+							},
+							"response": [
+								{
+									"name": "/",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/friends",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":id",
+												"friends"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "150"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "301"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"12d-1u/loHIGUv02GZq3Rk9WVPC6O/c\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 05:14:39 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"get friends succeded\",\n    \"friends\": [\n        {\n            \"user_idA\": 150,\n            \"user_idB\": 152,\n            \"accepted\": false,\n            \"sender\": 152,\n            \"user_id\": 152,\n            \"user_name\": \"test\",\n            \"user_email\": \"test\",\n            \"deckToOpen\": 1,\n            \"user_wallet\": 47,\n            \"external_id\": null,\n            \"user_last_game\": \"00000000\",\n            \"user_last_memory\": \"0000000000\",\n            \"user_image\": null\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/search/:new_friends",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/friends/search/:new_friends",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":id",
+										"friends",
+										"search",
+										":new_friends"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "154",
+											"type": "string"
+										},
+										{
+											"key": "new_friends",
+											"value": "test",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet de rechercher des amis par nom ou email."
+							},
+							"response": [
+								{
+									"name": "/search/{new_friends}",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/friends/search/:new_friends",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":id",
+												"friends",
+												"search",
+												":new_friends"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "154"
+												},
+												{
+													"key": "new_friends",
+													"value": "test"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "158"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"9e-GAd+wa2+BzQ19jZ9pq/UHTZ35Xo\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 06:08:05 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"friends\": [\n        {\n            \"user_name\": \"Zigotest\",\n            \"user_id\": 149\n        },\n        {\n            \"user_name\": \"test\",\n            \"user_id\": 152\n        },\n        {\n            \"user_name\": \"testCrypt\",\n            \"user_id\": 155\n        }\n    ]\n}"
+								},
+								{
+									"name": "/search/{new_friends}",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/50/friends/search/mal",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												"50",
+												"friends",
+												"search",
+												"mal"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "169"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"a9-bgDgMBmn3fdQjuIC8U8yNAdgKBs\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 09 Apr 2019 20:14:58 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"friends\": [\n        {\n            \"user_name\": \"Maxime Malosse\",\n            \"user_id\": 79\n        },\n        {\n            \"user_name\": \"Max Mal\",\n            \"user_id\": 80\n        },\n        {\n            \"user_name\": \"Maxime Malosse\",\n            \"user_id\": 83\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/friends/:id2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user/friends/:id2",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user",
+										"friends",
+										":id2"
+									],
+									"variable": [
+										{
+											"key": "user",
+											"value": "153",
+											"type": "string"
+										},
+										{
+											"key": "id2",
+											"value": "155",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet de demander un lien d'amitié entre deux joueurs."
+							},
+							"response": [
+								{
+									"name": "/friends/:id2",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user/friends/:id2",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":user",
+												"friends",
+												":id2"
+											],
+											"variable": [
+												{
+													"key": "user",
+													"value": "153",
+													"type": "string"
+												},
+												{
+													"key": "id2",
+													"value": "155",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "54"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"36-GyS5/45l90B77S9YREzGAOydCyI\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 06:24:37 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"add a friend request succeded\"\n}"
+								}
+							]
+						},
+						{
+							"name": "/friends/:id2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user/friends/:id2",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user",
+										"friends",
+										":id2"
+									],
+									"variable": [
+										{
+											"key": "user",
+											"value": "154",
+											"type": "string"
+										},
+										{
+											"key": "id2",
+											"value": "155",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet de valider un lien d'amitié entre deux joueurs."
+							},
+							"response": [
+								{
+									"name": "PUT : /friends/:id2",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user/friends/:id2",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":user",
+												"friends",
+												":id2"
+											],
+											"variable": [
+												{
+													"key": "user",
+													"value": "154"
+												},
+												{
+													"key": "id2",
+													"value": "155"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "54"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"36-GyS5/45l90B77S9YREzGAOydCyI\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 06:23:07 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"add a friend request succeded\"\n}"
+								}
+							]
+						},
+						{
+							"name": "/friends/:id2",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/friends/:id2",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"friends",
+										":id2"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "133",
+											"type": "string"
+										},
+										{
+											"key": "id2",
+											"value": "50",
+											"type": "string"
+										}
+									]
+								},
+								"description": "permet de supprimer un lien d'amitié."
+							},
+							"response": [
+								{
+									"name": "/friends/:id2",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/friends/:id2",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":user_id",
+												"friends",
+												":id2"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "133",
+													"type": "string"
+												},
+												{
+													"key": "id2",
+													"value": "50",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "42"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"2a-JzsRAMsdUmhjMGoHzuc8VHgrnhI\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 06:26:40 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"friends is delete\"\n}"
+								}
+							]
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/userID/market",
+					"item": [
+						{
+							"name": "/",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/market",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"market"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "148",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet d'obtenir les cartes que l'on vend."
+							},
+							"response": [
+								{
+									"name": "/",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/market",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":user_id",
+												"market"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "148",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "204"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"cc-kzlE3TMTQFCNB4eTZEFQYv9WdNw\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 06:32:21 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"getMarketById is succefull\",\n    \"deck\": [\n        {\n            \"user_id\": 148,\n            \"card_id\": 225,\n            \"card_name\": \"Michael Thompson\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/225.jpeg\",\n            \"price\": 1\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "/{friend}",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/market/:id2",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"market",
+										":id2"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "154",
+											"type": "string"
+										},
+										{
+											"key": "id2",
+											"value": "155",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet d'accéder au cartes vendues par un joueur."
+							},
+							"response": [
+								{
+									"name": "/{friend}",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/market/:id2",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":user_id",
+												"market",
+												":id2"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "154",
+													"type": "string"
+												},
+												{
+													"key": "id2",
+													"value": "155",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "61"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"3d-gRxz5xUl2MsPF9VgSKcqI8U/1x4\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 10:54:24 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"getMarketById is succefull\",\n    \"deck\": []\n}"
+								}
+							]
+						},
+						{
+							"name": "/{cardID}",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"card_name\": \"Rick Sanchez\",\n\t\"price\":10\n}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/market/:card_id",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"market",
+										":card_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "154",
+											"type": "string"
+										},
+										{
+											"key": "card_id",
+											"value": "1",
+											"type": "string"
+										}
+									]
+								},
+								"description": "Permet d'ajouter une carte sur le market. Retourne notre collection à jour (moins la carte qu'on vient de mettre en vente)."
+							},
+							"response": [
+								{
+									"name": "/{cardID}",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"card_name\": \"Rick Sanchez\",\n\t\"price\":10\n}"
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/market/:card_id",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												":user_id",
+												"market",
+												":card_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "154",
+													"type": "string"
+												},
+												{
+													"key": "card_id",
+													"value": "1",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "2933"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"b75-zODgqvXZhcMixQFjrcNVBc+BXdQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 10 Apr 2019 10:57:20 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"getDeck is succefull\",\n    \"deck\": [\n        {\n            \"user_id\": 154,\n            \"card_id\": 11,\n            \"card_name\": \"Albert Einstein\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/11.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 58,\n            \"card_name\": \"Brad\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/58.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 77,\n            \"card_name\": \"Cowboy Morty\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/77.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 96,\n            \"card_name\": \"Tuberculosis\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/96.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 121,\n            \"card_name\": \"Eyehole Man\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/121.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 150,\n            \"card_name\": \"Cornvelious Daniel\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/150.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 155,\n            \"card_name\": \"Harold\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/155.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 167,\n            \"card_name\": \"Izzy\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/167.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 214,\n            \"card_name\": \"Man Painted Silver Who Makes Robot Noises\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/214.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 219,\n            \"card_name\": \"Mechanical Summer\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/219.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 223,\n            \"card_name\": \"Michael Jenkins\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/223.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 235,\n            \"card_name\": \"Mortytown Loco\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/235.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 244,\n            \"card_name\": \"Mr. Poopybutthole\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/244.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 252,\n            \"card_name\": \"Noob-Noob\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/252.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 276,\n            \"card_name\": \"Rat Boss\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/276.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 379,\n            \"card_name\": \"Wedding Bartender\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/379.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 402,\n            \"card_name\": \"Guy from The Bachelor\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/402.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 418,\n            \"card_name\": \"Mrs. Sullivan's Boyfriend\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/418.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 429,\n            \"card_name\": \"Chair-person\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/429.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 468,\n            \"card_name\": \"Morphizer-XE Customer Support\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/468.jpeg\",\n            \"amount\": 1\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "{friend}/buycard/{card_id}",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"user_name\":\"testCrypt\",\n\t\"user_password\":\"testCrypt\",\n\t\"user_email\":\"testCrypted@test.fr\"\n}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id/market/:id2/buycard/:card_id",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id",
+										"market",
+										":id2",
+										"buycard",
+										":card_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "Int",
+											"type": "string"
+										},
+										{
+											"key": "id2",
+											"value": "Int",
+											"type": "string"
+										},
+										{
+											"key": "card_id",
+											"value": "Int",
+											"type": "string"
+										}
+									]
+								},
+								"description": "crée un nouvel utilisateur"
+							},
+							"response": [
+								{
+									"name": "Create User",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"name": "Content-Type",
+												"type": "text",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n\t\"user_name\":\"testCrypt\",\n\t\"user_password\":\"testCrypt\",\n\t\"user_email\":\"testCrypted@test.fr\"\n}"
+										},
+										"url": {
+											"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/",
+											"protocol": "https",
+											"host": [
+												"api-rickandmorty-tcg",
+												"herokuapp",
+												"com"
+											],
+											"path": [
+												"users",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "Cowboy"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "330"
+										},
+										{
+											"key": "Etag",
+											"value": "W/\"14a-XwdLseAFvMxZmNErm176dEurAA4\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 09 Apr 2019 20:16:32 GMT"
+										},
+										{
+											"key": "Via",
+											"value": "1.1 vegur"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"code\": 200,\n    \"message\": \"user is created\",\n    \"user\": {\n        \"user_id\": 155,\n        \"user_name\": \"testCrypt\",\n        \"user_email\": \"testCrypted@test.fr\",\n        \"deckToOpen\": 1,\n        \"user_wallet\": 50,\n        \"external_id\": null,\n        \"user_last_game\": \"00000000\",\n        \"user_last_memory\": \"0000000000\",\n        \"user_image\": null\n    }\n}"
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "17ac6121-a072-4377-a683-85ff9d6ea04f",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc5accd7-5ba1-41c4-9039-1882fe5f0a1e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_name\": \"test user2\", \n\t\"user_email\": \"tes2t@test2.fr\",\n\t\"user_password\": \"$2b$06$2YT80ZLD9dNkbWpQXTg7oerJK8bwRfmCP4sxFVM796vrHCfEthqXy\"\n}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								""
+							]
+						},
+						"description": "crée un nouvel utilisateur"
+					},
+					"response": [
+						{
+							"name": "/",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"user_name\": \"test user2\", \n\t\"user_email\": \"tes2t@test2.fr\",\n\t\"user_password\": \"$2b$06$2YT80ZLD9dNkbWpQXTg7oerJK8bwRfmCP4sxFVM796vrHCfEthqXy\"\n}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "326"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"146-zxjOnIcaoD9Hg/lRUUabT4yHduY\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 11:06:06 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"user is created\",\n    \"user\": {\n        \"user_id\": 156,\n        \"user_name\": \"test user2\",\n        \"user_password\": \"$2b$06$z98krKmOmPEyjaC1ibnC/uCgRFy/YfKVNUtUScszihvpXwOaDsIgW\",\n        \"user_email\": \"tes2t@test2.fr\",\n        \"deckToOpen\": 1,\n        \"user_wallet\": 50,\n        \"external_id\": null,\n        \"user_last_game\": \"00000000\",\n        \"user_last_memory\": \"0000000000\",\n        \"user_image\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/:userID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "154",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Récupère les données de l'utilisateur"
+					},
+					"response": [
+						{
+							"name": "/:userID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:user_id",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "154",
+											"type": "string"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "237"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"ed-slZY+s5sDljCOCEk29jNDY+iZ18\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 11:09:22 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"user\": {\n        \"user_id\": 154,\n        \"user_name\": \"test user\",\n        \"user_email\": \"test@test.fr\",\n        \"deckToOpen\": 9,\n        \"user_wallet\": 200,\n        \"external_id\": null,\n        \"user_last_game\": \"00000000\",\n        \"user_last_memory\": \"0000000000\",\n        \"user_image\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/:userID/playGame",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"newDate\": \"12-04-2019\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/playGame",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								":id",
+								"playGame"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "154",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Permet de rentrer une nouvelle date en bdd afin d'empécher le joueur de jouer plus d'une fois par jour à ce jeu."
+					},
+					"response": [
+						{
+							"name": "/:userID/playGame",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"newDate\": \"12-04-2019\"}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/playGame",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":id",
+										"playGame"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "154"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"20-tj8FR1AyEiO2Z6YPDa60CyElEJU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 11:14:19 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/:userID/playMemory",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"newDate\": \"12-04-2019\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:card_id/playMemory",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								":card_id",
+								"playMemory"
+							],
+							"variable": [
+								{
+									"key": "card_id",
+									"value": "154",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Permet de rentrer une nouvelle date en bdd afin d'empécher le joueur de jouer plus d'une fois par jour à ce jeu (Memory)."
+					},
+					"response": [
+						{
+							"name": "/:userID/playMemory",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"newDate\": \"12-04-2019\"}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:card_id/playMemory",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":card_id",
+										"playMemory"
+									],
+									"variable": [
+										{
+											"key": "card_id",
+											"type": "string",
+											"value": "154"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"20-tj8FR1AyEiO2Z6YPDa60CyElEJU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 11:16:07 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/:userID/deck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/deck",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								":id",
+								"deck"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "154",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Permet d'obtenir les cartes que possede un joueur."
+					},
+					"response": [
+						{
+							"name": "/:userID/deck",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/:id/deck",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										":id",
+										"deck"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "154"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2933"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"b75-zODgqvXZhcMixQFjrcNVBc+BXdQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 11:24:22 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"getDeck is succefull\",\n    \"deck\": [\n        {\n            \"user_id\": 154,\n            \"card_id\": 11,\n            \"card_name\": \"Albert Einstein\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/11.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 58,\n            \"card_name\": \"Brad\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/58.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 77,\n            \"card_name\": \"Cowboy Morty\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/77.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 96,\n            \"card_name\": \"Tuberculosis\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/96.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 121,\n            \"card_name\": \"Eyehole Man\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/121.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 150,\n            \"card_name\": \"Cornvelious Daniel\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/150.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 155,\n            \"card_name\": \"Harold\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/155.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 167,\n            \"card_name\": \"Izzy\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/167.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 214,\n            \"card_name\": \"Man Painted Silver Who Makes Robot Noises\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/214.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 219,\n            \"card_name\": \"Mechanical Summer\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/219.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 223,\n            \"card_name\": \"Michael Jenkins\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/223.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 235,\n            \"card_name\": \"Mortytown Loco\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/235.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 244,\n            \"card_name\": \"Mr. Poopybutthole\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/244.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 252,\n            \"card_name\": \"Noob-Noob\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/252.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 276,\n            \"card_name\": \"Rat Boss\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/276.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 379,\n            \"card_name\": \"Wedding Bartender\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/379.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 402,\n            \"card_name\": \"Guy from The Bachelor\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/402.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 418,\n            \"card_name\": \"Mrs. Sullivan's Boyfriend\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/418.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 429,\n            \"card_name\": \"Chair-person\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/429.jpeg\",\n            \"amount\": 1\n        },\n        {\n            \"user_id\": 154,\n            \"card_id\": 468,\n            \"card_name\": \"Morphizer-XE Customer Support\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/468.jpeg\",\n            \"amount\": 1\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"description": "Requêtes concernant les utilisateurs.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8b00c01f-7d8f-4d0a-8b11-0b441a89fc81",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3ccedb5-7137-46e3-a451-301fd9aa8e64",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "/kaamelott",
+			"item": [
+				{
+					"name": "/randomQuote",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/kaamelott/randomQuote",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"kaamelott",
+								"randomQuote"
+							]
+						},
+						"description": "renvoi un citation de Kamelott aléatoire"
+					},
+					"response": [
+						{
+							"name": "/randomQuote",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/kaamelott/randomQuote",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"kaamelott",
+										"randomQuote"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "216"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"d8-dLD1UAo4mS0Zq6tC4cwE6dYFTSk\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:53:25 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"sucess\",\n    \"citation\": \"Ah, le printemps ! La nature se réveille, les oiseaux reviennent, on crame des mecs.\",\n    \"personnage\": \"Arthur\",\n    \"personnages\": [\n        \"Spurius Cordius Frontinius\",\n        \"Dagonet\",\n        \"Capito\"\n    ]\n}"
+						},
+						{
+							"name": "/randomQuote",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/kaamelott/randomQuote",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"kaamelott",
+										"randomQuote"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "199"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"c7-PyDrxRpLIelQ0TBryIgIx9SgLYc\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:53:01 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"sucess\",\n    \"citation\": \" (À propos des biscuits de la marraine du roi d'Armorique) Ils sentent la pisse, aussi.\",\n    \"personnage\": \"Loth\",\n    \"personnages\": [\n        \"Dagonet\",\n        \"Perceval\",\n        \"Bohort\"\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "/cards",
+			"item": [
+				{
+					"name": "/cards/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/:id",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cards",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "50",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Permet de récupérer une carte avec son ID."
+					},
+					"response": [
+						{
+							"name": "/cards/:id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/:id",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"cards",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"type": "string",
+											"value": "50"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "239"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"ef-EHjUWrqS5SXPQrXCPMyejKSOdo4\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 11:27:52 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"id\": 50,\n    \"name\": \"Blim Blam\",\n    \"status\": \"Alive\",\n    \"species\": \"Alien\",\n    \"gender\": \"Male\",\n    \"origin\": \"unknown\",\n    \"location\": \"Earth (Replacement Dimension)\",\n    \"image\": \"https://rickandmortyapi.com/api/character/avatar/50.jpeg\"\n}"
+						}
+					]
+				},
+				{
+					"name": "/cards/addDecks",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"deckNumber\":\"1\", \"user_id\":\"50\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/addDecks",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cards",
+								"addDecks"
+							]
+						},
+						"description": "update le deck à ouvrir par l'utilisateur et retoune l'user courant avec ses informations à jour."
+					},
+					"response": [
+						{
+							"name": "/cards/addDecks",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"deckNumber\":\"1\", \"user_id\":\"50\"}"
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/addDecks",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"cards",
+										"addDecks"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "268"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"10c-+IRhLNJfb48fstxJPTStO+Bwtug\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 05:12:43 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"success\",\n    \"user\": {\n        \"user_id\": 50,\n        \"user_name\": \"Valentin Rouby\",\n        \"user_email\": \"rouby.v@gmail.com\",\n        \"deckToOpen\": 1,\n        \"user_wallet\": 26,\n        \"external_id\": \"105384724805888871701\",\n        \"user_last_game\": \"2019-03-20\",\n        \"user_last_memory\": \"2019-03-20\",\n        \"user_image\": \"null\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "/randomSelectionFor/:amount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/randomSelectionFor/:amount",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cards",
+								"randomSelectionFor",
+								":amount"
+							],
+							"variable": [
+								{
+									"key": "amount",
+									"value": "1",
+									"type": "string"
+								}
+							]
+						},
+						"description": "Renvoie un nombre de cartes aléatoire utilisé dans le jeu mémory."
+					},
+					"response": [
+						{
+							"name": "/randomSelectionFor/{amount}",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/randomSelectionFor/:amount",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"cards",
+										"randomSelectionFor",
+										":amount"
+									],
+									"variable": [
+										{
+											"key": "amount",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "166"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"a6-p840fAuOVAKKdrfkaXvfvhp17tY\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:44:59 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"selection is ok\",\n    \"deck\": [\n        {\n            \"card_id\": 388,\n            \"card_name\": \"Zeep Xanflorp\",\n            \"card_image\": \"https://rickandmortyapi.com/api/character/avatar/388.jpeg\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "/cards/addRewards",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"listOfCards\":\"[{},{}]\", \"user_id\":\"50\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/addRewards",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cards",
+								"addRewards"
+							]
+						},
+						"description": "Ajoute les cartes gagnées par l'utilisateur lors du jeu memory."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/faq",
+			"item": [
+				{
+					"name": "FAQ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/faq",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"faq"
+							]
+						},
+						"description": "Retourne les questions/réponses de la FAQ"
+					},
+					"response": [
+						{
+							"name": "FAQ",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/faq",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"faq"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1217"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"4c1-BCUXBqq/JFGJJQKRE7XqIS/EgT0\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:44:17 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"success faq\",\n    \"faq\": [\n        {\n            \"faq_question\": \"Comment gagner des PickleRicks :\",\n            \"faq_response\": \"<b><u>Gagner des PickleRicks en répondant au Quiz Kaamelott</u>.</b>\\r\\nPour gagner des PickleRicks vous pouvez répondre une fois par jour a notre quiz sur les citations de Kaamelott. Vous gagnez 10 PR par réponse juste.\"\n        },\n        {\n            \"faq_question\": \"Comment gagner des cartes : \",\n            \"faq_response\": \"<b><u>Gagner des Cartes en dépensant vos PickleRicks</u>.</b>\\r\\nPour acheter des cartes vous pouvez dépenser vos PR en cliquant sur le symbole des PR sur les écrans principaux du jeu. Plusieurs packs sont disponibles. Vous pouvez aussi gagner les cartes que vous aller réussir à révéler dans notre jeu de Memory, une fois par jour.\"\n        },\n        {\n            \"faq_question\": \"Comment changer de mot de passe : \",\n            \"faq_response\": \"<b><u>Pour changer votre mot de passe rendez-vous sur l'écran précédent et suivez les étapes proposées</u>.</b>\\r\\nIl va vous être demandé de ressaisir votre ancien mot de passe et le nouveau. Si vous avez perdu votre mot de passe, la manipulation a lieu sur l'écran de connexion de l'application : un code vous sera envoyé pour réinitialiser le mot de passe. Ce code est valable une journée.\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "unused",
+			"item": [
+				{
+					"name": "AllCards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/all/:id",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"cards",
+								"all",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "string",
+									"description": "page recherché"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "AllCards",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/all/:id",
+									"protocol": "https",
+									"host": [
+										"api-rickandmorty-tcg",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"cards",
+										"all",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "page recherché"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Cowboy"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15349"
+								},
+								{
+									"key": "Etag",
+									"value": "W/\"3bf5-RrK/GDWmz7FkDAwM8ztaW5zodr8\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 10 Apr 2019 04:43:35 GMT"
+								},
+								{
+									"key": "Via",
+									"value": "1.1 vegur"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"info\": {\n        \"count\": 493,\n        \"pages\": 25,\n        \"next\": \"https://rickandmortyapi.com/api/character/?page=2\",\n        \"prev\": \"\"\n    },\n    \"results\": [\n        {\n            \"id\": 1,\n            \"name\": \"Rick Sanchez\",\n            \"status\": \"Alive\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"Earth (C-137)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/1\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/1.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/1\",\n                \"https://rickandmortyapi.com/api/episode/2\",\n                \"https://rickandmortyapi.com/api/episode/3\",\n                \"https://rickandmortyapi.com/api/episode/4\",\n                \"https://rickandmortyapi.com/api/episode/5\",\n                \"https://rickandmortyapi.com/api/episode/6\",\n                \"https://rickandmortyapi.com/api/episode/7\",\n                \"https://rickandmortyapi.com/api/episode/8\",\n                \"https://rickandmortyapi.com/api/episode/9\",\n                \"https://rickandmortyapi.com/api/episode/10\",\n                \"https://rickandmortyapi.com/api/episode/11\",\n                \"https://rickandmortyapi.com/api/episode/12\",\n                \"https://rickandmortyapi.com/api/episode/13\",\n                \"https://rickandmortyapi.com/api/episode/14\",\n                \"https://rickandmortyapi.com/api/episode/15\",\n                \"https://rickandmortyapi.com/api/episode/16\",\n                \"https://rickandmortyapi.com/api/episode/17\",\n                \"https://rickandmortyapi.com/api/episode/18\",\n                \"https://rickandmortyapi.com/api/episode/19\",\n                \"https://rickandmortyapi.com/api/episode/20\",\n                \"https://rickandmortyapi.com/api/episode/21\",\n                \"https://rickandmortyapi.com/api/episode/22\",\n                \"https://rickandmortyapi.com/api/episode/23\",\n                \"https://rickandmortyapi.com/api/episode/24\",\n                \"https://rickandmortyapi.com/api/episode/25\",\n                \"https://rickandmortyapi.com/api/episode/26\",\n                \"https://rickandmortyapi.com/api/episode/27\",\n                \"https://rickandmortyapi.com/api/episode/28\",\n                \"https://rickandmortyapi.com/api/episode/29\",\n                \"https://rickandmortyapi.com/api/episode/30\",\n                \"https://rickandmortyapi.com/api/episode/31\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/1\",\n            \"created\": \"2017-11-04T18:48:46.250Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Morty Smith\",\n            \"status\": \"Alive\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"Earth (C-137)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/1\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/2.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/1\",\n                \"https://rickandmortyapi.com/api/episode/2\",\n                \"https://rickandmortyapi.com/api/episode/3\",\n                \"https://rickandmortyapi.com/api/episode/4\",\n                \"https://rickandmortyapi.com/api/episode/5\",\n                \"https://rickandmortyapi.com/api/episode/6\",\n                \"https://rickandmortyapi.com/api/episode/7\",\n                \"https://rickandmortyapi.com/api/episode/8\",\n                \"https://rickandmortyapi.com/api/episode/9\",\n                \"https://rickandmortyapi.com/api/episode/10\",\n                \"https://rickandmortyapi.com/api/episode/11\",\n                \"https://rickandmortyapi.com/api/episode/12\",\n                \"https://rickandmortyapi.com/api/episode/13\",\n                \"https://rickandmortyapi.com/api/episode/14\",\n                \"https://rickandmortyapi.com/api/episode/15\",\n                \"https://rickandmortyapi.com/api/episode/16\",\n                \"https://rickandmortyapi.com/api/episode/17\",\n                \"https://rickandmortyapi.com/api/episode/18\",\n                \"https://rickandmortyapi.com/api/episode/19\",\n                \"https://rickandmortyapi.com/api/episode/20\",\n                \"https://rickandmortyapi.com/api/episode/21\",\n                \"https://rickandmortyapi.com/api/episode/22\",\n                \"https://rickandmortyapi.com/api/episode/23\",\n                \"https://rickandmortyapi.com/api/episode/24\",\n                \"https://rickandmortyapi.com/api/episode/25\",\n                \"https://rickandmortyapi.com/api/episode/26\",\n                \"https://rickandmortyapi.com/api/episode/27\",\n                \"https://rickandmortyapi.com/api/episode/28\",\n                \"https://rickandmortyapi.com/api/episode/29\",\n                \"https://rickandmortyapi.com/api/episode/30\",\n                \"https://rickandmortyapi.com/api/episode/31\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/2\",\n            \"created\": \"2017-11-04T18:50:21.651Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Summer Smith\",\n            \"status\": \"Alive\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Female\",\n            \"origin\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/3.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/6\",\n                \"https://rickandmortyapi.com/api/episode/7\",\n                \"https://rickandmortyapi.com/api/episode/8\",\n                \"https://rickandmortyapi.com/api/episode/9\",\n                \"https://rickandmortyapi.com/api/episode/10\",\n                \"https://rickandmortyapi.com/api/episode/11\",\n                \"https://rickandmortyapi.com/api/episode/12\",\n                \"https://rickandmortyapi.com/api/episode/14\",\n                \"https://rickandmortyapi.com/api/episode/15\",\n                \"https://rickandmortyapi.com/api/episode/16\",\n                \"https://rickandmortyapi.com/api/episode/17\",\n                \"https://rickandmortyapi.com/api/episode/18\",\n                \"https://rickandmortyapi.com/api/episode/19\",\n                \"https://rickandmortyapi.com/api/episode/20\",\n                \"https://rickandmortyapi.com/api/episode/21\",\n                \"https://rickandmortyapi.com/api/episode/22\",\n                \"https://rickandmortyapi.com/api/episode/23\",\n                \"https://rickandmortyapi.com/api/episode/24\",\n                \"https://rickandmortyapi.com/api/episode/25\",\n                \"https://rickandmortyapi.com/api/episode/26\",\n                \"https://rickandmortyapi.com/api/episode/27\",\n                \"https://rickandmortyapi.com/api/episode/29\",\n                \"https://rickandmortyapi.com/api/episode/30\",\n                \"https://rickandmortyapi.com/api/episode/31\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/3\",\n            \"created\": \"2017-11-04T19:09:56.428Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Beth Smith\",\n            \"status\": \"Alive\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Female\",\n            \"origin\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/4.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/6\",\n                \"https://rickandmortyapi.com/api/episode/7\",\n                \"https://rickandmortyapi.com/api/episode/8\",\n                \"https://rickandmortyapi.com/api/episode/9\",\n                \"https://rickandmortyapi.com/api/episode/10\",\n                \"https://rickandmortyapi.com/api/episode/11\",\n                \"https://rickandmortyapi.com/api/episode/12\",\n                \"https://rickandmortyapi.com/api/episode/14\",\n                \"https://rickandmortyapi.com/api/episode/15\",\n                \"https://rickandmortyapi.com/api/episode/16\",\n                \"https://rickandmortyapi.com/api/episode/18\",\n                \"https://rickandmortyapi.com/api/episode/19\",\n                \"https://rickandmortyapi.com/api/episode/20\",\n                \"https://rickandmortyapi.com/api/episode/21\",\n                \"https://rickandmortyapi.com/api/episode/22\",\n                \"https://rickandmortyapi.com/api/episode/23\",\n                \"https://rickandmortyapi.com/api/episode/24\",\n                \"https://rickandmortyapi.com/api/episode/25\",\n                \"https://rickandmortyapi.com/api/episode/26\",\n                \"https://rickandmortyapi.com/api/episode/27\",\n                \"https://rickandmortyapi.com/api/episode/28\",\n                \"https://rickandmortyapi.com/api/episode/29\",\n                \"https://rickandmortyapi.com/api/episode/30\",\n                \"https://rickandmortyapi.com/api/episode/31\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/4\",\n            \"created\": \"2017-11-04T19:22:43.665Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Jerry Smith\",\n            \"status\": \"Alive\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/5.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/6\",\n                \"https://rickandmortyapi.com/api/episode/7\",\n                \"https://rickandmortyapi.com/api/episode/8\",\n                \"https://rickandmortyapi.com/api/episode/9\",\n                \"https://rickandmortyapi.com/api/episode/10\",\n                \"https://rickandmortyapi.com/api/episode/11\",\n                \"https://rickandmortyapi.com/api/episode/12\",\n                \"https://rickandmortyapi.com/api/episode/13\",\n                \"https://rickandmortyapi.com/api/episode/14\",\n                \"https://rickandmortyapi.com/api/episode/15\",\n                \"https://rickandmortyapi.com/api/episode/16\",\n                \"https://rickandmortyapi.com/api/episode/18\",\n                \"https://rickandmortyapi.com/api/episode/19\",\n                \"https://rickandmortyapi.com/api/episode/20\",\n                \"https://rickandmortyapi.com/api/episode/21\",\n                \"https://rickandmortyapi.com/api/episode/22\",\n                \"https://rickandmortyapi.com/api/episode/23\",\n                \"https://rickandmortyapi.com/api/episode/26\",\n                \"https://rickandmortyapi.com/api/episode/29\",\n                \"https://rickandmortyapi.com/api/episode/30\",\n                \"https://rickandmortyapi.com/api/episode/31\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/5\",\n            \"created\": \"2017-11-04T19:26:56.301Z\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Abadango Cluster Princess\",\n            \"status\": \"Alive\",\n            \"species\": \"Alien\",\n            \"type\": \"\",\n            \"gender\": \"Female\",\n            \"origin\": {\n                \"name\": \"Abadango\",\n                \"url\": \"https://rickandmortyapi.com/api/location/2\"\n            },\n            \"location\": {\n                \"name\": \"Abadango\",\n                \"url\": \"https://rickandmortyapi.com/api/location/2\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/6.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/27\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/6\",\n            \"created\": \"2017-11-04T19:50:28.250Z\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Abradolf Lincler\",\n            \"status\": \"unknown\",\n            \"species\": \"Human\",\n            \"type\": \"Genetic experiment\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"location\": {\n                \"name\": \"Testicle Monster Dimension\",\n                \"url\": \"https://rickandmortyapi.com/api/location/21\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/7.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/10\",\n                \"https://rickandmortyapi.com/api/episode/11\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/7\",\n            \"created\": \"2017-11-04T19:59:20.523Z\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Adjudicator Rick\",\n            \"status\": \"Dead\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Citadel of Ricks\",\n                \"url\": \"https://rickandmortyapi.com/api/location/3\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/8.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/28\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/8\",\n            \"created\": \"2017-11-04T20:03:34.737Z\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Agency Director\",\n            \"status\": \"Dead\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/9.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/24\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/9\",\n            \"created\": \"2017-11-04T20:06:54.976Z\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Alan Rails\",\n            \"status\": \"Dead\",\n            \"species\": \"Human\",\n            \"type\": \"Superhuman (Ghost trains summoner)\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Worldender's lair\",\n                \"url\": \"https://rickandmortyapi.com/api/location/4\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/10.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/25\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/10\",\n            \"created\": \"2017-11-04T20:19:09.017Z\"\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Albert Einstein\",\n            \"status\": \"Dead\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"Earth (C-137)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/1\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/11.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/12\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/11\",\n            \"created\": \"2017-11-04T20:20:20.965Z\"\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Alexander\",\n            \"status\": \"Dead\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"Earth (C-137)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/1\"\n            },\n            \"location\": {\n                \"name\": \"Anatomy Park\",\n                \"url\": \"https://rickandmortyapi.com/api/location/5\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/12.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/3\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/12\",\n            \"created\": \"2017-11-04T20:32:33.144Z\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Alien Googah\",\n            \"status\": \"unknown\",\n            \"species\": \"Alien\",\n            \"type\": \"\",\n            \"gender\": \"unknown\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/13.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/31\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/13\",\n            \"created\": \"2017-11-04T20:33:30.779Z\"\n        },\n        {\n            \"id\": 14,\n            \"name\": \"Alien Morty\",\n            \"status\": \"unknown\",\n            \"species\": \"Alien\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Citadel of Ricks\",\n                \"url\": \"https://rickandmortyapi.com/api/location/3\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/14.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/10\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/14\",\n            \"created\": \"2017-11-04T20:51:31.373Z\"\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Alien Rick\",\n            \"status\": \"unknown\",\n            \"species\": \"Alien\",\n            \"type\": \"\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Citadel of Ricks\",\n                \"url\": \"https://rickandmortyapi.com/api/location/3\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/15.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/10\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/15\",\n            \"created\": \"2017-11-04T20:56:13.215Z\"\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Amish Cyborg\",\n            \"status\": \"Dead\",\n            \"species\": \"Alien\",\n            \"type\": \"Parasite, Cyborg\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Earth (Replacement Dimension)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/20\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/16.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/15\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/16\",\n            \"created\": \"2017-11-04T21:12:45.235Z\"\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Annie\",\n            \"status\": \"Alive\",\n            \"species\": \"Human\",\n            \"type\": \"\",\n            \"gender\": \"Female\",\n            \"origin\": {\n                \"name\": \"Earth (C-137)\",\n                \"url\": \"https://rickandmortyapi.com/api/location/1\"\n            },\n            \"location\": {\n                \"name\": \"Anatomy Park\",\n                \"url\": \"https://rickandmortyapi.com/api/location/5\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/17.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/3\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/17\",\n            \"created\": \"2017-11-04T22:21:24.481Z\"\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Antenna Morty\",\n            \"status\": \"Alive\",\n            \"species\": \"Human\",\n            \"type\": \"Human with antennae\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Citadel of Ricks\",\n                \"url\": \"https://rickandmortyapi.com/api/location/3\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/18.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/10\",\n                \"https://rickandmortyapi.com/api/episode/28\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/18\",\n            \"created\": \"2017-11-04T22:25:29.008Z\"\n        },\n        {\n            \"id\": 19,\n            \"name\": \"Antenna Rick\",\n            \"status\": \"unknown\",\n            \"species\": \"Human\",\n            \"type\": \"Human with antennae\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/19.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/10\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/19\",\n            \"created\": \"2017-11-04T22:28:13.756Z\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Ants in my Eyes Johnson\",\n            \"status\": \"unknown\",\n            \"species\": \"Human\",\n            \"type\": \"Human with ants in his eyes\",\n            \"gender\": \"Male\",\n            \"origin\": {\n                \"name\": \"unknown\",\n                \"url\": \"\"\n            },\n            \"location\": {\n                \"name\": \"Interdimensional Cable\",\n                \"url\": \"https://rickandmortyapi.com/api/location/6\"\n            },\n            \"image\": \"https://rickandmortyapi.com/api/character/avatar/20.jpeg\",\n            \"episode\": [\n                \"https://rickandmortyapi.com/api/episode/8\"\n            ],\n            \"url\": \"https://rickandmortyapi.com/api/character/20\",\n            \"created\": \"2017-11-04T22:34:53.659Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "home page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-rickandmorty-tcg.herokuapp.com/",
+					"protocol": "https",
+					"host": [
+						"api-rickandmorty-tcg",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Permet de vérifier si l'API est fonctionnel ainsi que de \"reveiller\" heroku"
+			},
+			"response": [
+				{
+					"name": "home page",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "36"
+						},
+						{
+							"key": "Etag",
+							"value": "W/\"24-aQ0doJWbGN0u2FkH5Zy+hIj2TK8\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 10 Apr 2019 04:40:57 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"body": "Home Page - Rick And Morty API is ON"
+				}
+			]
+		}
+	]
+}
