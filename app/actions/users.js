@@ -113,7 +113,7 @@ function getUserById(id) {
         reject({ code: 500, message: err.errorno });
         return;
       }
-      if (rows) {
+      if (rows && rows.length > 0) {
         const user = rows[0];
         delete user.user_password;
         resolve({ code: 200, message: "success", user: user });
