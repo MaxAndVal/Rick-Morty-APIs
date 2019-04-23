@@ -1,0 +1,378 @@
+{
+	"info": {
+		"_postman_id": "c0d8ab10-423c-443a-93d6-3a4e2a79e856",
+		"name": "WebServiceHeroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/auth",
+			"item": [
+				{
+					"name": "mdp perdu: \"/lostpassword\"",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_email\":\"rouby.v@gmail.com\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/lostpassword",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"lostpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "connextionCode: \"/loginwithcode\"",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_code\":\"TEST\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/loginwithcode",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"loginwithcode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "connexion: \"/login\"",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_email\": \"rick@test.fr\",\"user_password\":\"grossetruite\", \"user_name\":\"kapoué\", \"external_id\":\"dfxxpoué\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/auth/login",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Requete concercnant la connexion et l'inscription."
+		},
+		{
+			"name": "/users",
+			"item": [
+				{
+					"name": "inscription: \"/\"",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_name\":\"testCrypt\",\n\t\"user_password\":\"testCrypt\",\n\t\"user_email\":\"testCrypted@test.fr\"\n}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser: \"/users/{userID}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/50",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"50"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeMDP: \"users/{userID}/password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user_email\":\"rouby.v@gmail.com\", \"user_old_password\":\"truite\", \"user_new_password\":\"potter26\"}"
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/133/password",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"users",
+								"133",
+								"password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/kaamelott",
+			"item": [
+				{
+					"name": "kaamelott",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api-rickandmorty-tcg.herokuapp.com/kaamelott/getRandomQuote",
+							"protocol": "https",
+							"host": [
+								"api-rickandmorty-tcg",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"kaamelott",
+								"getRandomQuote"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FAQ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RandomDeck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/randomDeckGenerator/19",
+					"protocol": "https",
+					"host": [
+						"api-rickandmorty-tcg",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"cards",
+						"randomDeckGenerator",
+						"19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDeck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-rickandmorty-tcg.herokuapp.com/users/deck/1",
+					"protocol": "https",
+					"host": [
+						"api-rickandmorty-tcg",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"deck",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AllCards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api-rickandmorty-tcg.herokuapp.com/cards/all/19",
+					"protocol": "https",
+					"host": [
+						"api-rickandmorty-tcg",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"cards",
+						"all",
+						"19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFriends",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"price\":12}"
+				},
+				"url": {
+					"raw": "localhost:14000/users/50/market/60/buycard/29",
+					"host": [
+						"localhost"
+					],
+					"port": "14000",
+					"path": [
+						"users",
+						"50",
+						"market",
+						"60",
+						"buycard",
+						"29"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchForFriends Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}
