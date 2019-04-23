@@ -9,8 +9,8 @@ if (isHeroku) {
   ePass = process.env.prodEmailPass;
 } else {
   const { EMAIL_CONFIG } = require("../../dbConnexion/config");
-  eUser = ""; //EMAIL_CONFIG.user;
-  ePass = ""; //EMAIL_CONFIG.pass;
+  eUser = EMAIL_CONFIG.user;
+  ePass = EMAIL_CONFIG.pass;
 }
 
 var transporter = nodemailer.createTransport({
