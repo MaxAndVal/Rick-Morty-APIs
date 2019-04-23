@@ -113,9 +113,13 @@ function getUserById(id) {
         reject({ code: 500, message: err.errorno });
         return;
       }
-      const user = rows[0];
-      delete user.user_password;
-      resolve({ code: 200, message: "success", user: user });
+      if (rows) {
+        const user = rows[0];
+        delete user.user_password;
+        resolve({ code: 200, message: "success", user: user });
+      } else {
+        resolve({ code: 250, message: "user not found", user: [] });
+      }
     })
   );
 }
